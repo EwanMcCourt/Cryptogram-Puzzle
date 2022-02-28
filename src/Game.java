@@ -51,10 +51,17 @@ public class Game {
             Character original = phrase.charAt(i);
             cryptogramAlphabet.put(original, (char) current);}}
             generated.cryptogramAlphabet = cryptogramAlphabet;
-        //System.out.println("phrase going in = " +phrase); //Uncomment to see unencrypted phrase
+
       return generated;
     }
 
+ void enterLetter(char guess){
+
+
+
+
+
+ }
 
 
 
