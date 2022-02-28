@@ -3,10 +3,11 @@ import java.util.Random;
 import java.util.HashMap;
 
 public class Game {
-    public static void main(String[] args) {
     Cryptogram Encrypted = generateCryptogram();
-    Encrypted.printDetails();
-    System.out.println(Encrypted.getFrequencies());
+    public static void main(String[] args) {
+        Cryptogram Encrypted = generateCryptogram();
+        Encrypted.printDetails();
+        System.out.println(Encrypted.getFrequencies());
     }
 
     static ArrayList<String> phrases = new ArrayList<String>();
@@ -22,7 +23,7 @@ public class Game {
         int random = rand.nextInt(phrases.size());
 
 
-        return phrases.get(random);
+        return phrases.get(1);
     }
 
 

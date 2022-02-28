@@ -12,22 +12,30 @@ void printDetails(){
     }}
 HashMap<Character, Integer> getFrequencies(){
     HashMap<Character, Integer>  frequencies = new HashMap<Character, Integer>();
+    HashMap<Character, Integer>  actualFrequencies = new HashMap<Character, Integer>();
     char[] charArray = phrase.toCharArray();
     for (int i=0; i < charArray.length; i++){
         if (phrase.charAt(i) == ' '){
             continue;}else{
         frequencies.put(phrase.charAt(i), 0);}}
-    for (int i=0; i < charArray.length; i++){
-        if (phrase.charAt(i) == ' '){
+    for (int i=0; i < charArray.length; i++) {
+        int total;
+        if (phrase.charAt(i) == ' ') {
             continue;
-        }else{
-            int total = frequencies.get(phrase.charAt(i));
-            frequencies.put(phrase.charAt(i), total +1);}
+        } else {
+            total = frequencies.get(phrase.charAt(i));
+            frequencies.put(phrase.charAt(i), total + 1);
+        }
 
 
 
+
+
+    }for (int i=0; i < charArray.length; i++) {
+    actualFrequencies.put(cryptogramAlphabet.get(phrase.charAt(i)), frequencies.get(phrase.charAt(i)));
+    actualFrequencies.remove(frequencies.get(phrase.charAt(i)));
     }
-    return frequencies;
+    return actualFrequencies;
     }
 
 
