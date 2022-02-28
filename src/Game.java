@@ -1,7 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 public class Game {
     public static void main(String[] args) {
     String Encrypted = generateCryptogram(Cryptogram.callPhrase());
