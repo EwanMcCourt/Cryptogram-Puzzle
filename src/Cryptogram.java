@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Cryptogram {
 String phrase;
 HashMap<Character, Character> cryptogramAlphabet = new HashMap<Character, Character>();
+String fullEncrypt;
 void printDetails(){
     System.out.println("phrase is " + phrase);
     for (Character i : cryptogramAlphabet.keySet()) {
