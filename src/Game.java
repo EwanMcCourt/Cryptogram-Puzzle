@@ -23,7 +23,7 @@ public class Game {
         int random = rand.nextInt(phrases.size());
 
 
-        return phrases.get(1);
+        return phrases.get(random);
     }
 
 
