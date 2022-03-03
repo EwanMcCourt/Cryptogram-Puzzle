@@ -107,39 +107,39 @@ public class Game {
         System.out.println("What position would you like to guess at?");
         String pos = object.nextLine();
 
-            int position = Integer.parseInt(pos);
-            System.out.println("What would you like to guess that letter as?");
-            String guess = object.next();
+        int position = Integer.parseInt(pos);
+        System.out.println("What would you like to guess that letter as?");
+        String guess = object.next();
 
-            System.out.println("You guessed " + guess + " at position " + pos);
-            int total = getKeyByValue(Encrypted.labeledMap, pos) + 1;
-            Encrypted.guesses[total - 1] = " " + String.valueOf(guess);
-            for (String label : Encrypted.labeledMap.values()) {
+        System.out.println("You guessed " + guess + " at position " + pos);
+        int total = getKeyByValue(Encrypted.labeledMap, pos) + 1;
+        Encrypted.guesses[total - 1] = " " + String.valueOf(guess);
+        for (String label : Encrypted.labeledMap.values()) {
 
-                System.out.print(label + " ");
+            System.out.print(label + " ");
+        }
+
+
+        System.out.println();
+        for (int i = 0; i < Encrypted.guesses.length; i++) {
+            System.out.print(Encrypted.guesses[i] + " ");
+        }
+        System.out.println();
+        return Encrypted.guesses;
+    }
+
+
+    static String[] initaliseArray(Cryptogram Encrypted) {
+        for (int i = 0; i < Encrypted.phrase.length(); i++) {
+            if (Encrypted.phrase.charAt(i) == ' ') {
+
+                Encrypted.guesses[i] = " ";
+
+            } else {
+                Encrypted.guesses[i] = " ?";
             }
 
-
-            System.out.println();
-            for (int i = 0; i < Encrypted.guesses.length; i++) {
-                System.out.print(Encrypted.guesses[i] + " ");
-            }
-            System.out.println();
-            return Encrypted.guesses;}
-
-
-            static String[] initaliseArray (Cryptogram Encrypted) {
-            for (int i = 0; i < Encrypted.phrase.length(); i++) {
-                if (Encrypted.phrase.charAt(i) == ' ') {
-
-                    Encrypted.guesses[i] = " ";
-
-                } else {
-                    Encrypted.guesses[i] = " ?";
-                }
-
-            }
-
+        }
 
 
         return Encrypted.guesses;
