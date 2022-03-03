@@ -12,7 +12,7 @@ public class GameTests {
     assertTrue(encrypted != null);
     }
     @Test
-    public void checkFirstChar(){
+    public void checkIfRandom(){
         Cryptogram encrypted = Game.generateCryptogram();
         char[] charArray;
         charArray = encrypted.phrase.toCharArray();
