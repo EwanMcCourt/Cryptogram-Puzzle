@@ -7,7 +7,7 @@ public class GameTests {
 
     @Test
   public void testNotNull(){
-   String encrypted = Game.generateCryptogram("testing");
+   Cryptogram encrypted = Game.generateCryptogram();
     assertTrue(encrypted != null);
     }
 
