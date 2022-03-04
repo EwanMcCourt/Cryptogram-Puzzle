@@ -9,22 +9,20 @@ public class Cryptogram {
     String[] guesses;
     HashMap<Integer, String> labeledMap = new HashMap<Integer, String>();
     public Cryptogram(){
-        String phrase = Game.callPhrase();
+        phrase = Game.callPhrase();
 
         char[] charArray; // used to store the phrase as a char array and used in loops
         int current; //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26); // a int that the phrase will be shifted by
         charArray = phrase.toCharArray();
-        Cryptogram generated = new Cryptogram();
         HashMap<Character, Character> cryptogramAlphabet = new HashMap<Character, Character>();
-        generated.phrase = phrase;
         int label = 1;
         char[] result = new char[charArray.length];
         for (int i = 0; i < charArray.length; i++) {
             current = phrase.charAt(i); //sets the current ascii value
             if (phrase.charAt(i) == ' ') {
-                generated.labeledMap.put(i, " ");
+                labeledMap.put(i, " ");
 
             } else {
                 String lable2 = String.valueOf(label);
@@ -32,7 +30,7 @@ public class Cryptogram {
                     lable2 = " " + lable2;
 
                 }
-                generated.labeledMap.put(i, lable2);
+                labeledMap.put(i, lable2);
                 label++;
             }
             if (phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
@@ -62,9 +60,9 @@ public class Cryptogram {
             }
 
         }
-        generated.cryptogramAlphabet = cryptogramAlphabet;
-        generated.fullEncrypt = new String(result);
-        System.out.println(generated.fullEncrypt);
+
+        fullEncrypt = new String(result);
+        System.out.println(fullEncrypt);
     }
 
 
