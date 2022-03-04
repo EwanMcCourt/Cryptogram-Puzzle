@@ -1,4 +1,13 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Game {
     Cryptogram Encrypted = generateCryptogram();
@@ -22,20 +31,20 @@ public class Game {
     }
 
 
-    static ArrayList<String> phrases = new ArrayList<String>();
 
-
-    static String callPhrase() {
-        //phrases.add("the quick brown fox jumped over the lazy dog");
-        //phrases.add("hi this is lots of is");
-        //phrases.add("abcdefghijklmnopqrstuvwxyz");
-        phrases.add("quick a");
-
-        Random rand = new Random();
-        int random = rand.nextInt(phrases.size());
-
-
-        return phrases.get(random);
+    static String callPhrase(){
+        try {
+            long lines = Files.lines(Path.of("./src/phrases.txt")).count(); //gets number of lines in file
+            BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
+            int random = new Random().nextInt((int) lines); //line to read from is chosen
+            for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
+            String phrase = phraseReader.readLine(); //set phrase to line in file
+            return phrase;
+        }
+        catch (IOException e){
+            System.out.print("Error, no phrase file!");
+            return null;
+        }
     }
 
 
