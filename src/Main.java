@@ -16,7 +16,7 @@ public class Main {
             System.out.println("file not found");
         }
         */
-        Players.addPlayer();
+
         //user command interface
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
         Scanner inputReader = new Scanner(System.in);
