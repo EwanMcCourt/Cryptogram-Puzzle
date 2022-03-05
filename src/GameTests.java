@@ -14,8 +14,10 @@ public class GameTests {
 
     @Test
     public void testNotNull() {
-        Cryptogram encrypted = Game.generateCryptogram();
-        assertNotNull(encrypted);
+        Game game = new Game(new Player("test"));
+        assertNotNull(game);
+        assertNotNull(game.getEncrypted());
+        assertNotNull(Game.playerGameMapping);
     }
 
     @Test

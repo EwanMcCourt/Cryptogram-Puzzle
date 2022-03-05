@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.HashMap;
@@ -12,7 +17,7 @@ public class Cryptogram {
     String parsedGuesses;
 
     public Cryptogram() {
-        phrase = Game.callPhrase();
+        phrase = callPhrase();
         posGuess = new ArrayList<Integer>();
         guesses = new String[phrase.length()];
         parsedGuesses = null;
@@ -100,5 +105,18 @@ public class Cryptogram {
             }
         }
         return frequencies;
+    }
+
+    public String callPhrase() {
+        try {
+            long lines = Files.lines(Path.of("./src/phrases.txt")).count(); //gets number of lines in file
+            BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
+            int random = new Random().nextInt((int) lines); //line to read from is chosen
+            for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
+            return phraseReader.readLine();
+        } catch (IOException e) {
+            System.out.print("Error, no phrase file!");
+            return null;
+        }
     }
 }

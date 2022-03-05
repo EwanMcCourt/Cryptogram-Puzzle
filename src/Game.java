@@ -7,34 +7,28 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class Game {
+    static HashMap<Game, Player> playerGameMapping;
 
+    private Cryptogram encrypted;
+    private Player currentPlayer;
 
-    public static void main(String[] args) {
-
-    }
-
-
-    static String callPhrase() {
+    public Game (Player player){
+        this.encrypted = new Cryptogram();
+        this.currentPlayer = player;
         try {
-            long lines = Files.lines(Path.of("./src/phrases.txt")).count(); //gets number of lines in file
-            BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
-            int random = new Random().nextInt((int) lines); //line to read from is chosen
-            for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
-            String phrase = phraseReader.readLine(); //set phrase to line in file
-            return phrase;
-        } catch (IOException e) {
-            System.out.print("Error, no phrase file!");
-            return null;
+            playerGameMapping.put(this, player);
+        }
+        catch (NullPointerException e){
+            playerGameMapping = new HashMap<>();
+            playerGameMapping.put(this, player);
         }
     }
 
-
-    static Cryptogram generateCryptogram() {
-        Cryptogram generated = new Cryptogram();
-        return generated;
+    public Cryptogram getEncrypted() {
+        return encrypted;
     }
 
-    static String[] enterLetter(Cryptogram encrypted, Player player) {
+    public String[] enterLetter() {
         Scanner object = new Scanner(System.in);
         String target;
         String guess;
@@ -74,15 +68,16 @@ public class Game {
         }
         for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
             if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+
                 if (!Objects.equals(encrypted.guesses[i], " ?")) {
                     if (Objects.equals(conform, "yes")) {
                         for (int j = 0; j < encrypted.fullEncrypt.length(); j++) {
                             if (targetChar[0] == encrypted.fullEncrypt.charAt(j)) {
                                 encrypted.guesses[j] = " " + guess;
-                                player.updateTotalGuesses(player.getTotalGuesses() + 1);
+                                currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
                                 char[] guessChar = guess.trim().toCharArray();
                                 if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
-                                    player.updatenumCorrectGuesses(player.getnumCorrectGuesses() + 1);
+                                    currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
                                 }
                             }
                         }
@@ -91,10 +86,10 @@ public class Game {
                     }
                 } else {
                     encrypted.guesses[i] = " " + guess;
-                    player.updateTotalGuesses(player.getTotalGuesses() + 1);
+                    currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
                     char[] guessChar = guess.trim().toCharArray();
                     if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
-                        player.updatenumCorrectGuesses(player.getnumCorrectGuesses() + 1);
+                        currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
                     }
                 }
             }
@@ -102,7 +97,7 @@ public class Game {
         return encrypted.guesses;
     }
 
-    static String[] undoLetter(Cryptogram encrypted, Player player) {
+    public String[] undoLetter() {
         Scanner reader = new Scanner(System.in);
         System.out.println("What guess are you unmapping?");
         String remove = reader.next();
@@ -130,7 +125,7 @@ public class Game {
     }
 
 
-    public static void currentSol(Cryptogram encrypted, Player player) {
+    public void currentSol() {
         for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
             if (encrypted.fullEncrypt.charAt(i) == ' ') {
                 System.out.print(encrypted.fullEncrypt.charAt(i) + " ");
@@ -147,12 +142,12 @@ public class Game {
             System.out.print(encrypted.guesses[i] + " ");
         }
         System.out.println();
-        System.out.println("You have guessed " + player.getTotalGuesses() + " times");
+        System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times");
 
 
     }
 
-    public static String parseInput(Cryptogram encrypted) {
+    public String parseInput() {
         String[] temp = new String[encrypted.phrase.length()];
         for (int i = 0; i < encrypted.guesses.length; i++) {
             if (encrypted.guesses[i] == " ") {
