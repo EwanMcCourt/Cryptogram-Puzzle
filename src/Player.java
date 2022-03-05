@@ -1,5 +1,6 @@
 public class Player {
 
+    private int numCorrectGuesses;
     private int id;
     private String username;
     private double accuracy;
@@ -7,12 +8,13 @@ public class Player {
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
-    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted) {
+    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted, int numCorrectGuesses) {
         setUsername(username);
         updateAccuracy(accuracy);
         updateTotalGuesses(totalGuesses);
         incrementCryptogramsCompleted(cryptogramsCompleted);
         incrementCryptogramsPlayed(cryptogramsPlayed);
+
     }
 
     public int getId() {
@@ -32,11 +34,21 @@ public class Player {
     }
 
     public double getAccuracy() {
+
         return this.accuracy;
     }
 
     public void updateAccuracy(double accuracy) {
-        this.accuracy = accuracy;
+        this.accuracy = (double) numCorrectGuesses / (double) totalGuesses * 100;
+    }
+
+    public void updatenumCorrectGuesses(int numCorrectGuesses) {
+        this.numCorrectGuesses = numCorrectGuesses;
+
+    }
+
+    public int getnumCorrectGuesses() {
+        return this.numCorrectGuesses;
     }
 
     public int getTotalGuesses() {
@@ -52,7 +64,7 @@ public class Player {
     }
 
     public void incrementCryptogramsPlayed(int cryptogramsPlayed) {
-        this.cryptogramsPlayed = cryptogramsPlayed;
+        this.cryptogramsPlayed = cryptogramsPlayed + 1;
     }
 
     public int getCryptogramsCompleted() {
@@ -60,7 +72,15 @@ public class Player {
     }
 
     public void incrementCryptogramsCompleted(int cryptogramsCompleted) {
-        this.cryptogramsCompleted = cryptogramsCompleted;
+        this.cryptogramsCompleted = cryptogramsCompleted + 1;
+    }
+
+    public void printDetails() {
+        System.out.println("Username " + getUsername());
+        System.out.println("Number of total guesses: " + getTotalGuesses());
+        System.out.println("Number of right guesses: " + getnumCorrectGuesses());
+        System.out.println("Accuracy: " + getAccuracy());
+
     }
 
 

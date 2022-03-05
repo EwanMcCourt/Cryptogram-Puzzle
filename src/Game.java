@@ -35,35 +35,75 @@ public class Game {
     }
 
     static String[] enterLetter(Cryptogram encrypted, Player player) {
-        char[] charArray = encrypted.phrase.toCharArray();
         Scanner object = new Scanner(System.in);
-        System.out.println("What position would you like to guess at?");
-        String pos = object.nextLine();
-        int position = Integer.parseInt(pos);
-        encrypted.posGuess.add(position);
-        System.out.println("What would you like to guess that letter as?");
-        String guess = object.next();
-        System.out.println("You guessed " + guess + " at position " + pos);
-        int total = getKeyByValue(encrypted.labeledMap, pos) + 1;
-        encrypted.guesses[total - 1] = " " + String.valueOf(guess);
-        player.updateTotalGuesses(player.getTotalGuesses() + 1);
+        String target;
+        String guess;
+        System.out.println("What letter do you want to guess?");
+        target = object.next();
+        if (target.length() > 1) {
+            System.out.println("That's multiple letters.");
+            System.out.println("What letter do you want to guess?");
+            target = object.next();
+        }
+        char[] targetChar = target.toCharArray();
+        System.out.println("What is your guess?");
+        guess = object.next();
+        if (guess.length() > 1) {
+            System.out.println("Your guess is too long!!");
+            System.out.println("What is your guess?");
+            guess = object.next();
+        }
+        for (int i = 0; i < encrypted.phrase.length(); i++) {
+            if ((" " + guess).equals(encrypted.guesses[i])) {
+                System.out.println("Error this letter has already been mapped");
+                return encrypted.guesses;
+            }
+        }
+        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+                if (encrypted.guesses[i] != " ?") {
+                    System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
+                    String conform = object.next();
+                    if (Objects.equals(conform, "yes")) {
+                        for (int j = 0; j < encrypted.fullEncrypt.length(); j++) {
+                            if (targetChar[0] == encrypted.fullEncrypt.charAt(j)) {
+                                encrypted.guesses[j] = " " + guess;
+                                player.updateTotalGuesses(player.getTotalGuesses() + 1);
+                                char[] guessChar = guess.trim().toCharArray();
+                                if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
+                                    player.updatenumCorrectGuesses(player.getnumCorrectGuesses() + 1);
+                                }
+                            }
+                        }
+                    } else {
+                        break;
+                    }
+                } else {
+                    encrypted.guesses[i] = " " + guess;
+                    player.updateTotalGuesses(player.getTotalGuesses() + 1);
+                    char[] guessChar = guess.trim().toCharArray();
+                    if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
+                        player.updatenumCorrectGuesses(player.getnumCorrectGuesses() + 1);
+                    }
+                }
+            }
+        }
         return encrypted.guesses;
     }
 
-
     static String[] undoLetter(Cryptogram encrypted, Player player) {
-        for (int i : encrypted.posGuess) {
-            System.out.println(i);
+        Scanner reader = new Scanner(System.in);
+        System.out.println("What guess are you unmapping?");
+        String remove = reader.next();
+        boolean exists = false;
+        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+            if ((" " + remove).equals(encrypted.guesses[i])) {
+                encrypted.guesses[i] = " ?";
+                exists = true;
+            }
         }
-        int removing = encrypted.posGuess.get(encrypted.posGuess.size()-1);
-        System.out.println("You removed" + encrypted.guesses[getKeyByValue(encrypted.labeledMap, String.valueOf(removing))] + " at " + removing);
-        encrypted.guesses[getKeyByValue(encrypted.labeledMap, String.valueOf(removing))] = " ?";
-        encrypted.posGuess.remove(encrypted.posGuess.size()-1);
-        //System.out.println(encrypted.posGuess.get(0));
-        if (player.getTotalGuesses() < 0) {
-            player.updateTotalGuesses(0);
-        } else {
-            player.updateTotalGuesses(player.getTotalGuesses() - 1);
+        if (exists == false) {
+            System.out.println("That letter is not mapped so there is nothing to undo");
         }
         return encrypted.guesses;
     }
@@ -80,6 +120,14 @@ public class Game {
 
 
     public static void currentSol(Cryptogram encrypted, Player player) {
+        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+            if (encrypted.fullEncrypt.charAt(i) == ' ') {
+                System.out.print(encrypted.fullEncrypt.charAt(i) + " ");
+            } else {
+                System.out.print(" " + encrypted.fullEncrypt.charAt(i) + " ");
+            }
+        }
+        System.out.println();
         for (String label : encrypted.labeledMap.values()) {
             System.out.print(label + " ");
         }
@@ -88,7 +136,7 @@ public class Game {
             System.out.print(encrypted.guesses[i] + " ");
         }
         System.out.println();
-        System.out.println("You have guessed " + player.getTotalGuesses() + " amount of times");
+        System.out.println("You have guessed " + player.getTotalGuesses() + " times");
 
 
     }

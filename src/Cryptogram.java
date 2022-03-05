@@ -19,7 +19,6 @@ public class Cryptogram {
         int current; //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26); // a int that the phrase will be shifted by
-        HashMap<Character, Character> cryptogramAlphabet = new HashMap<Character, Character>();
         int label = 1;
         char[] result = new char[phrase.length()];
         for (int i = 0; i < phrase.length(); i++) {
@@ -42,21 +41,23 @@ public class Cryptogram {
                 if (current > 122) { //checks for ascii values past 122 (z) and then wraps them round
                     current = current - 26;
                 }
-                char alphabet = (char) 97;
-                int changed;
-                for (int j = 0; j < 26; j++) {
-                    // System.out.println(j+ " : " +alphabet);
-                    changed = alphabet + shift;
-                    if (changed > 122) { //checks for ascii values past 122 (z) and then wraps them round
-                        changed = changed - 26;
-                    }
-                    cryptogramAlphabet.put(alphabet, (char) (changed));
-                    alphabet++;
-                }
-                result[i] = (char) current;
-                Character original = phrase.charAt(i);
             }
+
+            result[i] = (char) current;
+            Character original = phrase.charAt(i);
         }
+        char alphabet = (char) 97;
+        int changed;
+        for (int j = 0; j < 26; j++) {
+            changed = alphabet + shift;
+            if (changed > 122) { //checks for ascii values past 122 (z) and then wraps them round
+                changed = changed - 26;
+            }
+            cryptogramAlphabet.put(alphabet, (char) changed);
+            alphabet++;
+        }
+
+
         fullEncrypt = new String(result);
         System.out.println(fullEncrypt);
         for (int i = 0; i < phrase.length(); i++) {
@@ -68,11 +69,15 @@ public class Cryptogram {
         }
     }
 
-    void printDetails() {
+    public void printDetails() {
         System.out.println("phrase is " + phrase);
+        System.out.print(cryptogramAlphabet.keySet());
+        System.out.println();
+        System.out.print("[");
         for (Character i : cryptogramAlphabet.keySet()) {
-            System.out.println(i + " = " + cryptogramAlphabet.get(i) + " ");
+            System.out.print(cryptogramAlphabet.get(i)+ ", ");
         }
+        System.out.println("]");
     }
 
     HashMap<Character, Integer> getFrequencies() {

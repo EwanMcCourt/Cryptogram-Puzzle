@@ -26,7 +26,7 @@ public class Main {
         while (exit == false) {
             switch (input) {
                 case "new":
-                    Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0);
+                    Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
                     Cryptogram encrypted = Game.generateCryptogram();
                     encrypted.printDetails();
                     //System.out.println(Encrypted.getFrequencies());
@@ -39,7 +39,7 @@ public class Main {
                                 encrypted.guesses = Game.enterLetter(encrypted, player);
                                 Game.currentSol(encrypted, player);
                                 encrypted.parsedGuesses = Game.parseInput(encrypted);
-                                System.out.println(encrypted.parsedGuesses);
+                                player.updateAccuracy(player.getAccuracy());
                                 break;
                             case "undo":
                                 Game.currentSol(encrypted, player);
@@ -47,7 +47,6 @@ public class Main {
                                     encrypted.guesses = Game.undoLetter(encrypted, player);
                                     Game.currentSol(encrypted, player);
                                     encrypted.parsedGuesses = Game.parseInput(encrypted);
-                                    System.out.println(encrypted.parsedGuesses);
                                     break;
                                 } catch (Exception e) {
                                     System.out.println("Nothing to undo!!");
@@ -72,6 +71,7 @@ public class Main {
                         break;
                     }
                     System.out.println("Congrats you did it!!!");
+                    player.printDetails();
                     exit = true;
                     break;
 
@@ -88,7 +88,7 @@ public class Main {
                     exit = true;
                     break;
                 default:
-                    System.out.print("command not found, use 'help' for a list of commands");
+                    System.out.println("command not found, use 'help' for a list of commands");
                     System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
                     input = inputReader.nextLine();
                     break;

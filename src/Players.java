@@ -18,13 +18,13 @@ public class Players extends Cryptogram {
         FileWriter writing = null;
         try {
             Scanner input = new Scanner(file);
-            writing = new FileWriter(file,true);
+            writing = new FileWriter(file, true);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
 
 
             System.out.println("Please enter your unique username");
-            String username= scan.nextLine();
+            String username = scan.nextLine();
 
             //Checks if username already exists
             while (input.hasNext()) {
@@ -36,20 +36,19 @@ public class Players extends Cryptogram {
             }
 
 
-
             //Checks if players file is empty before writing to a new line
-            if(line==null){
-                writing.append( 0 +" "+username + " "+0.0+" " + 0 +" "+0+" "+0);
-            }else {
-                int amountOfPlayers=1;
+            if (line == null) {
+                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+            } else {
+                int amountOfPlayers = 1;
                 loadPlayers();
 
-                for(int i = 1; i<players.size();i++){
+                for (int i = 1; i < players.size(); i++) {
                     amountOfPlayers++;
 
                 }
                 System.out.println(amountOfPlayers);
-                writing.append("\n" +amountOfPlayers+ " "+ username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+                writing.append("\n" + amountOfPlayers + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
             }
             writing.close();
 
@@ -57,8 +56,6 @@ public class Players extends Cryptogram {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
 
     }
@@ -80,13 +77,14 @@ public class Players extends Cryptogram {
 
                 int totalGuesses = input.nextInt();
 
-                int cryptogramsPlayed =input.nextInt();
+                int cryptogramsPlayed = input.nextInt();
 
                 int cryptogramsCompleted = input.nextInt();
 
+                int numCorrectGuesses = input.nextInt();
 
 
-                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted));
+                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
 
 
             }
@@ -117,13 +115,13 @@ public class Players extends Cryptogram {
 
                 int totalGuesses = input.nextInt();
 
-                int cryptogramsPlayed =input.nextInt();
+                int cryptogramsPlayed = input.nextInt();
 
                 int cryptogramsCompleted = input.nextInt();
 
+                int numCorrectGuesses = input.nextInt();
 
-
-                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted));
+                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
 
 
             }
@@ -132,21 +130,21 @@ public class Players extends Cryptogram {
         } catch (InputMismatchException | FileNotFoundException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
         }
-        for(int i = 0; i<players.size();i++){
-            System.out.println(i + " "+players.get(i).getUsername() + " "+players.get(i).getAccuracy()+ " "+players.get(i).getTotalGuesses()+ " "+players.get(i).getCryptogramsPlayed()+ " "+players.get(i).getCryptogramsCompleted());
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsPlayed() + " " + players.get(i).getCryptogramsCompleted());
         }
 
 
     }
 
     //loads player based on id(line number)
-    public static String loadPlayer(int id ) {
+    public static String loadPlayer(int id) {
         loadPlayers();
         String playerInfo = null;
         Scanner input;
 
         //Checks for valid id
-        if(id > players.size() || id<0) {
+        if (id > players.size() || id < 0) {
             System.out.println("Sorry, that id is invalid.");
             return playerInfo;
         }
@@ -167,15 +165,14 @@ public class Players extends Cryptogram {
     }
 
 
-
     //displays player based on id(line number)
-    public static void displayPlayer(int id ) {
+    public static void displayPlayer(int id) {
         loadPlayers();
         String playerInfo = null;
         Scanner input;
 
         //Checks for valid id
-        if(id > players.size() || id<0) {
+        if (id > players.size() || id < 0) {
             System.out.println("Sorry, that id is invalid.");
 
         }
