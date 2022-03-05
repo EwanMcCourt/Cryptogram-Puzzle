@@ -10,6 +10,7 @@ public class Game {
         Encrypted.printDetails();
         System.out.println(Encrypted.getFrequencies());
         enterLetter(Encrypted);
+
     }
 
     static ArrayList<String> phrases = new ArrayList<String>();
