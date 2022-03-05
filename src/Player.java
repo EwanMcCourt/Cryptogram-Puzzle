@@ -1,4 +1,5 @@
 public class Player {
+    static int idVal;
 
     private int numCorrectGuesses;
     private int id;
@@ -8,13 +9,29 @@ public class Player {
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
-    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted, int numCorrectGuesses) {
-        setUsername(username);
-        updateAccuracy(accuracy);
-        updateTotalGuesses(totalGuesses);
-        incrementCryptogramsCompleted(cryptogramsCompleted);
-        incrementCryptogramsPlayed(cryptogramsPlayed);
+    public Player(String username){
+        try{
+            idVal++;
+        }
+        catch(NullPointerException e){
+            idVal = 1;
+        }
+        this.id = idVal;
+        this.username = username;
+        this.totalGuesses = 0;
+        this.cryptogramsPlayed = 0;
+        this.cryptogramsCompleted = 0;
+    }
 
+    //for hard coding player
+    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted, int numCorrectGuesses) {
+        this.id = id;
+        this.username = username;
+        this.accuracy = accuracy;
+        this.totalGuesses = totalGuesses;
+        this.cryptogramsPlayed = cryptogramsPlayed;
+        this.cryptogramsCompleted = cryptogramsCompleted;
+        this.numCorrectGuesses = numCorrectGuesses;
     }
 
     public int getId() {
