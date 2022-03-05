@@ -7,10 +7,10 @@ public class Player {
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
-    public Player(int id,String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted) {
+    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted) {
         setUsername(username);
         updateAccuracy(accuracy);
-        incrementTotalGuesses(totalGuesses);
+        updateTotalGuesses(totalGuesses);
         incrementCryptogramsCompleted(cryptogramsCompleted);
         incrementCryptogramsPlayed(cryptogramsPlayed);
     }
@@ -18,45 +18,50 @@ public class Player {
     public int getId() {
         return this.id;
     }
-    public void setId(int id){
-        this.id=id;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
-    public void setUsername(String username){
-        this.username=username;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public double getAccuracy(){
+    public double getAccuracy() {
         return this.accuracy;
     }
-    public void updateAccuracy(double accuracy){
-        this.accuracy=accuracy;
+
+    public void updateAccuracy(double accuracy) {
+        this.accuracy = accuracy;
     }
 
-    public int getTotalGuesses(){
+    public int getTotalGuesses() {
         return this.totalGuesses;
     }
-    public void incrementTotalGuesses(int totalGuesses){
-        this.totalGuesses =totalGuesses;
+
+    public void updateTotalGuesses(int totalGuesses) {
+        this.totalGuesses = totalGuesses;
     }
 
-    public int getCryptogramsPlayed(){
+    public int getCryptogramsPlayed() {
         return this.cryptogramsPlayed;
     }
-    public void incrementCryptogramsPlayed(int cryptogramsPlayed){
-        this.cryptogramsPlayed =cryptogramsPlayed;
+
+    public void incrementCryptogramsPlayed(int cryptogramsPlayed) {
+        this.cryptogramsPlayed = cryptogramsPlayed;
     }
 
-    public int getCryptogramsCompleted(){
+    public int getCryptogramsCompleted() {
         return this.cryptogramsCompleted;
     }
-    public void incrementCryptogramsCompleted(int cryptogramsCompleted){
-        this.cryptogramsCompleted =cryptogramsCompleted;
-    }
 
+    public void incrementCryptogramsCompleted(int cryptogramsCompleted) {
+        this.cryptogramsCompleted = cryptogramsCompleted;
+    }
 
 
 }
