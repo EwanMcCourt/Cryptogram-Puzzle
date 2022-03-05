@@ -52,11 +52,14 @@ public class Game {
 
 
     static String[] undoLetter(Cryptogram encrypted, Player player) {
-
-        int removing = encrypted.posGuess.get(encrypted.posGuess.size() - 1);
+        for (int i : encrypted.posGuess) {
+            System.out.println(i);
+        }
+        int removing = encrypted.posGuess.get(encrypted.posGuess.size()-1);
         System.out.println("You removed" + encrypted.guesses[getKeyByValue(encrypted.labeledMap, String.valueOf(removing))] + " at " + removing);
         encrypted.guesses[getKeyByValue(encrypted.labeledMap, String.valueOf(removing))] = " ?";
-        //encrypted.posGuess.remove(encrypted.posGuess.size());
+        encrypted.posGuess.remove(encrypted.posGuess.size()-1);
+        //System.out.println(encrypted.posGuess.get(0));
         if (player.getTotalGuesses() < 0) {
             player.updateTotalGuesses(0);
         } else {
