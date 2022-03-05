@@ -8,27 +8,28 @@ public class Cryptogram {
     String fullEncrypt;
     String[] guesses;
     HashMap<Integer, String> labeledMap = new HashMap<Integer, String>();
-    public Cryptogram(){
-        phrase = Game.callPhrase();
+    ArrayList<Integer> posGuess;
+    String parsedGuesses;
 
-        char[] charArray; // used to store the phrase as a char array and used in loops
+    public Cryptogram() {
+        phrase = Game.callPhrase();
+        posGuess = new ArrayList<Integer>();
+        guesses = new String[phrase.length()];
+        parsedGuesses = null;
         int current; //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26); // a int that the phrase will be shifted by
-        charArray = phrase.toCharArray();
         HashMap<Character, Character> cryptogramAlphabet = new HashMap<Character, Character>();
         int label = 1;
-        char[] result = new char[charArray.length];
-        for (int i = 0; i < charArray.length; i++) {
+        char[] result = new char[phrase.length()];
+        for (int i = 0; i < phrase.length(); i++) {
             current = phrase.charAt(i); //sets the current ascii value
             if (phrase.charAt(i) == ' ') {
                 labeledMap.put(i, " ");
-
             } else {
                 String lable2 = String.valueOf(label);
                 if (lable2.length() == 1) {
                     lable2 = " " + lable2;
-
                 }
                 labeledMap.put(i, lable2);
                 label++;
@@ -40,10 +41,7 @@ public class Cryptogram {
                 current = (current + shift);
                 if (current > 122) { //checks for ascii values past 122 (z) and then wraps them round
                     current = current - 26;
-
-
                 }
-
                 char alphabet = (char) 97;
                 int changed;
                 for (int j = 0; j < 26; j++) {
@@ -58,15 +56,17 @@ public class Cryptogram {
                 result[i] = (char) current;
                 Character original = phrase.charAt(i);
             }
-
         }
-
         fullEncrypt = new String(result);
         System.out.println(fullEncrypt);
+        for (int i = 0; i < phrase.length(); i++) {
+            if (phrase.charAt(i) == ' ') {
+                guesses[i] = " ";
+            } else {
+                guesses[i] = " ?";
+            }
+        }
     }
-
-
-
 
     void printDetails() {
         System.out.println("phrase is " + phrase);
@@ -94,10 +94,6 @@ public class Cryptogram {
                 frequencies.put(fullEncrypt.charAt(i), total + 1);
             }
         }
-
-
         return frequencies;
     }
-
-
 }

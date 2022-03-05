@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -21,16 +22,66 @@ public class Main {
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
         Scanner inputReader = new Scanner(System.in);
         String input = inputReader.nextLine();
-        while (!input.equals("exit")) {
-            input = inputReader.nextLine();
+        boolean exit = false;
+        while (exit == false) {
             switch (input) {
                 case "new":
+                    Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0);
+                    Cryptogram encrypted = Game.generateCryptogram();
+                    encrypted.printDetails();
+                    //System.out.println(Encrypted.getFrequencies());
+                    while (!Objects.equals(encrypted.parsedGuesses, encrypted.phrase) && exit == false) {
+                        System.out.println("Do you want to add a guess or undo a guess?");
+                        input = inputReader.nextLine();
+                        switch (input) {
+                            case "guess":
+                                Game.currentSol(encrypted, player);
+                                encrypted.guesses = Game.enterLetter(encrypted, player);
+                                Game.currentSol(encrypted, player);
+                                encrypted.parsedGuesses = Game.parseInput(encrypted);
+                                System.out.println(encrypted.parsedGuesses);
+                                break;
+                            case "undo":
+                                Game.currentSol(encrypted, player);
+                                try {
+                                    encrypted.guesses = Game.undoLetter(encrypted, player);
+                                    Game.currentSol(encrypted, player);
+                                    encrypted.parsedGuesses = Game.parseInput(encrypted);
+                                    System.out.println(encrypted.parsedGuesses);
+                                    break;
+                                } catch (Exception e) {
+                                    System.out.println("Nothing to undo!!");
+                                    break;
+                                }
+                            case "help":
+                                //print out what each command does
+                                input = inputReader.nextLine();
+                                break;
+                            case "exit":
+                                exit = true;
+                                break;
+                            default:
+                                System.out.println("Not guess or undo, try again!");
+                                break;
+                        }
+                    }
+                    if (exit == true) {
+                        break;
+                    }
+                    System.out.println("Congrats you did it!!!");
+                    exit = true;
                     break;
+
                 case "help":
                     //print out what each command does
+                    input = inputReader.nextLine();
+                    break;
+                case "exit":
+                    exit = true;
                     break;
                 default:
                     System.out.print("command not found, use 'help' for a list of commands");
+                    input = inputReader.nextLine();
                     break;
             }
         }
