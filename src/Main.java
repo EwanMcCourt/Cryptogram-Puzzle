@@ -54,8 +54,11 @@ public class Main {
                                     break;
                                 }
                             case "help":
-                                //print out what each command does
-                                input = inputReader.nextLine();
+                                System.out.println("new - generates a new cryptogram");
+                                System.out.println("guess - begins a guess for the cryptogram");
+                                System.out.println("undo - undos the last guess in the cryptogram");
+                                System.out.println("help - shows list of commands and their function");
+                                System.out.println("exit - exits the program");
                                 break;
                             case "exit":
                                 exit = true;
@@ -73,7 +76,12 @@ public class Main {
                     break;
 
                 case "help":
-                    //print out what each command does
+                    System.out.println("new - generates a new cryptogram");
+                    System.out.println("guess - begins a guess for the cryptogram");
+                    System.out.println("undo - undos the last guess in the cryptogram");
+                    System.out.println("help - shows list of commands and their function");
+                    System.out.println("exit - exits the program");
+                    System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
                     input = inputReader.nextLine();
                     break;
                 case "exit":
@@ -81,6 +89,7 @@ public class Main {
                     break;
                 default:
                     System.out.print("command not found, use 'help' for a list of commands");
+                    System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
                     input = inputReader.nextLine();
                     break;
             }
