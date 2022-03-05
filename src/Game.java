@@ -14,23 +14,29 @@ public class Game {
     }
 
 
-    static String callPhrase() {
+    static String callPhrase(String fileName) {
         try {
-            long lines = Files.lines(Path.of("./src/phrases.txt")).count(); //gets number of lines in file
-            BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
+            long lines = Files.lines(Path.of(fileName)).count(); //gets number of lines in file
+            if (lines == 0){
+                System.out.print("Error, no phrase file!");
+                System.exit(0);
+                return null;
+            }
+            BufferedReader phraseReader = new BufferedReader(new FileReader(fileName));
             int random = new Random().nextInt((int) lines); //line to read from is chosen
             for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
             String phrase = phraseReader.readLine(); //set phrase to line in file
             return phrase;
         } catch (IOException e) {
             System.out.print("Error, no phrase file!");
+            System.exit(0);
             return null;
         }
     }
 
 
     static Cryptogram generateCryptogram() {
-        Cryptogram generated = new Cryptogram();
+        Cryptogram generated = new Cryptogram("./src/phrases.txt");
         return generated;
     }
 

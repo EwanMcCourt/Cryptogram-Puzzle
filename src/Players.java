@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Players extends Cryptogram {
+public class Players  {
     static List<Player> players = new ArrayList<>();
     static File file = new File("PlayerInfo.txt");
 

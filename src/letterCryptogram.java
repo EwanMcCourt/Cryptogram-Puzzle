@@ -1,4 +1,4 @@
-public class letterCryptogram extends Cryptogram {
+public class letterCryptogram  {
 
 
 

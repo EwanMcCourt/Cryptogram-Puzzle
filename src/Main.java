@@ -4,6 +4,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
+
+
     public static void main(String[] args) throws FileNotFoundException {
         /*
         //for testing - prints cryptogram of both types
@@ -16,6 +18,7 @@ public class Main {
         catch(IOException e) {
             System.out.println("file not found");
         }
+
         */
 
         //user command interface
@@ -30,7 +33,7 @@ public class Main {
                     Cryptogram encrypted = Game.generateCryptogram();
                     encrypted.printDetails();
                     //System.out.println(Encrypted.getFrequencies());
-                    while (!Objects.equals(encrypted.parsedGuesses, encrypted.phrase) && exit == false) {
+                    while (!Objects.equals(encrypted.parsedGuesses, encrypted.phrase) && exit == false ) {
                         System.out.println("Do you want to add a guess or undo a guess?");
                         input = inputReader.nextLine();
                         switch (input) {
@@ -66,7 +69,9 @@ public class Main {
                                 System.out.println("Not guess or undo, try again!");
                                 break;
                         }
+
                     }
+
                     if (exit == true) {
                         break;
                     }
@@ -96,4 +101,5 @@ public class Main {
         }
 
     }
+
 }

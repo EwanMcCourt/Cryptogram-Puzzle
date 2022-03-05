@@ -1,4 +1,4 @@
-public class numberCryptogram extends Cryptogram {
+public class numberCryptogram  {
 
 
     numberCryptogram testing = new numberCryptogram();

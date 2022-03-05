@@ -11,8 +11,8 @@ public class Cryptogram {
     ArrayList<Integer> posGuess;
     String parsedGuesses;
 
-    public Cryptogram() {
-        phrase = Game.callPhrase();
+    public Cryptogram(String fileName) {
+        phrase = Game.callPhrase(fileName);
         posGuess = new ArrayList<Integer>();
         guesses = new String[phrase.length()];
         parsedGuesses = null;
