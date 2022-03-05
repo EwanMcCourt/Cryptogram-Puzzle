@@ -9,16 +9,16 @@ import java.util.HashMap;
 
 public class Cryptogram {
     String phrase;
-    HashMap<Character, Character> cryptogramAlphabet = new HashMap<Character, Character>();
+    HashMap<Character, Character> cryptogramAlphabet = new HashMap<>();
     String fullEncrypt;
     String[] guesses;
-    HashMap<Integer, String> labeledMap = new HashMap<Integer, String>();
+    HashMap<Integer, String> labeledMap = new HashMap<>();
     ArrayList<Integer> posGuess;
     String parsedGuesses;
 
     public Cryptogram() {
         phrase = callPhrase();
-        posGuess = new ArrayList<Integer>();
+        posGuess = new ArrayList<>();
         guesses = new String[phrase.length()];
         parsedGuesses = null;
         int current; //the ascii value that is eventually shifted
@@ -71,6 +71,15 @@ public class Cryptogram {
             } else {
                 guesses[i] = " ?";
             }
+        }
+    }
+
+    static Cryptogram newCryptogram(String type){
+        if (type.equals("yes")){
+            return new numberCryptogram();
+        }
+        else {
+            return new letterCryptogram();
         }
     }
 

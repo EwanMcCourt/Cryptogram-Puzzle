@@ -12,8 +12,8 @@ public class Game {
     private Cryptogram encrypted;
     private Player currentPlayer;
 
-    public Game (Player player){
-        this.encrypted = new Cryptogram();
+    public Game (Player player, String type){
+        this.encrypted = Cryptogram.newCryptogram(type);
         this.currentPlayer = player;
         try {
             playerGameMapping.put(this, player);
@@ -61,6 +61,75 @@ public class Game {
                 toConform = true;
                 break;
             }}
+        }
+        if(toConform){
+            System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
+            conform = object.next();
+        }
+        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+
+                if (!Objects.equals(encrypted.guesses[i], " ?")) {
+                    if (Objects.equals(conform, "yes")) {
+                        for (int j = 0; j < encrypted.fullEncrypt.length(); j++) {
+                            if (targetChar[0] == encrypted.fullEncrypt.charAt(j)) {
+                                encrypted.guesses[j] = " " + guess;
+                                currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
+                                char[] guessChar = guess.trim().toCharArray();
+                                if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
+                                    currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
+                                }
+                            }
+                        }
+                    } else {
+                        //break;
+                    }
+                } else {
+                    encrypted.guesses[i] = " " + guess;
+                    currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
+                    char[] guessChar = guess.trim().toCharArray();
+                    if (encrypted.cryptogramAlphabet.get(guessChar[0]) == targetChar[0]) {
+                        currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
+                    }
+                }
+            }
+        }
+        return encrypted.guesses;
+    }
+
+    public String[] enterLetterNum() {
+        Scanner object = new Scanner(System.in);
+        String target;
+        String guess;
+        System.out.println("What letter do you want to guess?");
+        target = object.next();
+        if (target.length() > 1) {
+            System.out.println("That's multiple letters.");
+            System.out.println("What letter do you want to guess?");
+            target = object.next();
+        }
+        char[] targetChar = target.toCharArray();
+        System.out.println("What is your guess?");
+        guess = object.next();
+        if (guess.length() > 1) {
+            System.out.println("Your guess is too long!!");
+            System.out.println("What is your guess?");
+            guess = object.next();
+        }
+        for (int i = 0; i < encrypted.phrase.length(); i++) {
+            if ((" " + guess).equals(encrypted.guesses[i])) {
+                System.out.println("Error this letter has already been mapped");
+                return encrypted.guesses;
+            }
+        }
+        String conform = null;
+        boolean toConform = false;
+        for (int i = 0; i < encrypted.phrase.length(); i++) {
+            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+                if (!Objects.equals(encrypted.guesses[i], " ?")) {
+                    toConform = true;
+                    break;
+                }}
         }
         if(toConform){
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
