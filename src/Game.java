@@ -59,11 +59,22 @@ public class Game {
                 return encrypted.guesses;
             }
         }
+        String conform = null;
+        boolean toConform = false;
+        for (int i = 0; i < encrypted.phrase.length(); i++) {
+            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+            if (!Objects.equals(encrypted.guesses[i], " ?")) {
+                toConform = true;
+                break;
+            }}
+        }
+        if(toConform){
+            System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
+            conform = object.next();
+        }
         for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
             if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
-                if (encrypted.guesses[i] != " ?") {
-                    System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
-                    String conform = object.next();
+                if (!Objects.equals(encrypted.guesses[i], " ?")) {
                     if (Objects.equals(conform, "yes")) {
                         for (int j = 0; j < encrypted.fullEncrypt.length(); j++) {
                             if (targetChar[0] == encrypted.fullEncrypt.charAt(j)) {
@@ -76,7 +87,7 @@ public class Game {
                             }
                         }
                     } else {
-                        break;
+                        //break;
                     }
                 } else {
                     encrypted.guesses[i] = " " + guess;
@@ -155,4 +166,5 @@ public class Game {
         String returned = String.join("", temp);
         return returned;
     }
+
 }
