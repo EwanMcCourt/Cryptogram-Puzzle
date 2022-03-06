@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class numberCryptogram extends Cryptogram {
-    static boolean isLetter = false;
-
     private ArrayList<String> numbers;
     private HashMap<Character, String> cryptogramAlphabet;
 
+
     public numberCryptogram(){
+        this.isLetter = false;
         this.phrase = callPhrase();
         this.numbers = new ArrayList<>();
         for (Integer i = 1; i <= 26; i++){
@@ -54,8 +54,7 @@ public class numberCryptogram extends Cryptogram {
             }
         }
 
-        fullEncrypt = Arrays.toString(result);
-
+        fullEncryptNum = result;
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
                 guesses[i] = " ";

@@ -1,11 +1,11 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class letterCryptogram extends Cryptogram {
 
-    static boolean isLetter = true;
-
     public letterCryptogram() {
+        this.isLetter = true;
         phrase = callPhrase();
         posGuess = new ArrayList<Integer>();
         guesses = new String[phrase.length()];
@@ -47,7 +47,7 @@ public class letterCryptogram extends Cryptogram {
             if (changed > 122) { //checks for ascii values past 122 (z) and then wraps them round
                 changed = changed - 26;
             }
-            cryptogramAlphabet.put(alphabet, (char) changed);
+            cryptogramAlphabet.put(alphabet, Character.toString((char) changed));
             alphabet++;
         }
 

@@ -22,7 +22,7 @@ public class GameTests {
 
     @Test
     public void checkIfRandom() {
-        Cryptogram encrypted = new Cryptogram();
+        Cryptogram encrypted = Cryptogram.newCryptogram("");
 
 
         for (int i = 0; i < encrypted.phrase.length(); i++) {
