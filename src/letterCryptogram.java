@@ -41,7 +41,9 @@ public class letterCryptogram extends Cryptogram {
 
 
         fullEncrypt = result;
-        System.out.println(fullEncrypt);
+        for(int i = 0; i < phrase.length(); i++){
+        System.out.print(fullEncrypt[i]);}
+        System.out.println();
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
                 guesses[i] = " ";
