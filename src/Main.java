@@ -27,12 +27,7 @@ public class Main {
                         switch (input) {
                             case "guess":
                                 game.currentSol();
-                                if (!game.getEncrypted().isLetter) {
-                                    game.getEncrypted().guesses = game.enterLetterNum();
-                                }
-                                else {
-                                    game.getEncrypted().guesses = game.enterLetter();
-                                }
+                                game.getEncrypted().guesses = game.enterLetter();
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
