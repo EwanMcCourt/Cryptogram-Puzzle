@@ -152,8 +152,6 @@ public class Game {
         for (int i = 0; i < encrypted.guesses.length; i++) {
             if (encrypted.guesses[i] == " ") {
                 temp[i] = encrypted.guesses[i];
-
-
             } else {
                 temp[i] = encrypted.guesses[i].trim();
             }
@@ -161,5 +159,4 @@ public class Game {
         String returned = String.join("", temp);
         return returned;
     }
-
 }

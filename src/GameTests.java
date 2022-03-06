@@ -23,8 +23,6 @@ public class GameTests {
     @Test
     public void checkIfRandom() {
         Cryptogram encrypted = new Cryptogram();
-
-
         for (int i = 0; i < encrypted.phrase.length(); i++) {
 
             char current = encrypted.phrase.charAt(i);
@@ -37,5 +35,4 @@ public class GameTests {
             }
         }
     }
-
 }
