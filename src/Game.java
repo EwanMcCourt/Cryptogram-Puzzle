@@ -155,7 +155,6 @@ public class Game {
                 } else {
                     encrypted.guesses[i] = " " + guess;
                     currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
-                    char[] guessChar = guess.trim().toCharArray();
                     if (encrypted.cryptogramAlphabet.get(guess.charAt(0)) == target) {
                         currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
                     }
@@ -217,29 +216,29 @@ public class Game {
             for (int i = 0; i < encrypted.fullEncryptNum.length; i++) {
                 if (encrypted.fullEncryptNum[i].charAt(0) == ' ') {
                     System.out.print(encrypted.fullEncryptNum[i] + " ");
-                } else {
+                } else if (encrypted.fullEncryptNum[i].length()==2){
+                    System.out.print(encrypted.fullEncryptNum[i] + " ");
+                }
+                else {
                     System.out.print(" " + encrypted.fullEncryptNum[i] + " ");
                 }
             }
         }
         System.out.println();
-        int j = 0;
-        for (String label : encrypted.labeledMap.values()) {
-            System.out.print(label + " ");
-            if (!encrypted.isLetter && encrypted.fullEncryptNum[j].length() == 2){
-                System.out.print(" ");
+        int j = 1;
+        for (int i = 0; i < encrypted.phrase.length(); i++) {
+            if(!(encrypted.phrase.charAt(i) == ' ')) {
+                if (j < 10) {
+                    System.out.print(" " + j + " ");
+                }
+                else System.out.print(j + " ");
+                j++;
             }
-            if (!encrypted.isLetter && label.equals(" 9")){
-                System.out.print(" ");
-            }
-            j++;
+            else System.out.print("  ");
         }
         System.out.println();
         for (int i = 0; i < encrypted.guesses.length; i++) {
             System.out.print(encrypted.guesses[i] + " ");
-            if (!encrypted.isLetter && encrypted.fullEncryptNum[i].length() == 2){
-                System.out.print(" ");
-            }
         }
         System.out.println();
         System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times");

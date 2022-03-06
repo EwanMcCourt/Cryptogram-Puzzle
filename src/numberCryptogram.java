@@ -39,21 +39,6 @@ public class numberCryptogram extends Cryptogram {
             }
             else result[i] = " ";
         }
-        int label = 1;
-        for (int i = 0; i < phrase.length(); i++) {
-            if (phrase.charAt(i) == ' ') {
-                labeledMap.put(i, " ");
-            } else {
-                String lable2 = String.valueOf(label);
-
-                if (lable2.length() == 1) {
-                    lable2 = " " + lable2;
-                }
-                labeledMap.put(i, lable2);
-                label++;
-            }
-        }
-
         fullEncryptNum = result;
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {

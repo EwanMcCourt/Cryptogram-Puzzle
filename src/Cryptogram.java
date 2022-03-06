@@ -15,7 +15,6 @@ public class Cryptogram {
     String fullEncrypt;
     String[] fullEncryptNum;
     String[] guesses;
-    HashMap<Integer, String> labeledMap = new HashMap<>();
     ArrayList<Integer> posGuess;
     String parsedGuesses;
 

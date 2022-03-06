@@ -13,20 +13,9 @@ public class letterCryptogram extends Cryptogram {
         int current; //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26); // a int that the phrase will be shifted by
-        int label = 1;
         char[] result = new char[phrase.length()];
         for (int i = 0; i < phrase.length(); i++) {
             current = phrase.charAt(i); //sets the current ascii value
-            if (phrase.charAt(i) == ' ') {
-                labeledMap.put(i, " ");
-            } else {
-                String lable2 = String.valueOf(label);
-                if (lable2.length() == 1) {
-                    lable2 = " " + lable2;
-                }
-                labeledMap.put(i, lable2);
-                label++;
-            }
             if (phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
                 result[i] = (char) current;
                 continue;
@@ -38,7 +27,6 @@ public class letterCryptogram extends Cryptogram {
             }
 
             result[i] = (char) current;
-            Character original = phrase.charAt(i);
         }
         char alphabet = (char) 97;
         int changed;
