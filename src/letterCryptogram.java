@@ -13,11 +13,11 @@ public class letterCryptogram extends Cryptogram {
         int current; //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26); // a int that the phrase will be shifted by
-        char[] result = new char[phrase.length()];
+        String[] result = new String[phrase.length()];
         for (int i = 0; i < phrase.length(); i++) {
             current = phrase.charAt(i); //sets the current ascii value
             if (phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
-                result[i] = (char) current;
+                result[i] = Character.toString((char) current);
                 continue;
             } else {
                 current = (current + shift);
@@ -26,7 +26,7 @@ public class letterCryptogram extends Cryptogram {
                 }
             }
 
-            result[i] = (char) current;
+            result[i] = Character.toString((char) current);
         }
         char alphabet = (char) 97;
         int changed;
@@ -40,7 +40,7 @@ public class letterCryptogram extends Cryptogram {
         }
 
 
-        fullEncrypt = new String(result);
+        fullEncrypt = result;
         System.out.println(fullEncrypt);
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {

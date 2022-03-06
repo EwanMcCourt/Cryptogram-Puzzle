@@ -26,11 +26,9 @@ public class Main {
                         input = inputReader.nextLine();
                         switch (input) {
                             case "guess":
-                                System.out.println(game.getEncrypted().isLetter);
                                 game.currentSol();
                                 if (!game.getEncrypted().isLetter) {
                                     game.getEncrypted().guesses = game.enterLetterNum();
-                                    System.out.println("hi");
                                 }
                                 else {
                                     game.getEncrypted().guesses = game.enterLetter();

@@ -27,8 +27,8 @@ public class GameTests {
 
         for (int i = 0; i < encrypted.phrase.length(); i++) {
 
-            char current = encrypted.phrase.charAt(i);
-            char current2 = encrypted.fullEncrypt.charAt(i);
+            String current = Character.toString(encrypted.phrase.charAt(i));
+            String current2 = encrypted.fullEncrypt[i];
             if (encrypted.phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
 
             } else {

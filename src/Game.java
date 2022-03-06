@@ -56,7 +56,7 @@ public class Game {
         String conform = null;
         boolean toConform = false;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
-            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+            if (target.equals(encrypted.fullEncrypt[i])) {
             if (!Objects.equals(encrypted.guesses[i], " ?")) {
                 toConform = true;
                 break;
@@ -66,17 +66,17 @@ public class Game {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
             conform = object.next();
         }
-        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
-            if (targetChar[0] == encrypted.fullEncrypt.charAt(i)) {
+        for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
+            if (target.equals(encrypted.fullEncrypt[i])) {
 
                 if (!Objects.equals(encrypted.guesses[i], " ?")) {
                     if (Objects.equals(conform, "yes")) {
-                        for (int j = 0; j < encrypted.fullEncrypt.length(); j++) {
-                            if (targetChar[0] == encrypted.fullEncrypt.charAt(j)) {
+                        for (int j = 0; j < encrypted.fullEncrypt.length; j++) {
+                            if (target.equals(encrypted.fullEncrypt[i])) {
                                 encrypted.guesses[j] = " " + guess;
                                 currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
                                 char[] guessChar = guess.trim().toCharArray();
-                                if (encrypted.cryptogramAlphabet.get(guessChar[0]) == target) {
+                                if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
                                     currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
                                 }
                             }
@@ -88,7 +88,7 @@ public class Game {
                     encrypted.guesses[i] = " " + guess;
                     currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
                     char[] guessChar = guess.trim().toCharArray();
-                    if (encrypted.cryptogramAlphabet.get(guessChar[0]) == target) {
+                    if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
                         currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
                     }
                 }
@@ -126,7 +126,7 @@ public class Game {
         boolean toConform = false;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
 
-            if (target.equals(encrypted.fullEncryptNum[i])) {
+            if (target.equals(encrypted.fullEncrypt[i])) {
                 if (!Objects.equals(encrypted.guesses[i], " ?")) {
                     toConform = true;
                     break;
@@ -136,13 +136,13 @@ public class Game {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
             conform = object.next();
         }
-        for (int i = 0; i < encrypted.fullEncryptNum.length; i++) {
-            if (target.equals(encrypted.fullEncryptNum[i])) {
+        for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
+            if (target.equals(encrypted.fullEncrypt[i])) {
 
                 if (!Objects.equals(encrypted.guesses[i], " ?")) {
                     if (Objects.equals(conform, "yes")) {
-                        for (int j = 0; j < encrypted.fullEncryptNum.length; j++) {
-                            if (target.equals(encrypted.fullEncryptNum[j])) {
+                        for (int j = 0; j < encrypted.fullEncrypt.length; j++) {
+                            if (target.equals(encrypted.fullEncrypt[j])) {
                                 encrypted.guesses[j] = " " + guess;
                                 currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
                                 char[] guessChar = guess.trim().toCharArray();
@@ -170,7 +170,7 @@ public class Game {
         String remove = reader.next();
         boolean exists = false;
         if (encrypted.isLetter) {
-            for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+            for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
                 if ((" " + remove).equals(encrypted.guesses[i])) {
                     encrypted.guesses[i] = " ?";
                     exists = true;
@@ -178,7 +178,7 @@ public class Game {
             }
         }
         else{
-            for (int i = 0; i < encrypted.fullEncryptNum.length; i++) {
+            for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
                 if ((" " + remove).equals(encrypted.guesses[i])) {
                     encrypted.guesses[i] = " ?";
                     exists = true;
@@ -204,23 +204,23 @@ public class Game {
 
     public void currentSol() {
         try {
-            for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
-                if (encrypted.fullEncrypt.charAt(i) == ' ') {
-                    System.out.print(encrypted.fullEncrypt.charAt(i) + " ");
+            for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
+                if (encrypted.fullEncrypt[i].charAt(0) == ' ') {
+                    System.out.print(encrypted.fullEncrypt[i] + " ");
                 } else {
-                    System.out.print(" " + encrypted.fullEncrypt.charAt(i) + " ");
+                    System.out.print(" " + encrypted.fullEncrypt[i] + " ");
                 }
             }
         }
         catch (NullPointerException e){
-            for (int i = 0; i < encrypted.fullEncryptNum.length; i++) {
-                if (encrypted.fullEncryptNum[i].charAt(0) == ' ') {
-                    System.out.print(encrypted.fullEncryptNum[i] + " ");
-                } else if (encrypted.fullEncryptNum[i].length()==2){
-                    System.out.print(encrypted.fullEncryptNum[i] + " ");
+            for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
+                if (encrypted.fullEncrypt[i].charAt(0) == ' ') {
+                    System.out.print(encrypted.fullEncrypt[i] + " ");
+                } else if (encrypted.fullEncrypt[i].length()==2){
+                    System.out.print(encrypted.fullEncrypt[i] + " ");
                 }
                 else {
-                    System.out.print(" " + encrypted.fullEncryptNum[i] + " ");
+                    System.out.print(" " + encrypted.fullEncrypt[i] + " ");
                 }
             }
         }

@@ -39,7 +39,7 @@ public class numberCryptogram extends Cryptogram {
             }
             else result[i] = " ";
         }
-        fullEncryptNum = result;
+        fullEncrypt = result;
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
                 guesses[i] = " ";

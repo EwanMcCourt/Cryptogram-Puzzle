@@ -12,8 +12,7 @@ public class Cryptogram {
 
     String phrase;
     HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
-    String fullEncrypt;
-    String[] fullEncryptNum;
+    String[] fullEncrypt;
     String[] guesses;
     ArrayList<Integer> posGuess;
     String parsedGuesses;
@@ -40,23 +39,23 @@ public class Cryptogram {
         System.out.println("]");
     }
 
-    HashMap<Character, Integer> getFrequencies() {
-        HashMap<Character, Integer> frequencies = new HashMap<Character, Integer>();
-        char[] charArray = fullEncrypt.toCharArray();
+    HashMap<String, Integer> getFrequencies() {
+        HashMap<String, Integer> frequencies = new HashMap<>();
+        String[] charArray = fullEncrypt;
         for (int i = 0; i < charArray.length; i++) {
-            if (fullEncrypt.charAt(i) == ' ') {
+            if (fullEncrypt[i].charAt(0) == ' ') {
                 continue;
             } else {
-                frequencies.put(fullEncrypt.charAt(i), 0);
+                frequencies.put(fullEncrypt[i], 0);
             }
         }
         for (int i = 0; i < charArray.length; i++) {
             int total;
-            if (fullEncrypt.charAt(i) == ' ') {
+            if (fullEncrypt[i].charAt(0) == ' ') {
                 continue;
             } else {
-                total = frequencies.get(fullEncrypt.charAt(i));
-                frequencies.put(fullEncrypt.charAt(i), total + 1);
+                total = frequencies.get(fullEncrypt[i]);
+                frequencies.put(fullEncrypt[i], total + 1);
             }
         }
         return frequencies;
