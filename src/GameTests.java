@@ -1,5 +1,4 @@
 import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.util.Objects;
 
 
 import static org.junit.Assert.*;
-
 
 public class GameTests {
 
