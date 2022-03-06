@@ -1,10 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
+
 
         //user command interface
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
@@ -13,8 +15,11 @@ public class Main {
         while (!input.equals("exit")) {
             switch (input) {
                 case "new":
+                    System.out.println("Would you like to play a number cryptogram?" );
+                    System.out.println("(Defaults to letter cryptogram)" );
+                    input = inputReader.nextLine();
                     Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
-                    Game game = new Game(player);
+                    Game game = new Game(player, input);
                     game.getEncrypted().printDetails();
                     while (!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit")) {
                         System.out.println("Do you want to add a guess or undo a guess?");
@@ -22,7 +27,12 @@ public class Main {
                         switch (input) {
                             case "guess":
                                 game.currentSol();
-                                game.getEncrypted().guesses = game.enterLetter();
+                                if (!game.getEncrypted().isLetter) {
+                                    game.getEncrypted().guesses = game.enterLetterNum();
+                                }
+                                else {
+                                    game.getEncrypted().guesses = game.enterLetter();
+                                }
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());

@@ -14,7 +14,7 @@ public class GameTests {
 
     @Test
     public void testNotNull() {
-        Game game = new Game(new Player("test"));
+        Game game = new Game(new Player("test"), "letter");
         assertNotNull(game);
         assertNotNull(game.getEncrypted());
         assertNotNull(Game.playerGameMapping);
@@ -22,11 +22,13 @@ public class GameTests {
 
     @Test
     public void checkIfRandom() {
-        Cryptogram encrypted = new Cryptogram();
+        Cryptogram encrypted = Cryptogram.newCryptogram("");
+
+
         for (int i = 0; i < encrypted.phrase.length(); i++) {
 
-            char current = encrypted.phrase.charAt(i);
-            char current2 = encrypted.fullEncrypt.charAt(i);
+            String current = Character.toString(encrypted.phrase.charAt(i));
+            String current2 = encrypted.fullEncrypt[i];
             if (encrypted.phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
 
             } else {
