@@ -162,18 +162,93 @@ public class acceptanceTests {
         }
             }
         }
-
         @Test
-            public void testMain() throws IOException {
-                System.out.println("main");
-                String[] args = null;
-                Main test = new Main();
-                test.main(args);
+            public void checkFailingCryptogram(){
+
 
 
 
         }
+        @Test
+        public void checkLetterNotInCryptogram(){
+            Cryptogram encrypted = Game.generateCryptogram();
+            Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+            String letters = "abcdefghijklmnopqrstuvwxyz";
+            char currGuess = 'a';
 
+            for (int i =0; i<26; i++){
+                if (encrypted.fullEncrypt.contains("" + letters.charAt(i)) == false){
+                    currGuess = letters.charAt(i);
+                }
+            }
+
+            InputStream savedStandardInputStream = System.in;
+            String simulatedUserInput = currGuess + System.getProperty("line.separator")
+                    + "f" + System.getProperty("line.separator");
+
+
+            System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+            encrypted.guesses = Game.enterLetter(encrypted, testPlayer);
+            System.setIn(savedStandardInputStream);
+            Game.currentSol(encrypted, testPlayer);
+
+        }
+    @Test
+    public void checkUndoLetter(){
+        Cryptogram encrypted = Game.generateCryptogram();
+        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+
+
+        InputStream savedStandardInputStream = System.in;
+        String simulatedUserInput = String.valueOf(encrypted.fullEncrypt.charAt(0)) + System.getProperty("line.separator")
+                + "e" + System.getProperty("line.separator");
+
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+        String[] testResult = Game.enterLetter(encrypted, testPlayer );
+        System.setIn(savedStandardInputStream);
+
+        Game.currentSol(encrypted, testPlayer);
+        testPlayer.printDetails();
+
+        savedStandardInputStream = System.in;
+        simulatedUserInput = "e" + System.getProperty("line.separator");
+
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+        testResult = Game.undoLetter(encrypted, testPlayer );
+        System.setIn(savedStandardInputStream);
+
+        Game.currentSol(encrypted, testPlayer);
+        testPlayer.printDetails();
+
+    }
+    @Test
+    public void checkUndoLetterNotBeenMapped(){
+        Cryptogram encrypted = Game.generateCryptogram();
+        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+
+
+        InputStream savedStandardInputStream = System.in;
+        String simulatedUserInput = String.valueOf(encrypted.fullEncrypt.charAt(0)) + System.getProperty("line.separator")
+                + "e" + System.getProperty("line.separator");
+
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+        String[] testResult = Game.enterLetter(encrypted, testPlayer );
+        System.setIn(savedStandardInputStream);
+
+        Game.currentSol(encrypted, testPlayer);
+        testPlayer.printDetails();
+
+        savedStandardInputStream = System.in;
+        simulatedUserInput =  "d" + System.getProperty("line.separator");
+
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+        testResult = Game.undoLetter(encrypted, testPlayer );
+        System.setIn(savedStandardInputStream);
+
+        Game.currentSol(encrypted, testPlayer);
+        testPlayer.printDetails();
+
+    }
     }
 
 
