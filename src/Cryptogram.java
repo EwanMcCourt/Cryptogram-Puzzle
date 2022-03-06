@@ -47,13 +47,12 @@ public class Cryptogram {
                     current = current - 26;
                 }
             }
-
             result[i] = (char) current;
             Character original = phrase.charAt(i);
         }
         char alphabet = (char) 97;
         int changed;
-        for (int j = 0; j < 26; j++) {
+        for (int j = 0; j < 26; j++){
             changed = alphabet + shift;
             if (changed > 122) { //checks for ascii values past 122 (z) and then wraps them round
                 changed = changed - 26;
@@ -61,8 +60,6 @@ public class Cryptogram {
             cryptogramAlphabet.put(alphabet, (char) changed);
             alphabet++;
         }
-
-
         fullEncrypt = new String(result);
         System.out.println(fullEncrypt);
         for (int i = 0; i < phrase.length(); i++) {
