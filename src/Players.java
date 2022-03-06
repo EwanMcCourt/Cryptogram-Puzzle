@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Players  {
+public class Players {
     static List<Player> players = new ArrayList<>();
     static File file = new File("PlayerInfo.txt");
 
@@ -52,12 +52,9 @@ public class Players  {
             }
             writing.close();
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     //Currently, loads players unordered
@@ -85,16 +82,12 @@ public class Players  {
 
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
-
-
             }
             input.close();
 
         } catch (InputMismatchException | FileNotFoundException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
         }
-
-
         return players;
     }
 
@@ -122,8 +115,6 @@ public class Players  {
                 int numCorrectGuesses = input.nextInt();
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
-
-
             }
             input.close();
 
@@ -133,8 +124,6 @@ public class Players  {
         for (int i = 0; i < players.size(); i++) {
             System.out.println(i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsPlayed() + " " + players.get(i).getCryptogramsCompleted());
         }
-
-
     }
 
     //loads player based on id(line number)
@@ -148,18 +137,13 @@ public class Players  {
             System.out.println("Sorry, that id is invalid.");
             return playerInfo;
         }
-
         try {
             input = new Scanner(file);
             playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
             input.close();
-
         } catch (IOException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
-
-
         }
-
         System.out.println(playerInfo);
         return playerInfo;
     }
@@ -174,22 +158,14 @@ public class Players  {
         //Checks for valid id
         if (id > players.size() || id < 0) {
             System.out.println("Sorry, that id is invalid.");
-
         }
-
         try {
             input = new Scanner(file);
             playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
             input.close();
-
         } catch (IOException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
-
-
         }
-
         System.out.println(playerInfo);
-
     }
-
 }
