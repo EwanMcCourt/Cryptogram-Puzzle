@@ -203,7 +203,7 @@ public class Game {
 
 
     public void currentSol() {
-        try {
+        if (encrypted.isLetter){
             for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
                 if (encrypted.fullEncrypt[i].charAt(0) == ' ') {
                     System.out.print(encrypted.fullEncrypt[i] + " ");
@@ -212,7 +212,7 @@ public class Game {
                 }
             }
         }
-        catch (NullPointerException e){
+        else{
             for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
                 if (encrypted.fullEncrypt[i].charAt(0) == ' ') {
                     System.out.print(encrypted.fullEncrypt[i] + " ");
