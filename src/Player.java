@@ -51,7 +51,6 @@ public class Player {
     }
 
     public double getAccuracy() {
-
         return this.accuracy;
     }
 
@@ -61,7 +60,6 @@ public class Player {
 
     public void updatenumCorrectGuesses(int numCorrectGuesses) {
         this.numCorrectGuesses = numCorrectGuesses;
-
     }
 
     public int getnumCorrectGuesses() {
@@ -97,8 +95,5 @@ public class Player {
         System.out.println("Number of total guesses: " + getTotalGuesses());
         System.out.println("Number of right guesses: " + getnumCorrectGuesses());
         System.out.println("Accuracy: " + getAccuracy());
-
     }
-
-
 }
