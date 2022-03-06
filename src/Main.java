@@ -64,7 +64,6 @@ public class Main {
                         break;
                     }
                     break;
-
                 case "help":
                     System.out.println("new - generates a new cryptogram");
                     System.out.println("guess - begins a guess for the cryptogram");
