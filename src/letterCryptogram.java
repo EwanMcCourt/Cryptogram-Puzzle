@@ -25,7 +25,6 @@ public class letterCryptogram extends Cryptogram {
                     current = current - 26;
                 }
             }
-
             result[i] = Character.toString((char) current);
         }
         char alphabet = (char) 97;
@@ -38,8 +37,6 @@ public class letterCryptogram extends Cryptogram {
             cryptogramAlphabet.put(alphabet, Character.toString((char) changed));
             alphabet++;
         }
-
-
         fullEncrypt = result;
         for(int i = 0; i < phrase.length(); i++){
         System.out.print(fullEncrypt[i]);}
@@ -52,7 +49,4 @@ public class letterCryptogram extends Cryptogram {
             }
         }
     }
-
-
-
 }

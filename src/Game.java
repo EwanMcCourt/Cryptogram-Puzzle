@@ -166,8 +166,6 @@ public class Game {
         }
         System.out.println();
         System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times");
-
-
     }
 
     public String parseInput() {

@@ -46,10 +46,7 @@ public class numberCryptogram extends Cryptogram {
             } else {
                 guesses[i] = " ?";
             }
-        }
-
-        }
-
+        }}
 
     public void printDetails() {
         System.out.println("phrase is " + phrase);
@@ -69,7 +66,4 @@ public class numberCryptogram extends Cryptogram {
         }
         System.out.println("]");
     }
-
-
-
 }

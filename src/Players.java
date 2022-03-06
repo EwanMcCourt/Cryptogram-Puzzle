@@ -35,7 +35,6 @@ public class Players {
                 }
             }
 
-
             //Checks if players file is empty before writing to a new line
             if (line == null) {
                 writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
@@ -45,13 +44,11 @@ public class Players {
 
                 for (int i = 1; i < players.size(); i++) {
                     amountOfPlayers++;
-
                 }
                 System.out.println(amountOfPlayers);
                 writing.append("\n" + amountOfPlayers + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
             }
             writing.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +57,6 @@ public class Players {
     //Currently, loads players unordered
     public static List<Player> loadPlayers() {
         try {
-
 
             Scanner input = new Scanner(file);
 
@@ -94,7 +90,6 @@ public class Players {
     //Currently, displays players unordered
     public static void displayPlayers() {
         try {
-
 
             Scanner input = new Scanner(file);
 
@@ -147,7 +142,6 @@ public class Players {
         System.out.println(playerInfo);
         return playerInfo;
     }
-
 
     //displays player based on id(line number)
     public static void displayPlayer(int id) {
