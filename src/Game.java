@@ -170,10 +170,20 @@ public class Game {
         System.out.println("What guess are you unmapping?");
         String remove = reader.next();
         boolean exists = false;
-        for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
-            if ((" " + remove).equals(encrypted.guesses[i])) {
-                encrypted.guesses[i] = " ?";
-                exists = true;
+        if (encrypted.isLetter) {
+            for (int i = 0; i < encrypted.fullEncrypt.length(); i++) {
+                if ((" " + remove).equals(encrypted.guesses[i])) {
+                    encrypted.guesses[i] = " ?";
+                    exists = true;
+                }
+            }
+        }
+        else{
+            for (int i = 0; i < encrypted.fullEncryptNum.length; i++) {
+                if ((" " + remove).equals(encrypted.guesses[i])) {
+                    encrypted.guesses[i] = " ?";
+                    exists = true;
+                }
             }
         }
         if (!exists) {
@@ -216,7 +226,7 @@ public class Game {
         int j = 0;
         for (String label : encrypted.labeledMap.values()) {
             System.out.print(label + " ");
-            if (encrypted.fullEncryptNum[j].length() == 2){
+            if (!encrypted.isLetter && encrypted.fullEncryptNum[j].length() == 2){
                 System.out.print(" ");
             }
             if (!encrypted.isLetter && label.equals(" 9")){
@@ -227,7 +237,7 @@ public class Game {
         System.out.println();
         for (int i = 0; i < encrypted.guesses.length; i++) {
             System.out.print(encrypted.guesses[i] + " ");
-            if (encrypted.fullEncryptNum[i].length() == 2){
+            if (!encrypted.isLetter && encrypted.fullEncryptNum[i].length() == 2){
                 System.out.print(" ");
             }
         }
