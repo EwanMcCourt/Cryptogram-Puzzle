@@ -21,7 +21,8 @@ public class Main {
                     Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
                     Game game = new Game(player, input);
                     game.getEncrypted().printDetails();
-                    while (!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit")) {
+                    game.getEncrypted().parsedGuesses = game.parseInput();
+                    while((!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit"))){
                         System.out.println("Do you want to add a guess or undo a guess?");
                         input = inputReader.nextLine();
                         switch (input) {
@@ -31,6 +32,11 @@ public class Main {
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
+                                if(!(game.getEncrypted().parsedGuesses.contains("?"))){
+                                    System.out.println("fail!");
+                                    player.incrementCryptogramsPlayed(player.getCryptogramsPlayed());
+                                    player.printDetails();
+                                }
                                 break;
                             case "undo":
                                 game.currentSol();
@@ -57,12 +63,12 @@ public class Main {
                                 break;
                         }
                     }
-                    if (!input.equals("exit")) {
-                        System.out.println("Congrats you did it!!!");
-                        player.printDetails();
-                        input = "exit";
-                        break;
-                    }
+                    System.out.println("Congrats you did it!!!");
+                    player.incrementCryptogramsCompleted(player.getCryptogramsCompleted());
+                    player.incrementCryptogramsPlayed(player.getCryptogramsPlayed());
+                    player.printDetails();
+                    System.out.println("Type new to make a new cryptogram or type exit to leave.");
+                    input = input = inputReader.nextLine();
                     break;
                 case "help":
                     System.out.println("new - generates a new cryptogram");
