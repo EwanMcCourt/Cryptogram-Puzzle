@@ -6,7 +6,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //user command interface
+
+        //user command interface (displays all user prompts and messages)
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
         Scanner inputReader = new Scanner(System.in);
         String input = inputReader.nextLine();
