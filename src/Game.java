@@ -12,13 +12,12 @@ public class Game {
     private Cryptogram encrypted;
     private Player currentPlayer;
 
-    public Game (Player player, String type){
+    public Game(Player player, String type) {
         this.encrypted = Cryptogram.newCryptogram(type);
         this.currentPlayer = player;
         try {
             playerGameMapping.put(this, player);
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             playerGameMapping = new HashMap<>();
             playerGameMapping.put(this, player);
         }
@@ -30,18 +29,26 @@ public class Game {
 
     public String[] enterLetter() {
         Scanner object = new Scanner(System.in);
-        String target;
+        String target = " ";
         String guess;
-        String type;
-        if (getEncrypted().isLetter){
-            type = "letter";
-        }
-        else type = "number";
-        System.out.println("What "+type+" do you want to guess?");
+        int contains = 0;
+        System.out.println("What letter do you want to guess?");
         target = object.next();
-        while ((type.equals("letter") && target.length() > 1) || (type.equals("number") && target.length() > 2)){
-            System.out.println("Input too long.");
-            System.out.println("What "+type+" do you want to guess?");
+        while (contains == 0) {
+            for (int i = 0; i < encrypted.phrase.length(); i++) {
+                if (Objects.equals(encrypted.fullEncrypt[i], target)) {
+                    contains = contains + 1;
+                }
+            }
+            if (contains == 0) {
+                System.out.println("That letter isn't in this cryptogram try again!");
+                System.out.println("What letter do you want to guess?");
+                target = object.next();
+            }
+        }
+        if (target.length() > 1) {
+            System.out.println("That's multiple letters.");
+            System.out.println("What letter do you want to guess?");
             target = object.next();
         }
         System.out.println("What is your guess?");
@@ -61,12 +68,13 @@ public class Game {
         boolean toConform = false;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
             if (target.equals(encrypted.fullEncrypt[i])) {
-            if (!Objects.equals(encrypted.guesses[i], " ?")) {
-                toConform = true;
-                break;
-            }}
+                if (!Objects.equals(encrypted.guesses[i], " ?")) {
+                    toConform = true;
+                    break;
+                }
+            }
         }
-        if(toConform){
+        if (toConform) {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
             conform = object.next();
         }
@@ -109,8 +117,7 @@ public class Game {
                     exists = true;
                 }
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
                 if ((" " + remove).equals(encrypted.guesses[i])) {
                     encrypted.guesses[i] = " ?";
@@ -151,14 +158,12 @@ public class Game {
         System.out.println();
         int j = 1;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
-            if(!(encrypted.phrase.charAt(i) == ' ')) {
+            if (!(encrypted.phrase.charAt(i) == ' ')) {
                 if (j < 10) {
                     System.out.print(" " + j + " ");
-                }
-                else System.out.print(j + " ");
+                } else System.out.print(j + " ");
                 j++;
-            }
-            else System.out.print("  ");
+            } else System.out.print("  ");
         }
         System.out.println();
         for (int i = 0; i < encrypted.guesses.length; i++) {

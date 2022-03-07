@@ -87,5 +87,7 @@ public class Player {
         System.out.println("Number of total guesses: " + getTotalGuesses());
         System.out.println("Number of right guesses: " + getnumCorrectGuesses());
         System.out.println("Accuracy: " + getAccuracy());                     //Outputs the details stores on the player
+        System.out.println("Cryptograms played: "+ getCryptogramsPlayed());
+        System.out.println("Cryptograms completed: "+ getCryptogramsCompleted());
     }
 }
