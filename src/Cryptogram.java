@@ -18,7 +18,7 @@ public class Cryptogram {
 
     public Cryptogram() {}
 
-    static Cryptogram newCryptogram(String type, String file){
+    static Cryptogram newCryptogram(String type, String file) {
         if (type.equals("yes")){
             return new numberCryptogram(file);
         }
@@ -42,17 +42,13 @@ public class Cryptogram {
         HashMap<String, Integer> frequencies = new HashMap<>();
         String[] charArray = fullEncrypt;
         for (int i = 0; i < charArray.length; i++) {
-            if (fullEncrypt[i].charAt(0) == ' ') {
-                continue;
-            } else {
+            if (!(fullEncrypt[i].charAt(0) == ' ')) {
                 frequencies.put(fullEncrypt[i], 0);
             }
         }
         for (int i = 0; i < charArray.length; i++) {
             int total;
-            if (fullEncrypt[i].charAt(0) == ' ') {
-                continue;
-            } else {
+            if (!(fullEncrypt[i].charAt(0) == ' ')) {
                 total = frequencies.get(fullEncrypt[i]);
                 frequencies.put(fullEncrypt[i], total + 1);
             }
@@ -67,7 +63,7 @@ public class Cryptogram {
             int random = new Random().nextInt((int) lines); //line to read from is chosen
             for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
             return phraseReader.readLine();
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.out.print("Error, no phrase file!");            //Displays error message
             return null;
         }

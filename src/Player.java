@@ -69,17 +69,17 @@ public class Player {
     }
 
     public int getCryptogramsPlayed() {
-        return this.cryptogramsPlayed;                   //Incrementing the number of cryptograms that have been played
+        return this.cryptogramsPlayed;                   //Returns the number of cryptograms that have been played
     }
-    public void incrementCryptogramsPlayed(int cryptogramsPlayed) {
-        this.cryptogramsPlayed = cryptogramsPlayed + 1;
+    public void incrementCryptogramsPlayed() {
+        this.cryptogramsPlayed++;
     }
 
     public int getCryptogramsCompleted() {
-        return this.cryptogramsCompleted;             //Incrementing the number of cryptograms that have been completed
+        return this.cryptogramsCompleted;             //Returns the number of cryptograms that have been completed
     }
-    public void incrementCryptogramsCompleted(int cryptogramsCompleted) {
-        this.cryptogramsCompleted = cryptogramsCompleted + 1;
+    public void incrementCryptogramsCompleted() {
+        this.cryptogramsCompleted++;
     }
 
     public void printDetails() {

@@ -1,10 +1,8 @@
 import org.junit.Test;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
+
 
 
 import static org.junit.Assert.*;
@@ -21,15 +19,10 @@ public class GameTests {
     @Test
     public void checkCryptogramGenerationLetters() {
         Cryptogram encrypted = Cryptogram.newCryptogram("", "./src/phrases.txt");
-
-
         for (int i = 0; i < encrypted.phrase.length(); i++) {
-
-            char current = encrypted.phrase.charAt(i);
-            char current2 = encrypted.fullEncrypt[i].charAt(0);
-            if (encrypted.phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
-
-            } else {
+            String current = Character.toString(encrypted.phrase.charAt(i));
+            String current2 = encrypted.fullEncrypt[i];
+            if (!(encrypted.phrase.charAt(i) == ' ')) {  //checking for a space and skips this iteration of the loop
                 System.out.println(current + " == " + current2);
                 assertNotEquals(current, current2);
             }
@@ -40,27 +33,25 @@ public class GameTests {
         Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, "yes", "./src/phrases.txt");
         for (int i = 0; i < game.getEncrypted().fullEncrypt.length; i++) {
-            if (game.getEncrypted().fullEncrypt[i] == " ") {
-                continue;
+            if (!(game.getEncrypted().phrase.charAt(i) == ' ')) {
+                int currentNum = Integer.parseInt(game.getEncrypted().fullEncrypt[i]);
+                assertTrue(currentNum <= 26 && currentNum >= 1);
             }
-            int currentNum = Integer.parseInt(game.getEncrypted().fullEncrypt[i]);
-            assertTrue(currentNum < 27);
         }
     }
 
     @Test //the code seems to work but test fails as program ends
     public void checkEmptyPhrases(){
-        Game testGame = new Game(new Player("test"), "letter", "./src/phrases.txt");
-        String phrase = testGame.getEncrypted().callPhrase("./src/empty.txt");
-        assertNull(phrase);
+        assertThrows(NullPointerException.class, () -> {
+            new Game(new Player("test"), "letter", "./src/empty.txt");
+        });
     }
 
     @Test //the code seems to work but test fails as program ends
     public void checkNoFile() {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
-        Game testGame = new Game(player, " ", "./src/phrases.txt");
-
-
+        assertThrows(NullPointerException.class, () -> {
+            new Game(new Player("test"), "letter", "./src/fileThatDoesn'tExist.txt");
+        });
     }
 
     @Test
@@ -70,13 +61,12 @@ public class GameTests {
         Game game = new Game(testPlayer, "letter", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
 
-        InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = String.valueOf(encrypted.fullEncrypt[0]) + System.getProperty("line.separator")
+        String simulatedUserInput = encrypted.fullEncrypt[0] + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        String[] testResult = game.enterLetter();
-        System.setIn(savedStandardInputStream);
+        game.enterLetter();
+        System.setIn(System.in);
         String parsedEncrypted = game.parseInput();
         game.currentSol();
         assertEquals(parsedEncrypted.charAt(0),'e');
@@ -87,17 +77,23 @@ public class GameTests {
     public void checkEnterLetterTwiceInSamePosition() {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
-        InputStream savedStandardInputStream = System.in;
-        String firstEncrypt = String.valueOf(game.getEncrypted().fullEncrypt[0]);
-        String simulatedUserInput = firstEncrypt + System.getProperty("line.separator") + "e";
+        game.currentSol();
+        String simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "e";
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.getEncrypted().guesses = game.enterLetter();
-        simulatedUserInput = firstEncrypt + System.getProperty("line.separator") + "l" + System.getProperty("line.separator") + "yes";
+
+        game.currentSol();
+        simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "l" + System.getProperty("line.separator") + "yes";
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.getEncrypted().guesses = game.enterLetter();
-        savedStandardInputStream = System.in;
-        assertNotEquals(" e", firstEncrypt);
-        assertEquals(" l", firstEncrypt);
+        assertNotEquals(" e", game.getEncrypted().guesses[0]);
+        assertEquals(" l", game.getEncrypted().guesses[0]);
+
+        game.currentSol();
+        simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "k" + System.getProperty("line.separator") + "no";
+        System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
+        game.getEncrypted().guesses = game.enterLetter();
+        assertEquals(" l", game.getEncrypted().guesses[0]);
     }
 
     @Test
@@ -168,7 +164,7 @@ public class GameTests {
             }
         }
 
-        assertEquals("the quick brown fox jumped over the lazy dog", game.parseInput());
+        assertEquals("hi this is a lot of is", game.parseInput());
     }
 
     @Test
@@ -187,77 +183,64 @@ public class GameTests {
                 game.getEncrypted().guesses = game.enterLetter();
                 game.getEncrypted().parsedGuesses = game.parseInput();
                 player.updateAccuracy(player.getAccuracy());
-                if (!(game.getEncrypted().parsedGuesses.contains("?"))) {
-                    System.out.println("fail!");
-                    player.incrementCryptogramsPlayed(player.getCryptogramsPlayed());
-                    player.printDetails();
-                }
             }
-            assertTrue(player.getCryptogramsCompleted() == 0);
-            assertTrue(player.getCryptogramsPlayed() == 1);
+        if (!(game.getEncrypted().parsedGuesses.contains("?"))) {
+            System.out.println("fail!");
+            player.incrementCryptogramsPlayed();
+            player.printDetails();
+        }
+        assertEquals(0, player.getCryptogramsCompleted());
+        assertEquals(1, player.getCryptogramsPlayed());
         }
 
 
     @Test
     public void checkLetterNotInCryptogram(){
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
-        Game game = new Game(testPlayer, " ", "./src/phrases.txt");
-        String letters = "abcdefghijklmnopqrstuvwxyz";
-        char currGuess = 'a';
-        Cryptogram currEncrypted = game.getEncrypted();
-        String parsedEncrypted = game.parseInput();
+        Game game = new Game(testPlayer, " ", "./src/test.txt");
 
-        for (int i =0; i<game.getEncrypted().fullEncrypt.length; i++){
-            if(Objects.equals(game.getEncrypted().fullEncrypt[i], " ")){
-                continue;
-            }
-            if (game.getEncrypted().fullEncrypt[i].equals("" + letters.charAt(i))){
-                currGuess = letters.charAt(i);
-            }
-        }
 
         InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = currGuess + System.getProperty("line.separator")
-                + "f" + System.getProperty("line.separator");
+        String simulatedUserInput = "%" + System.getProperty("line.separator")
+                + game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "h";
 
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        game.getEncrypted().guesses = game.enterLetter();
+        game.enterLetter();
         System.setIn(savedStandardInputStream);
-        assertEquals(currEncrypted,game.getEncrypted());
+        assertEquals(" h",game.getEncrypted().guesses[0]);
 
-    }/*
+    }
     @Test
     public void checkUndoLetter(){
-        Cryptogram encrypted = Game.generateCryptogram();
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
-
+        Game game = new Game(testPlayer, " ", "./src/test.txt");
 
         InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = String.valueOf(encrypted.fullEncrypt.charAt(0)) + System.getProperty("line.separator")
+        String simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        String[] testResult = Game.enterLetter(encrypted, testPlayer );
+        game.enterLetter();
         System.setIn(savedStandardInputStream);
 
-        Game.currentSol(encrypted, testPlayer);
+        game.currentSol();
         testPlayer.printDetails();
 
         savedStandardInputStream = System.in;
         simulatedUserInput = "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        testResult = Game.undoLetter(encrypted, testPlayer );
+        game.undoLetter();
         System.setIn(savedStandardInputStream);
 
-        Game.currentSol(encrypted, testPlayer);
+        game.currentSol();
         testPlayer.printDetails();
-        assertNotEquals(encrypted.guesses[0],"e");
+        assertNotEquals(game.getEncrypted().guesses[0],"e");
 
 
 
-    }*/
+    }
     @Test
     public void checkUndoLetterNotBeenMapped(){
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
@@ -266,13 +249,11 @@ public class GameTests {
         String simulatedUserInput = String.valueOf(game.getEncrypted().fullEncrypt[0]) + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        String[] testResult = game.enterLetter();
         System.setIn(savedStandardInputStream);
         Cryptogram currEncrypted = game.getEncrypted();
         savedStandardInputStream = System.in;
         simulatedUserInput =  "d" + System.getProperty("line.separator");
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        testResult = game.undoLetter();
         System.setIn(savedStandardInputStream);
         Cryptogram currEncrypted2 = game.getEncrypted();
         assertEquals(currEncrypted,currEncrypted2);

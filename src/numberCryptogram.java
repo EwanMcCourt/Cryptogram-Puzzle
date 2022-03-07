@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class numberCryptogram extends Cryptogram {
 
-    public numberCryptogram(String file){
+    public numberCryptogram(String file) {
         this.isLetter = false;
         this.phrase = callPhrase(file);
         this.posGuess = new ArrayList<>();

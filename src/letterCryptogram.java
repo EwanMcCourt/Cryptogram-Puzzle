@@ -4,12 +4,12 @@ import java.util.Random;
 
 public class letterCryptogram extends Cryptogram {
 
-    public letterCryptogram(String file) {
+    public letterCryptogram(String file)  {
         this.isLetter = true;
-        phrase = callPhrase(file);
-        posGuess = new ArrayList<Integer>();
-        guesses = new String[phrase.length()];
-        parsedGuesses = null;
+        this.phrase = callPhrase(file);
+        this.posGuess = new ArrayList<>();
+        this.guesses = new String[phrase.length()];
+        this.parsedGuesses = null;
         int current;                        //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26);           //a int that the phrase will be shifted by
