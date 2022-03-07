@@ -21,12 +21,11 @@ public class GameTests {
     public void checkIfRandom() {
         Cryptogram encrypted = Cryptogram.newCryptogram("");
 
-
         for (int i = 0; i < encrypted.phrase.length(); i++) {
 
             String current = Character.toString(encrypted.phrase.charAt(i));
             String current2 = encrypted.fullEncrypt[i];
-            if (encrypted.phrase.charAt(i) == ' ') {  //checking for a space and skips this iteration of the loop
+            if (encrypted.phrase.charAt(i) == ' ') {      //checking for a space and skips this iteration of the loop
             } else {
                 System.out.println(current + " == " + current2);
                 assertNotEquals(current, current2);

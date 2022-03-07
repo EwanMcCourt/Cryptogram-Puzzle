@@ -7,7 +7,6 @@ public class numberCryptogram extends Cryptogram {
     private ArrayList<String> numbers;
     private HashMap<Character, String> cryptogramAlphabet;
 
-
     public numberCryptogram(){
         this.isLetter = false;
         this.phrase = callPhrase();
