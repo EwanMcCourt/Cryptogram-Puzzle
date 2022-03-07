@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class Cryptogram {
     boolean isLetter;
-
     String phrase;
     HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
     String[] fullEncrypt;
@@ -63,13 +62,13 @@ public class Cryptogram {
 
     public String callPhrase() {
         try {
-            long lines = Files.lines(Path.of("./src/phrases.txt")).count(); //gets number of lines in file
+            long lines = Files.lines(Path.of("./src/phrases.txt")).count();    //gets number of lines in file
             BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
-            int random = new Random().nextInt((int) lines); //line to read from is chosen
-            for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
+            int random = new Random().nextInt((int) lines);                     //line to read from is chosen
+            for (int i = 0; i < random; i++) phraseReader.readLine();            // navigates to right line in file
             return phraseReader.readLine();
         } catch (IOException e) {
-            System.out.print("Error, no phrase file!");
+            System.out.print("Error, no phrase file!");            //Displays error message
             return null;
         }
     }
