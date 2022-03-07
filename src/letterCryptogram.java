@@ -3,9 +3,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class letterCryptogram extends Cryptogram {
-    public letterCryptogram() {
+
+    public letterCryptogram(String file) {
         this.isLetter = true;
-        phrase = callPhrase();
+        phrase = callPhrase(file);
         posGuess = new ArrayList<Integer>();
         guesses = new String[phrase.length()];
         parsedGuesses = null;

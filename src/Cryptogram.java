@@ -8,22 +8,22 @@ import java.util.Random;
 import java.util.HashMap;
 
 public class Cryptogram {
-    boolean isLetter;
-    String phrase;
-    HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
-    String[] fullEncrypt;
-    String[] guesses;
-    ArrayList<Integer> posGuess;
-    String parsedGuesses;
+    protected boolean isLetter;
+    protected String phrase;
+    protected HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
+    protected String[] fullEncrypt;
+    protected String[] guesses;
+    protected ArrayList<Integer> posGuess;
+    protected String parsedGuesses;
 
     public Cryptogram() {}
 
-    static Cryptogram newCryptogram(String type){
+    static Cryptogram newCryptogram(String type, String file){
         if (type.equals("yes")){
-            return new numberCryptogram();
+            return new numberCryptogram(file);
         }
         else {
-            return new letterCryptogram();
+            return new letterCryptogram(file);
         }
     }
 
@@ -60,12 +60,12 @@ public class Cryptogram {
         return frequencies;
     }
 
-    public String callPhrase() {
+    public String callPhrase(String file) {
         try {
-            long lines = Files.lines(Path.of("./src/phrases.txt")).count();    //gets number of lines in file
-            BufferedReader phraseReader = new BufferedReader(new FileReader("./src/phrases.txt"));
-            int random = new Random().nextInt((int) lines);                     //line to read from is chosen
-            for (int i = 0; i < random; i++) phraseReader.readLine();            // navigates to right line in file
+            long lines = Files.lines(Path.of(file)).count(); //gets number of lines in file
+            BufferedReader phraseReader = new BufferedReader(new FileReader(file));
+            int random = new Random().nextInt((int) lines); //line to read from is chosen
+            for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
             return phraseReader.readLine();
         } catch (IOException e) {
             System.out.print("Error, no phrase file!");            //Displays error message

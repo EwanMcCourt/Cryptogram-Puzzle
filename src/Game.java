@@ -12,8 +12,8 @@ public class Game {
     private Cryptogram encrypted;
     private Player currentPlayer;
 
-    public Game(Player player, String type) {
-        this.encrypted = Cryptogram.newCryptogram(type);
+    public Game(Player player, String type, String file) {
+        this.encrypted = Cryptogram.newCryptogram(type, file);
         this.currentPlayer = player;
         try {
             playerGameMapping.put(this, player);
@@ -29,11 +29,21 @@ public class Game {
 
     public String[] enterLetter() {
         Scanner object = new Scanner(System.in);
-        String target = " ";
+        String target;
         String guess;
+        String type;
+        if (encrypted.isLetter){
+            type = "letter";
+        }
+        else type = "number";
         int contains = 0;
         System.out.println("What letter do you want to guess?");
         target = object.next();
+        while ((type.equals("letter") && target.length() > 1) || (type.equals("number") && target.length() > 2)){
+            System.out.println("Input too long.");
+            System.out.println("What "+type+" do you want to guess?");
+            target = object.next();
+        }
         while (contains == 0) {
             for (int i = 0; i < encrypted.phrase.length(); i++) {
                 if (Objects.equals(encrypted.fullEncrypt[i], target)) {
@@ -45,11 +55,6 @@ public class Game {
                 System.out.println("What letter do you want to guess?");
                 target = object.next();
             }
-        }
-        if (target.length() > 1) {
-            System.out.println("That's multiple letters.");
-            System.out.println("What letter do you want to guess?");
-            target = object.next();
         }
         System.out.println("What is your guess?");
         guess = object.next();

@@ -18,7 +18,7 @@ public class Main {
                     System.out.println("(Defaults to letter cryptogram)" );
                     input = inputReader.nextLine();
                     Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
-                    Game game = new Game(player, input);
+                    Game game = new Game(player, input, "./src/phrases.txt");
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
                     while((!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit"))){
@@ -67,7 +67,7 @@ public class Main {
                     player.incrementCryptogramsPlayed(player.getCryptogramsPlayed());
                     player.printDetails();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
-                    input = input = inputReader.nextLine();
+                    input = inputReader.nextLine();
                     break;
                 case "help":
                     System.out.println("new - generates a new cryptogram");
