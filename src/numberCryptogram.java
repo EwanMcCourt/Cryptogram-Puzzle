@@ -4,33 +4,30 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class numberCryptogram extends Cryptogram {
-    private ArrayList<String> numbers;
-    private HashMap<Character, String> cryptogramAlphabet;
 
-
-    public numberCryptogram(){
+    public numberCryptogram(String file){
         this.isLetter = false;
-        this.phrase = callPhrase();
-        this.numbers = new ArrayList<>();
-        for (Integer i = 1; i <= 26; i++){
-            this.numbers.add(i.toString());
-        }
+        this.phrase = callPhrase(file);
         this.posGuess = new ArrayList<>();
         this.guesses = new String[phrase.length()];
         this.parsedGuesses = null;
         this.cryptogramAlphabet = new HashMap<>();
 
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i = 1; i <= 26; i++){
+            numbers.add(Integer.toString(i));
+        }
+
         Random rand = new Random();
         int num; //value in array list to be mapped to letter
-        ArrayList<String> numbersCopy = numbers;
 
         String[] result = new String[phrase.length()];
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
-            num = rand.nextInt(0, numbersCopy.size());
-            cryptogramAlphabet.put(alphabet, numbersCopy.get(num));
-            numbersCopy.remove(num);
+            num = rand.nextInt(0, numbers.size());
+            cryptogramAlphabet.put(alphabet, numbers.get(num));
+            numbers.remove(num);
             alphabet++;
         }
         for (int i = 0; i < phrase.length(); i++) {
