@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        //user command interface (displays all user prompts and messages)
+
+        //user command interface
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
         Scanner inputReader = new Scanner(System.in);
         String input = inputReader.nextLine();
@@ -19,10 +20,9 @@ public class Main {
                     input = inputReader.nextLine();
                     Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
                     Game game = new Game(player, input, "./src/phrases.txt");
-
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
-                    while(game.getEncrypted().parsedGuesses.contains("?") && !input.equals("exit")){
+                    while((!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit"))){
                         System.out.println("Do you want to add a guess or undo a guess?");
                         input = inputReader.nextLine();
                         switch (input) {
@@ -32,6 +32,11 @@ public class Main {
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
+                                if(!(game.getEncrypted().parsedGuesses.contains("?"))){
+                                    System.out.println("fail!");
+                                    player.incrementCryptogramsPlayed();
+                                    player.printDetails();
+                                }
                                 break;
                             case "undo":
                                 game.currentSol();
@@ -45,6 +50,7 @@ public class Main {
                                     break;
                                 }
                             case "help":
+                                System.out.println("new - generates a new cryptogram");
                                 System.out.println("guess - begins a guess for the cryptogram");
                                 System.out.println("undo - undos the last guess in the cryptogram");
                                 System.out.println("help - shows list of commands and their function");
@@ -58,20 +64,20 @@ public class Main {
                         }
                     }
                     if(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase)){
-                        System.out.println("fail!");
+                        System.out.println("Fail by exit!");
                     }
-                    else {
-                        System.out.println("Congrats you did it!!!");
-                        player.incrementCryptogramsCompleted();
-                    }
+                    else{
+                    System.out.println("Congrats you did it!!!");
+                    player.incrementCryptogramsCompleted();}
                     player.incrementCryptogramsPlayed();
                     player.printDetails();
-
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
-                    input = inputReader.nextLine();
+                    input = input = inputReader.nextLine();
                     break;
                 case "help":
                     System.out.println("new - generates a new cryptogram");
+                    System.out.println("guess - begins a guess for the cryptogram");
+                    System.out.println("undo - undos the last guess in the cryptogram");
                     System.out.println("help - shows list of commands and their function");
                     System.out.println("exit - exits the program");
                     System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
