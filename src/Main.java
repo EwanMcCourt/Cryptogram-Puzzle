@@ -45,21 +45,18 @@ public class Main {
                     Game game = new Game(player, input, "./src/phrases.txt");
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
-                    while((!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit"))){
+                    while((game.getEncrypted().parsedGuesses.contains("?") && !input.equals("exit"))){
                         System.out.println("Do you want to add a guess or undo a guess?");
-                        input = inputReader.nextLine();
+                        input = inputReader.nextLine().trim();
                         switch (input) {
                             case "guess":
+                                System.out.println(game.getEncrypted().guesses);
                                 game.currentSol();
                                 game.enterLetter();
+                                System.out.println(game.getEncrypted().guesses);
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
-                                if(!(game.getEncrypted().parsedGuesses.contains("?"))){
-                                    System.out.println("fail!");
-                                    player.incrementCryptogramsPlayed();
-                                    player.printDetails();
-                                }
                                 break;
                             case "undo":
                                 game.currentSol();
@@ -87,7 +84,10 @@ public class Main {
                         }
                     }
                     if(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase)){
-                        System.out.println("Fail by exit!");
+                        if (input.equals("exit")) {
+                            System.out.println("Fail by exit!");
+                        }
+                        else System.out.println("Fail!");
                     }
                     else{
                     System.out.println("Congrats you did it!!!");
