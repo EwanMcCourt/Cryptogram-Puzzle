@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -9,7 +8,7 @@ public class numberCryptogram extends Cryptogram {
         this.isLetter = false;
         this.phrase = callPhrase(file);
         this.posGuess = new ArrayList<>();
-        this.guesses = new String[phrase.length()];
+        this.guesses = new ArrayList<>();
         this.parsedGuesses = null;
         this.cryptogramAlphabet = new HashMap<>();
 
@@ -21,7 +20,7 @@ public class numberCryptogram extends Cryptogram {
         Random rand = new Random();
         int num; //value in array list to be mapped to letter
 
-        String[] result = new String[phrase.length()];
+        ArrayList<String> result = new ArrayList<>();
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
@@ -32,16 +31,16 @@ public class numberCryptogram extends Cryptogram {
         }
         for (int i = 0; i < phrase.length(); i++) {
             if (!(phrase.charAt(i) == ' ')) {
-                result[i] = cryptogramAlphabet.get(phrase.charAt(i));
+                result.add(cryptogramAlphabet.get(phrase.charAt(i)));
             }
-            else result[i] = " ";
+            else result.add(" ");
         }
         fullEncrypt = result;
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
-                guesses[i] = " ";
+                guesses.add(" ");
             } else {
-                guesses[i] = " ?";
+                guesses.add(" ?");
             }
         }}
 

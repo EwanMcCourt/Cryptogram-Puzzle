@@ -72,7 +72,7 @@ public class Main {
                     player.incrementCryptogramsPlayed();
                     player.printDetails();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
-                    input = input = inputReader.nextLine();
+                    input = inputReader.nextLine();
                     break;
                 case "help":
                     System.out.println("new - generates a new cryptogram");

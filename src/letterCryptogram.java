@@ -8,16 +8,16 @@ public class letterCryptogram extends Cryptogram {
         this.isLetter = true;
         this.phrase = callPhrase(file);
         this.posGuess = new ArrayList<>();
-        this.guesses = new String[phrase.length()];
+        this.guesses = new ArrayList<>();
         this.parsedGuesses = null;
         int current;                        //the ascii value that is eventually shifted
         Random rand = new Random();
         int shift = rand.nextInt(1, 26);           //a int that the phrase will be shifted by
-        String[] result = new String[phrase.length()];
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < phrase.length(); i++) {
             current = phrase.charAt(i);            //sets the current ascii value
             if (phrase.charAt(i) == ' ') {           //checking for a space and skips this iteration of the loop
-                result[i] = Character.toString((char) current);
+                result.add(Character.toString((char) current));
                 continue;
             } else {
                 current = (current + shift);
@@ -25,7 +25,7 @@ public class letterCryptogram extends Cryptogram {
                     current = current - 26;
                 }
             }
-            result[i] = Character.toString((char) current);
+            result.add(Character.toString((char) current));
         }
         char alphabet = (char) 97;
         int changed;
@@ -39,13 +39,13 @@ public class letterCryptogram extends Cryptogram {
         }
         fullEncrypt = result;
         for(int i = 0; i < phrase.length(); i++){
-        System.out.print(fullEncrypt[i]);}
+        System.out.print(fullEncrypt.get(i));}
         System.out.println();
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
-                guesses[i] = " ";
+                guesses.add(" ");
             } else {
-                guesses[i] = " ?";
+                guesses.add(" ?");
             }
         }
     }
