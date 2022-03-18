@@ -31,13 +31,11 @@ public class Game {
         String target;
         String guess;
         String type;
-        if (encrypted.isLetter){
-            type = "letter";
-        }
+        if (encrypted.isLetter) type = "letter";
         else type = "number";
         System.out.println("What letter do you want to guess?");
         target = object.next();
-        while ((type.equals("letter") && target.length() > 1) || (type.equals("number") && target.length() > 2)){
+        while ((type.equals("letter") && target.length() > 1) || target.length() > 2){
             System.out.println("Input too long.");
             System.out.println("What "+type+" do you want to guess?");
             target = object.next();
@@ -60,59 +58,43 @@ public class Game {
             guess = object.next();
         }
         String conform = null;
-        if (encrypted.fullEncrypt.contains(target)) {
-            if (!encrypted.guesses.get(encrypted.fullEncrypt.indexOf(target)).equals(" ?")) {
-                System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
+        if (!encrypted.guesses.get(encrypted.fullEncrypt.indexOf(target)).equals(" ?")) {
+            System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
+            conform = object.next();
+            while (!conform.equals("yes")&&!conform.equals("no")){
+                System.out.println("Invalid input, try again...");
                 conform = object.next();
             }
         }
-        boolean accuracyUpdated = false;
-        for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
-            if (target.equals(encrypted.fullEncrypt.get(i))) {
-
-                if (!Objects.equals(encrypted.guesses.get(i), " ?")) {
-                    if (Objects.equals(conform, "yes")) {
-                        for (int j = 0; j < encrypted.fullEncrypt.size(); j++) {
-                            if (target.equals(encrypted.fullEncrypt.get(j))) {
-                                encrypted.guesses.set(j, " " + guess);
-                                if(!accuracyUpdated) {
-                                    currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
-                                    if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
-                                        currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
-                                    }
-                                    accuracyUpdated = true;
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    encrypted.guesses.set(i, " " + guess);
-                    if(!accuracyUpdated) {
-                        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
-                        if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
-                            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
-                        }
-                        accuracyUpdated = true;
-                    }
-                }
-            }
+        if (Objects.equals(conform, "yes") || Objects.equals(conform, null)) {
+            applyGuess(target, guess);
         }
         return encrypted.guesses;
+    }
+
+    public void applyGuess(String target, String guess){
+        for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
+            if (target.equals(encrypted.fullEncrypt.get(i))) {
+                    encrypted.guesses.set(i, " " + guess);
+            }
+        }
+        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
+        if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
+            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
+        }
     }
 
     public ArrayList<String> undoLetter() {
         Scanner reader = new Scanner(System.in);
         System.out.println("What guess are you unmapping?");
         String remove = reader.next();
-        boolean exists = false;
-        for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
-            if ((" " + remove).equals(encrypted.guesses.get(i))) {
+        if (encrypted.guesses.contains(" " + remove)){
+            while (encrypted.guesses.contains(" " + remove)){
+                int i = encrypted.guesses.indexOf(" " + remove);
                 encrypted.guesses.set(i," ?");
-                exists = true;
             }
         }
-
-        if (!exists) {
+        else {
             System.out.println("That letter is not mapped so there is nothing to undo");
         }
         return encrypted.guesses;
@@ -130,7 +112,6 @@ public class Game {
 
 
     public void currentSol() {
-
         for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
             if (encrypted.fullEncrypt.get(i).charAt(0) == ' ') {
                 System.out.print(encrypted.fullEncrypt.get(i) + " ");
@@ -141,7 +122,6 @@ public class Game {
                 System.out.print(" " + encrypted.fullEncrypt.get(i) + " ");
             }
         }
-
         System.out.println();
         int j = 1;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
@@ -169,7 +149,6 @@ public class Game {
                 temp[i] = encrypted.guesses.get(i).trim();
             }
         }
-        String returned = String.join("", temp);
-        return returned;
+        return String.join("", temp);
     }
 }
