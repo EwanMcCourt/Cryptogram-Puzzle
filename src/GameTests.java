@@ -21,7 +21,7 @@ public class GameTests {
         Cryptogram encrypted = Cryptogram.newCryptogram("", "./src/phrases.txt");
         for (int i = 0; i < encrypted.phrase.length(); i++) {
             String current = Character.toString(encrypted.phrase.charAt(i));
-            String current2 = encrypted.fullEncrypt[i];
+            String current2 = encrypted.fullEncrypt.get(i);
             if (!(encrypted.phrase.charAt(i) == ' ')) {  //checking for a space and skips this iteration of the loop
                 System.out.println(current + " == " + current2);
                 assertNotEquals(current, current2);
@@ -32,9 +32,9 @@ public class GameTests {
     public void checkCryptogramGenerationNumbers() {
         Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, "yes", "./src/phrases.txt");
-        for (int i = 0; i < game.getEncrypted().fullEncrypt.length; i++) {
+        for (int i = 0; i < game.getEncrypted().fullEncrypt.size(); i++) {
             if (!(game.getEncrypted().phrase.charAt(i) == ' ')) {
-                int currentNum = Integer.parseInt(game.getEncrypted().fullEncrypt[i]);
+                int currentNum = Integer.parseInt(game.getEncrypted().fullEncrypt.get(i));
                 assertTrue(currentNum <= 26 && currentNum >= 1);
             }
         }
@@ -61,7 +61,7 @@ public class GameTests {
         Game game = new Game(testPlayer, "letter", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
 
-        String simulatedUserInput = encrypted.fullEncrypt[0] + System.getProperty("line.separator")
+        String simulatedUserInput = encrypted.fullEncrypt.get(0) + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
@@ -78,22 +78,22 @@ public class GameTests {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
         game.currentSol();
-        String simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "e";
+        String simulatedUserInput = game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator") + "e";
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.getEncrypted().guesses = game.enterLetter();
 
         game.currentSol();
-        simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "l" + System.getProperty("line.separator") + "yes";
+        simulatedUserInput = game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator") + "l" + System.getProperty("line.separator") + "yes";
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.getEncrypted().guesses = game.enterLetter();
-        assertNotEquals(" e", game.getEncrypted().guesses[0]);
-        assertEquals(" l", game.getEncrypted().guesses[0]);
+        assertNotEquals(" e", game.getEncrypted().guesses.get(0));
+        assertEquals(" l", game.getEncrypted().guesses.get(0));
 
         game.currentSol();
-        simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "k" + System.getProperty("line.separator") + "no";
+        simulatedUserInput = game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator") + "k" + System.getProperty("line.separator") + "no";
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.getEncrypted().guesses = game.enterLetter();
-        assertEquals(" l", game.getEncrypted().guesses[0]);
+        assertEquals(" l", game.getEncrypted().guesses.get(0));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class GameTests {
         Cryptogram encrypted = game.getEncrypted();
 
         InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = encrypted.fullEncrypt[0] + System.getProperty("line.separator")
+        String simulatedUserInput = encrypted.fullEncrypt.get(0) + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
@@ -111,7 +111,7 @@ public class GameTests {
         System.setIn(savedStandardInputStream);
         game.currentSol();
         savedStandardInputStream = System.in;
-        simulatedUserInput = encrypted.fullEncrypt[0] + System.getProperty("line.separator")
+        simulatedUserInput = encrypted.fullEncrypt.get(0) + System.getProperty("line.separator")
                 + "d" + System.getProperty("line.separator") + "yes" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
@@ -126,7 +126,7 @@ public class GameTests {
     public void checkEnterLetterAtDifferentGuessForSameTarget1() {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
-        String firstEncrypt = String.valueOf(game.getEncrypted().fullEncrypt[0]);
+        String firstEncrypt = String.valueOf(game.getEncrypted().fullEncrypt.get(0));
         InputStream savedStandardInputStream = System.in;
         String simulatedUserInput = firstEncrypt + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
@@ -149,11 +149,10 @@ public class GameTests {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
-
         for (int i = 0; i<(encrypted.phrase.length()); i++) {
             InputStream savedStandardInputStream = System.in;
             if (!(encrypted.phrase.charAt(i) == ' ')) {
-                String simulatedUserInput = encrypted.fullEncrypt[i] + System.getProperty("line.separator")
+                String simulatedUserInput = encrypted.fullEncrypt.get(i) + System.getProperty("line.separator")
                         + encrypted.phrase.charAt(i) + System.getProperty("line.separator");
 
                 System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
@@ -174,7 +173,7 @@ public class GameTests {
         game.getEncrypted().printDetails();
         game.getEncrypted().parsedGuesses = game.parseInput();
             for (int i = 0; i < game.getEncrypted().phrase.length(); i++) {
-                String wrongInput = game.getEncrypted().fullEncrypt[i];
+                String wrongInput = game.getEncrypted().fullEncrypt.get(i);
                 if (wrongInput.equals(" ")) {
                     continue;
                 }
@@ -202,13 +201,13 @@ public class GameTests {
 
         InputStream savedStandardInputStream = System.in;
         String simulatedUserInput = "%" + System.getProperty("line.separator")
-                + game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator") + "h";
+                + game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator") + "h";
 
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         game.enterLetter();
         System.setIn(savedStandardInputStream);
-        assertEquals(" h",game.getEncrypted().guesses[0]);
+        assertEquals(" h",game.getEncrypted().guesses.get(0));
 
     }
     @Test
@@ -217,7 +216,7 @@ public class GameTests {
         Game game = new Game(testPlayer, " ", "./src/test.txt");
 
         InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = game.getEncrypted().fullEncrypt[0] + System.getProperty("line.separator")
+        String simulatedUserInput = game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
@@ -236,7 +235,7 @@ public class GameTests {
 
         game.currentSol();
         testPlayer.printDetails();
-        assertNotEquals(game.getEncrypted().guesses[0],"e");
+        assertNotEquals(game.getEncrypted().guesses.get(0),"e");
 
 
 
@@ -246,7 +245,7 @@ public class GameTests {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
         InputStream savedStandardInputStream = System.in;
-        String simulatedUserInput = String.valueOf(game.getEncrypted().fullEncrypt[0]) + System.getProperty("line.separator")
+        String simulatedUserInput = String.valueOf(game.getEncrypted().fullEncrypt.get(0)) + System.getProperty("line.separator")
                 + "e" + System.getProperty("line.separator");
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
         System.setIn(savedStandardInputStream);

@@ -26,34 +26,24 @@ public class Game {
         return encrypted;
     }
 
-    public String[] enterLetter() {
+    public ArrayList<String> enterLetter() {
         Scanner object = new Scanner(System.in);
         String target;
         String guess;
         String type;
-        if (encrypted.isLetter){
-            type = "letter";
-        }
+        if (encrypted.isLetter) type = "letter";
         else type = "number";
-        boolean contains = false;
         System.out.println("What letter do you want to guess?");
         target = object.next();
-        while ((type.equals("letter") && target.length() > 1) || (type.equals("number") && target.length() > 2)){
+        while ((type.equals("letter") && target.length() > 1) || target.length() > 2){
             System.out.println("Input too long.");
             System.out.println("What "+type+" do you want to guess?");
             target = object.next();
         }
-        while (!contains) {
-            for (int i = 0; i < encrypted.phrase.length(); i++) {
-                if (Objects.equals(encrypted.fullEncrypt[i], target)) {
-                    contains = true;
-                }
-            }
-            if (!contains) {
-                System.out.println("That letter isn't in this cryptogram try again!");
-                System.out.println("What letter do you want to guess?");
-                target = object.next();
-            }
+        while (!encrypted.fullEncrypt.contains(target)) {
+            System.out.println("That "+type+" isn't in this cryptogram try again!");
+            System.out.println("What "+type+" do you want to guess?");
+            target = object.next();
         }
         System.out.println("What is your guess?");
         guess = object.next();
@@ -62,73 +52,49 @@ public class Game {
             System.out.println("What is your guess?");
             guess = object.next();
         }
-        for (int i = 0; i < encrypted.phrase.length(); i++) {
-            if ((" " + guess).equals(encrypted.guesses[i])) {
-                System.out.println("Error this letter has already been mapped");
-                return encrypted.guesses;
-            }
+        while (encrypted.guesses.contains(" " + guess)) {
+            System.out.println("This letter has already been guessed");
+            System.out.println("What is your guess?");
+            guess = object.next();
         }
         String conform = null;
-        boolean toConform = false;
-        for (int i = 0; i < encrypted.phrase.length(); i++) {
-            if (target.equals(encrypted.fullEncrypt[i])) {
-                if (!Objects.equals(encrypted.guesses[i], " ?")) {
-                    toConform = true;
-                    break;
-                }
-            }
-        }
-        if (toConform) {
+        if (!encrypted.guesses.get(encrypted.fullEncrypt.indexOf(target)).equals(" ?")) {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
             conform = object.next();
-        }
-        boolean accuracyUpdated = false;
-        for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
-            if (target.equals(encrypted.fullEncrypt[i])) {
-
-                if (!Objects.equals(encrypted.guesses[i], " ?")) {
-                    if (Objects.equals(conform, "yes")) {
-                        for (int j = 0; j < encrypted.fullEncrypt.length; j++) {
-                            if (target.equals(encrypted.fullEncrypt[j])) {
-                                encrypted.guesses[j] = " " + guess;
-                                if(!accuracyUpdated) {
-                                    currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
-                                    if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
-                                        currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
-                                    }
-                                    accuracyUpdated = true;
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    encrypted.guesses[i] = " " + guess;
-                    if(!accuracyUpdated) {
-                        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
-                        if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
-                            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
-                        }
-                        accuracyUpdated = true;
-                    }
-                }
+            while (!conform.equals("yes")&&!conform.equals("no")){
+                System.out.println("Invalid input, try again...");
+                conform = object.next();
             }
+        }
+        if (Objects.equals(conform, "yes") || Objects.equals(conform, null)) {
+            applyGuess(target, guess);
         }
         return encrypted.guesses;
     }
 
-    public String[] undoLetter() {
+    public void applyGuess(String target, String guess){
+        for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
+            if (target.equals(encrypted.fullEncrypt.get(i))) {
+                    encrypted.guesses.set(i, " " + guess);
+            }
+        }
+        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
+        if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
+            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
+        }
+    }
+
+    public ArrayList<String> undoLetter() {
         Scanner reader = new Scanner(System.in);
         System.out.println("What guess are you unmapping?");
         String remove = reader.next();
-        boolean exists = false;
-        for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
-            if ((" " + remove).equals(encrypted.guesses[i])) {
-                encrypted.guesses[i] = " ?";
-                exists = true;
+        if (encrypted.guesses.contains(" " + remove)){
+            while (encrypted.guesses.contains(" " + remove)){
+                int i = encrypted.guesses.indexOf(" " + remove);
+                encrypted.guesses.set(i," ?");
             }
         }
-
-        if (!exists) {
+        else {
             System.out.println("That letter is not mapped so there is nothing to undo");
         }
         return encrypted.guesses;
@@ -146,18 +112,16 @@ public class Game {
 
 
     public void currentSol() {
-
-        for (int i = 0; i < encrypted.fullEncrypt.length; i++) {
-            if (encrypted.fullEncrypt[i].charAt(0) == ' ') {
-                System.out.print(encrypted.fullEncrypt[i] + " ");
-            } else if (encrypted.fullEncrypt[i].length()==2){
-                System.out.print(encrypted.fullEncrypt[i] + " ");
+        for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
+            if (encrypted.fullEncrypt.get(i).charAt(0) == ' ') {
+                System.out.print(encrypted.fullEncrypt.get(i) + " ");
+            } else if (encrypted.fullEncrypt.get(i).length()==2){
+                System.out.print(encrypted.fullEncrypt.get(i) + " ");
             }
             else {
-                System.out.print(" " + encrypted.fullEncrypt[i] + " ");
+                System.out.print(" " + encrypted.fullEncrypt.get(i) + " ");
             }
         }
-
         System.out.println();
         int j = 1;
         for (int i = 0; i < encrypted.phrase.length(); i++) {
@@ -169,8 +133,8 @@ public class Game {
             } else System.out.print("  ");
         }
         System.out.println();
-        for (int i = 0; i < encrypted.guesses.length; i++) {
-            System.out.print(encrypted.guesses[i] + " ");
+        for (int i = 0; i < encrypted.guesses.size(); i++) {
+            System.out.print(encrypted.guesses.get(i) + " ");
         }
         System.out.println();
         System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times");
@@ -178,14 +142,13 @@ public class Game {
 
     public String parseInput() {
         String[] temp = new String[encrypted.phrase.length()];
-        for (int i = 0; i < encrypted.guesses.length; i++) {
-            if (encrypted.guesses[i] == " ") {
-                temp[i] = encrypted.guesses[i];
+        for (int i = 0; i < encrypted.guesses.size(); i++) {
+            if (Objects.equals(encrypted.guesses.get(i), " ")) {
+                temp[i] = encrypted.guesses.get(i);
             } else {
-                temp[i] = encrypted.guesses[i].trim();
+                temp[i] = encrypted.guesses.get(i).trim();
             }
         }
-        String returned = String.join("", temp);
-        return returned;
+        return String.join("", temp);
     }
 }

@@ -51,7 +51,7 @@ public class Main {
                         switch (input) {
                             case "guess":
                                 game.currentSol();
-                                game.getEncrypted().guesses = game.enterLetter();
+                                game.enterLetter();
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
@@ -95,7 +95,7 @@ public class Main {
                     player.incrementCryptogramsPlayed();
                     player.printDetails();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
-                    input = input = inputReader.nextLine();
+                    input = inputReader.nextLine();
                     break;
                 case "help":
                     System.out.println("new - generates a new cryptogram");
