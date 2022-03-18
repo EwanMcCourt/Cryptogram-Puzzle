@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Cryptogram {
     protected boolean isLetter;
     protected String phrase;
-    protected HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
+    protected HashMap<Character, String> cryptogramAlphabet;
     protected ArrayList<String> fullEncrypt;
     protected ArrayList<String> guesses;
     protected ArrayList<Integer> posGuess;
