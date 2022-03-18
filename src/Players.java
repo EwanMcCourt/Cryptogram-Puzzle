@@ -12,7 +12,7 @@ public class Players {
 
     //Adds a new player to the file
     public static void addPlayer() {
-
+        Players.loadPlayers();
         Scanner scan = new Scanner(System.in);
 
         FileWriter writing = null;
@@ -37,27 +37,53 @@ public class Players {
 
             //Checks if players file is empty before writing to a new line
             if (line == null) {
-                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
             } else {
                 int amountOfPlayers = 1;
-                loadPlayers();
+
 
                 for (int i = 1; i < players.size(); i++) {
                     amountOfPlayers++;
                 }
-                System.out.println(amountOfPlayers);
-                writing.append("\n" + amountOfPlayers + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+
+                writing.append("\n" + amountOfPlayers++ + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0+ " "+0 );
             }
             writing.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        loadPlayers();
+        savePlayers();
     }
 
-    //Currently, loads players unordered
+    public static void savePlayers() {
+        Scanner scan = new Scanner(System.in);
+
+        FileWriter writing = null;
+        try {
+            Scanner input = new Scanner(file);
+            writing = new FileWriter(file);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        //    String line = reader.readLine();
+
+              //  System.out.println(players.size());
+                for (int i = 0; i < players.size(); i++) {
+                    writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
+                    }
+
+            writing.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+        //Currently, loads players unordered
     public static List<Player> loadPlayers() {
         try {
-
+            players.clear();
             Scanner input = new Scanner(file);
 
             while (input.hasNext()) {
@@ -75,6 +101,7 @@ public class Players {
                 int cryptogramsCompleted = input.nextInt();
 
                 int numCorrectGuesses = input.nextInt();
+
 
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
@@ -122,24 +149,33 @@ public class Players {
     }
 
     //loads player based on id(line number)
-    public static String loadPlayer(int id) {
+    public static Player loadPlayer(String givenUsername){
         loadPlayers();
-        String playerInfo = null;
-        Scanner input;
+        Player playerInfo = null;
+        Scanner reader= null;
 
         //Checks for valid id
-        if (id > players.size() || id < 0) {
-            System.out.println("Sorry, that id is invalid.");
-            return playerInfo;
-        }
+//        if (id > players.size() || id < 0) {
+//            System.out.println("Sorry, that id is invalid.");
+//            return playerInfo;
+//        }
         try {
-            input = new Scanner(file);
-            playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
-            input.close();
-        } catch (IOException e) {
-            System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
+            reader = new Scanner(file);
+            for(int i =0;i<players.size();i++){
+
+                if(players.get(i).getUsername().equals(givenUsername)){
+
+                    playerInfo =players.get(i);
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        System.out.println(playerInfo);
+
+        //     playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
+        reader.close();
+        
         return playerInfo;
     }
 
@@ -147,16 +183,16 @@ public class Players {
     public static void displayPlayer(int id) {
         loadPlayers();
         String playerInfo = null;
-        Scanner input;
+
 
         //Checks for valid id
         if (id > players.size() || id < 0) {
             System.out.println("Sorry, that id is invalid.");
         }
         try {
-            input = new Scanner(file);
+
             playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
-            input.close();
+
         } catch (IOException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
         }

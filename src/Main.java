@@ -5,20 +5,43 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner inputReader = new Scanner(System.in);
+
+
+
+        System.out.print("Welcome, would you like to make a new player profile?");
+        String input = inputReader.nextLine();
+
+        if(input.equals("yes")){
+            Players.addPlayer();
+        }
+            System.out.println("What is the username of the account you wish to play as?");
+            input = inputReader.nextLine();
+            Player player = Players.loadPlayer(input);
+//            player.incrementCryptogramsCompleted();
+//            player.incrementCryptogramsPlayed();
 
 
         //user command interface
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
-        Scanner inputReader = new Scanner(System.in);
-        String input = inputReader.nextLine();
+
+         input = inputReader.nextLine();
+
+
+
+
+
+
+
+
         while (!input.equals("exit")) {
             switch (input) {
                 case "new":
                     System.out.println("Would you like to play a number cryptogram?" );
                     System.out.println("(Defaults to letter cryptogram)" );
                     input = inputReader.nextLine();
-                    Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+
                     Game game = new Game(player, input, "./src/phrases.txt");
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
