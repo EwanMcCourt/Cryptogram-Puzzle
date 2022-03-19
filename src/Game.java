@@ -197,7 +197,6 @@ public class Game {
                         for (String s : map){
                             alphabet.put(s.charAt(0), Character.toString(s.charAt(2)));
                         }
-                        ArrayList
                         Cryptogram c = new letterCryptogram(parsed[2], new ArrayList<String>(Arrays.asList(parsed[3])), alphabet);
                         this.encrypted = c;
                     }
