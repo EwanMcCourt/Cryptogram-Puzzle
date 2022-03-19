@@ -162,7 +162,7 @@ public class Game {
             BufferedWriter writing = new BufferedWriter(new FileWriter(saveFile, true));
             ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
             String overwrite = null;
-            String gameInfo = currentPlayer.getUsername()+"~"+encrypted.isLetter+"~"+encrypted.phrase+"~"+encrypted.guesses.toString()+"~"+encrypted.cryptogramAlphabet;
+            String gameInfo = currentPlayer.getUsername()+"~"+encrypted.isLetter+"~"+encrypted.phrase+"~"+parseInput()+"~"+encrypted.cryptogramAlphabet;
             for (int i = 0; i < fileContent.size(); i++){
                 String[] parsed = fileContent.get(i).split("~");
                 if (parsed[0].equals(currentPlayer.getUsername())) {
@@ -197,7 +197,14 @@ public class Game {
                         for (String s : map){
                             alphabet.put(s.charAt(0), Character.toString(s.charAt(2)));
                         }
-                        Cryptogram c = new letterCryptogram(parsed[2], new ArrayList<String>(Arrays.asList(parsed[3])), alphabet);
+                        ArrayList<String> guesses = new ArrayList<>();
+                        for (int j = 0; j < parsed[3].length();j++){
+                            if (parsed[3].charAt(j) == ' '){
+                                guesses.add(Character.toString(parsed[3].charAt(j)));
+                            }
+                            else guesses.add(" "+Character.toString(parsed[3].charAt(j)));
+                        }
+                        Cryptogram c = new letterCryptogram(parsed[2], guesses, alphabet);
                         this.encrypted = c;
                     }
                 }
