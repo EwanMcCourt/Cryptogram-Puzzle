@@ -34,15 +34,20 @@ public class Main {
 
 
 
-
+        Game game;
         while (!input.equals("exit")) {
             switch (input) {
-                case "new":
-                    System.out.println("Would you like to play a number cryptogram?" );
-                    System.out.println("(Defaults to letter cryptogram)" );
-                    input = inputReader.nextLine();
-
-                    Game game = new Game(player, input, "./src/phrases.txt");
+                case "load": case "new":
+                    if (input.equals("load")) {
+                        game = new Game(player);
+                        game.loadGame();
+                    }
+                    else {
+                        System.out.println("Would you like to play a number cryptogram?");
+                        System.out.println("(Defaults to letter cryptogram)");
+                        input = inputReader.nextLine();
+                        game = new Game(player, input, "./src/phrases.txt");
+                    }
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
                     while((game.getEncrypted().parsedGuesses.contains("?") && !input.equals("exit"))){
@@ -50,10 +55,8 @@ public class Main {
                         input = inputReader.nextLine().trim();
                         switch (input) {
                             case "guess":
-                                System.out.println(game.getEncrypted().guesses);
                                 game.currentSol();
                                 game.enterLetter();
-                                System.out.println(game.getEncrypted().guesses);
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy(player.getAccuracy());
@@ -85,7 +88,12 @@ public class Main {
                     }
                     if(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase)){
                         if (input.equals("exit")) {
-                            System.out.println("Fail by exit!");
+                            System.out.println("Woulds you like to save your game? (yes/no)");
+                            input = inputReader.nextLine();
+                            if (input.equals("yes")){
+                                game.saveGame();
+                            }
+                            else System.out.println("Fail by exit!");
                         }
                         else System.out.println("Fail!");
                     }
@@ -111,6 +119,8 @@ public class Main {
                     System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
                     input = inputReader.nextLine();
                     break;
+
+
             }
         }
     }

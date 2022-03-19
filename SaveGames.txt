@@ -1,0 +1,1 @@
+a~true~the quick brown fox jumped over the lazy dog~[ t,  ?,  ?,  ,  ?,  ?,  ?,  ?,  ?,  ,  ?,  ?,  ?,  ?,  ?,  ,  ?,  ?,  ?,  ,  ?,  ?,  ?,  ?,  ?,  ?,  ,  ?,  ?,  ?,  ?,  ,  t,  ?,  ?,  ,  ?,  ?,  ?,  ?,  ,  ?,  ?,  ?]~{a=d, b=g, c=w, d=r, e=a, f=z, g=m, h=k, i=x, j=u, k=j, l=y, m=e, n=o, o=t, p=q, q=n, r=c, s=v, t=s, u=h, v=i, w=l, x=p, y=f, z=b}

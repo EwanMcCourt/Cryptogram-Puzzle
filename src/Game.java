@@ -1,13 +1,13 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Game {
     static HashMap<Game, Player> playerGameMapping;
+    static File saveFile = new File("SaveGames.txt");;
     private Cryptogram encrypted;
     private Player currentPlayer;
 
@@ -20,6 +20,10 @@ public class Game {
             playerGameMapping = new HashMap<>();
             playerGameMapping.put(this, player);
         }
+    }
+
+    public Game(Player player){
+        this.currentPlayer = player;
     }
 
     public Cryptogram getEncrypted() {
@@ -150,5 +154,57 @@ public class Game {
             }
         }
         return String.join("", temp);
+    }
+
+    public void saveGame(){
+        try {
+            Scanner input = new Scanner(System.in);
+            BufferedWriter writing = new BufferedWriter(new FileWriter(saveFile, true));
+            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
+            String overwrite = null;
+            String gameInfo = currentPlayer.getUsername()+"~"+encrypted.isLetter+"~"+encrypted.phrase+"~"+encrypted.guesses.toString()+"~"+encrypted.cryptogramAlphabet;
+            for (int i = 0; i < fileContent.size(); i++){
+                String[] parsed = fileContent.get(i).split("~");
+                if (parsed[0].equals(currentPlayer.getUsername())) {
+                    System.out.println("You already have a saved game, would you like to overwrite? (yes/no)");
+                    overwrite = input.next();
+                    if (overwrite.equals("yes")) {
+                        fileContent.remove(i);
+                        fileContent.add(gameInfo);
+                    }
+                }
+            }
+            if (overwrite == null){
+                fileContent.add(gameInfo);
+            }
+            Files.write(Paths.get(String.valueOf(saveFile)), fileContent, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadGame(){
+        try {
+            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
+            for (int i = 0; i < fileContent.size(); i++){
+                String[] parsed = fileContent.get(i).split("~");
+                if (parsed[0].equals(currentPlayer.getUsername())) {
+                    if (parsed[1].equals("true")){
+                        HashMap<Character, String> alphabet = new HashMap<>();
+                        parsed[4] = parsed[4].substring(1, parsed[4].length()-1);
+                        String[] map = parsed[4].split(" ");
+                        System.out.print(map[map.length-1]);
+                        for (String s : map){
+                            alphabet.put(s.charAt(0), Character.toString(s.charAt(2)));
+                        }
+                        ArrayList
+                        Cryptogram c = new letterCryptogram(parsed[2], new ArrayList<String>(Arrays.asList(parsed[3])), alphabet);
+                        this.encrypted = c;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

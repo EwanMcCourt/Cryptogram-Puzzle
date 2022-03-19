@@ -57,24 +57,17 @@ public class Players {
     }
 
     public static void savePlayers() {
-        Scanner scan = new Scanner(System.in);
-
-        FileWriter writing = null;
+        FileWriter writing;
         try {
             Scanner input = new Scanner(file);
             writing = new FileWriter(file);
             BufferedReader reader = new BufferedReader(new FileReader(file));
-
-        //    String line = reader.readLine();
-
-              //  System.out.println(players.size());
-                for (int i = 0; i < players.size(); i++) {
-                    writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
-                    }
-
+            for (int i = 0; i < players.size(); i++) {
+                writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
+            }
             writing.close();
-
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 

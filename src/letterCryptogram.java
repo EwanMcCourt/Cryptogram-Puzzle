@@ -4,6 +4,21 @@ import java.util.Random;
 
 public class letterCryptogram extends Cryptogram {
 
+    public letterCryptogram(String phrase, ArrayList guesses, HashMap<Character, String> cryptogramAlphabet){
+        this.isLetter = true;
+        this.phrase = phrase;
+        this.guesses = guesses;
+        this.cryptogramAlphabet = cryptogramAlphabet;
+        this.fullEncrypt = new ArrayList<>();
+        for (int i = 0; i < phrase.length(); i++) {
+            if (!(phrase.charAt(i) == ' ')) {
+                this.fullEncrypt.add(cryptogramAlphabet.get(phrase.charAt(i)));
+            }
+            else this.fullEncrypt.add(" ");
+        }
+    }
+
+
     public letterCryptogram(String file)  {
         this.isLetter = true;
         this.phrase = callPhrase(file);
