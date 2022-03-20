@@ -147,9 +147,11 @@ public class GameTests {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
+        String done = "";
         for (int i = 0; i<(encrypted.phrase.length()); i++) {
             InputStream savedStandardInputStream = System.in;
-            if (!(encrypted.phrase.charAt(i) == ' ')) {
+            if (!(encrypted.phrase.charAt(i) == ' ')&&!done.contains(Character.toString(encrypted.phrase.charAt(i)))) {
+                done = done+encrypted.phrase.charAt(i);
                 String simulatedUserInput = encrypted.fullEncrypt.get(i) + System.getProperty("line.separator")
                         + encrypted.phrase.charAt(i) + System.getProperty("line.separator");
 
@@ -168,14 +170,16 @@ public class GameTests {
         Game game = new Game(player, " ", "./src/phrases.txt");
         game.getEncrypted().printDetails();
         game.getEncrypted().parsedGuesses = game.parseInput();
+        String done = "";
         for (int i = 0; i < game.getEncrypted().phrase.length(); i++) {
             String wrongInput = game.getEncrypted().fullEncrypt.get(i);
-            if (wrongInput.equals(" ")) {
+            if (wrongInput.equals(" ")||done.contains(wrongInput)) {
                 continue;
             }
             String simulatedUserInput = wrongInput + System.getProperty("line.separator") + wrongInput + System.getProperty("line.separator");
             System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-            game.getEncrypted().guesses = game.enterLetter();
+            game.enterLetter();
+            done = done + game.getEncrypted().fullEncrypt.get(i);
             game.getEncrypted().parsedGuesses = game.parseInput();
             player.updateAccuracy();
         }
