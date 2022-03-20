@@ -57,14 +57,16 @@ public class Sprint2Tests {
         player.setUsername(pUserName);
         assertEquals(pUserName,player.getUsername());
     }
-    /*@Test
-    public void TestWins() throws IOException {
+    @Test
+    public void TestStats() throws IOException {
         Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
-        for (int i = 0; i < (encrypted.phrase.length()); i++) {
+        String done = "";
+        for (int i = 0; i<(encrypted.phrase.length()); i++) {
             InputStream savedStandardInputStream = System.in;
-            if (!(encrypted.phrase.charAt(i) == ' ')) {
+            if (!(encrypted.phrase.charAt(i) == ' ')&&!done.contains(Character.toString(encrypted.phrase.charAt(i)))) {
+                done = done+encrypted.phrase.charAt(i);
                 String simulatedUserInput = encrypted.fullEncrypt.get(i) + System.getProperty("line.separator")
                         + encrypted.phrase.charAt(i) + System.getProperty("line.separator");
 
@@ -74,8 +76,18 @@ public class Sprint2Tests {
                 game.currentSol();
             }
 
-
+            }
+            assertTrue(testPlayer.getTotalGuesses() > 1);
+    }
+    @Test
+    public void TestLoadPlayer() throws IOException {
+        Player testPlayer = new Player(1, "hardCoded", 0.0, 5, 10, 1, 0);
+        Game game = new Game(testPlayer, "letter", "./src/test.txt");
+        Players.savePlayers();
+        Player testPlayer2 = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        testPlayer2 = Players.loadPlayer("hardCoded");
+        assertTrue(testPlayer.getCryptogramsCompleted() == testPlayer2.getCryptogramsCompleted());
         }
     }
-*/
-}
+
+
