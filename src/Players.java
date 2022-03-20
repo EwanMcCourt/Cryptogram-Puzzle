@@ -89,14 +89,13 @@ public class Players {
 
                 double accuracy = input.nextDouble();
 
-                int totalGuesses = input.nextInt();
+                int numCorrectGuesses = input.nextInt();
 
-                int cryptogramsPlayed = input.nextInt();
+                int totalGuesses = input.nextInt();
 
                 int cryptogramsCompleted = input.nextInt();
 
-                int numCorrectGuesses = input.nextInt();
-
+                int cryptogramsPlayed = input.nextInt();
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
             }
@@ -111,24 +110,21 @@ public class Players {
     //Currently, displays players unordered
     public static void displayPlayers() {
         try {
-
             Scanner input = new Scanner(file);
-
             while (input.hasNext()) {
-
                 int id = input.nextInt();
 
                 String username = input.next();
 
                 double accuracy = input.nextDouble();
 
-                int totalGuesses = input.nextInt();
+                int numCorrectGuesses = input.nextInt();
 
-                int cryptogramsPlayed = input.nextInt();
+                int totalGuesses = input.nextInt();
 
                 int cryptogramsCompleted = input.nextInt();
 
-                int numCorrectGuesses = input.nextInt();
+                int cryptogramsPlayed = input.nextInt();
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
             }

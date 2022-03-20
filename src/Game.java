@@ -232,4 +232,21 @@ public class Game {
             return false;
         }
     }
+
+    public void removeSave(){
+        try {
+            ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
+            for (int i = 0; i<fileContent.size();i++){
+                String[] parsed = fileContent.get(i).split("~");
+                if (parsed[0].equals(currentPlayer.getUsername())){
+                    fileContent.remove(i);
+                    i--;
+                }
+            }
+            Files.write(Paths.get(String.valueOf(saveFile)), fileContent, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

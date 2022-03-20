@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner inputReader = new Scanner(System.in);
 
-        System.out.print("Welcome, would you like to make a new player profile? ");
+        System.out.print("Welcome, would you like to make a new player profile? (yes/no) ");
         String input;
         Player player;
         do {
@@ -19,7 +19,7 @@ public class Main {
             System.out.println("What is the username of the account you wish to play as? ");
             input = inputReader.nextLine();
             player = Players.loadPlayer(input);
-            if (player == null) System.out.print("Player does not exist, would you like to make a new player profile?");
+            if (player == null) System.out.print("Player does not exist, would you like to make a new player profile? (yes/no) ");
         }
         while (player == null); //makes sure the player is either a new one or one that exists
 
@@ -48,7 +48,7 @@ public class Main {
                     }
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
-                    while((game.getEncrypted().parsedGuesses.contains("?") && !input.equals("exit"))){
+                    while(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit")){
                         System.out.println("Do you want to add a guess or undo a guess?");
                         input = inputReader.nextLine().trim();
                         switch (input) {
@@ -58,6 +58,9 @@ public class Main {
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
                                 player.updateAccuracy();
+                                if (!(game.getEncrypted().parsedGuesses.contains("?"))&&!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase)){
+                                    System.out.println("Incorrect solution! Keep trying..");
+                                }
                                 break;
                             case "undo":      //User selects "undo" which reverts their previous guess
                                 game.currentSol();
@@ -83,21 +86,19 @@ public class Main {
                                 break;
                         }
                     }
-                    if(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase)){
-                        if (input.equals("exit")) {
-                            System.out.println("Woulds you like to save your game? (yes/no)");
-                            input = inputReader.nextLine();
-                            if (input.equals("yes")){
-                                game.saveGame();      //Allows user to save their cryptogram game
-                            }
-                            else System.out.println("Fail by exit!");
+                    if (input.equals("exit")) {
+                        System.out.println("Would you like to save your game? (yes/no)");
+                        input = inputReader.nextLine();
+                        if (input.equals("yes")){
+                            game.saveGame();      //Allows user to save their cryptogram game
                         }
-                        else System.out.println("Fail!");
+                        else System.out.println("Fail by exit!");
                     }
                     else{
                     System.out.println("Congrats you did it!!!");     //Message upon completion of a cryptogram game
                     player.incrementCryptogramsCompleted();}
                     player.printDetails();
+                    game.removeSave();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
                     input = inputReader.nextLine();  //Allows user to try another cryptogram or exit the program
                     break;
