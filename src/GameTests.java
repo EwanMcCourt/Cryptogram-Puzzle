@@ -177,7 +177,7 @@ public class GameTests {
             System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
             game.getEncrypted().guesses = game.enterLetter();
             game.getEncrypted().parsedGuesses = game.parseInput();
-            player.updateAccuracy(player.getAccuracy());
+            player.updateAccuracy();
         }
         if (!(game.getEncrypted().parsedGuesses.contains("?"))) {
             System.out.println("fail!");

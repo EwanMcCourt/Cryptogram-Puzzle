@@ -48,9 +48,9 @@ public class Player {
     }    //Updating the username
 
     public double getAccuracy() {
-        return this.accuracy;                               //Updating the accuracy
+        return Math.round(this.accuracy * 100.0) / 100.0;
     }
-    public void updateAccuracy(double accuracy) {
+    public void updateAccuracy() {
         this.accuracy = (double) numCorrectGuesses / (double) totalGuesses * 100;
         Players.savePlayers();
     }

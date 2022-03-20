@@ -31,7 +31,7 @@ public class Main {
                 case "load": case "new":
                     if (input.equals("load")) {
                         game = new Game(player);
-                        game.loadGame();            //Loads a preciously saved game
+                        game.loadGame();            //Loads a previously saved game
                     }
                     else {
                         System.out.println("Would you like to play a number cryptogram?");
@@ -50,7 +50,7 @@ public class Main {
                                 game.enterLetter();
                                 game.currentSol();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
-                                player.updateAccuracy(player.getAccuracy());
+                                player.updateAccuracy();
                                 break;
                             case "undo":      //User selects "undo" which reverts their previous guess
                                 game.currentSol();
@@ -73,7 +73,7 @@ public class Main {
                             case "exit":
                                 break;
                             default:
-                                System.out.println("Not guess or undo, try again!"); //Error message for invalid guess
+                                System.out.println("Not guess or undo, try again!"); //Error message for invalid input
                                 break;
                         }
                     }

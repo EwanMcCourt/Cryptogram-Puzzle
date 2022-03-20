@@ -189,22 +189,27 @@ public class Game {
             for (int i = 0; i < fileContent.size(); i++){
                 String[] parsed = fileContent.get(i).split("~");
                 if (parsed[0].equals(currentPlayer.getUsername())) {
-                    if (parsed[1].equals("true")){
-                        HashMap<Character, String> alphabet = new HashMap<>();
-                        parsed[4] = parsed[4].substring(1, parsed[4].length()-1);
-                        String[] map = parsed[4].split(" ");
-                        System.out.print(map[map.length-1]);
-                        for (String s : map){
-                            alphabet.put(s.charAt(0), Character.toString(s.charAt(2)));
+                    HashMap<Character, String> alphabet = new HashMap<>();
+                    parsed[4] = parsed[4].substring(1, parsed[4].length()-1);
+                    String[] map = parsed[4].split(", ");
+                    System.out.print(map[map.length-1]);
+                    for (String s : map){
+                        String[] key = s.split("=");
+                        alphabet.put(key[0].charAt(0), key[1]);
+                    }
+                    ArrayList<String> guesses = new ArrayList<>();
+                    for (int j = 0; j < parsed[3].length();j++){
+                        if (parsed[3].charAt(j) == ' '){
+                            guesses.add(Character.toString(parsed[3].charAt(j)));
                         }
-                        ArrayList<String> guesses = new ArrayList<>();
-                        for (int j = 0; j < parsed[3].length();j++){
-                            if (parsed[3].charAt(j) == ' '){
-                                guesses.add(Character.toString(parsed[3].charAt(j)));
-                            }
-                            else guesses.add(" "+Character.toString(parsed[3].charAt(j)));
-                        }
+                        else guesses.add(" "+Character.toString(parsed[3].charAt(j)));
+                    }
+                    if (parsed[1].equals("true")) {
                         Cryptogram c = new letterCryptogram(parsed[2], guesses, alphabet); //Allows user to load a previously saved game
+                        this.encrypted = c;
+                    }
+                    else {
+                        Cryptogram c = new numberCryptogram(parsed[2], guesses, alphabet); //Allows user to load a previously saved game
                         this.encrypted = c;
                     }
                 }

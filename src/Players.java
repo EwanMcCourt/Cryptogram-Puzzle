@@ -25,6 +25,10 @@ public class Players {
 
             System.out.println("Please enter your unique username");
             String username = scan.nextLine();   //User inputs their username
+            while (username.length() == 0){
+                System.out.println("Invalid input, please try again");
+                username = scan.nextLine();
+            }
 
             //Checks if username already exists
             while (input.hasNext()) {

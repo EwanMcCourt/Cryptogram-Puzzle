@@ -4,6 +4,20 @@ import java.util.Random;
 
 public class numberCryptogram extends Cryptogram {
 
+    public numberCryptogram(String phrase, ArrayList guesses, HashMap<Character, String> cryptogramAlphabet){
+        this.isLetter = false;
+        this.phrase = phrase;
+        this.guesses = guesses;
+        this.cryptogramAlphabet = cryptogramAlphabet;
+        this.fullEncrypt = new ArrayList<>();
+        for (int i = 0; i < phrase.length(); i++) {
+            if (!(phrase.charAt(i) == ' ')) {
+                this.fullEncrypt.add(cryptogramAlphabet.get(phrase.charAt(i)));
+            }
+            else this.fullEncrypt.add(" ");
+        }
+    }
+
     public numberCryptogram(String file) {
         this.isLetter = false;
         this.phrase = callPhrase(file);
