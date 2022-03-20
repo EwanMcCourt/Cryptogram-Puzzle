@@ -143,7 +143,7 @@ public class Players {
     }
 
     //loads player based on id(line number)
-    public static Player loadPlayer(String givenUsername){
+    public static Player loadPlayer(String givenUsername) throws IOException {
         loadPlayers();
         Player playerInfo = null;
         Scanner reader= null;
@@ -167,10 +167,10 @@ public class Players {
             e.printStackTrace();
         }
 
-        //     playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
+            //playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get();
         reader.close();
         
-        return playerInfo;
+            return playerInfo;
     }
 
     //displays player based on id(line number)

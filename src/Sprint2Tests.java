@@ -26,7 +26,7 @@ public class Sprint2Tests {
 
 
     }
-    /*
+
     @Test
     public void TestLoad() throws IOException {
         Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
@@ -45,9 +45,9 @@ public class Sprint2Tests {
         game.saveGame();
         Game game2 = new Game(player);
         game2.loadGame();
-        assertEquals(game.getEncrypted().guesses,game2.getEncrypted().guesses);
+        assertEquals(game.getEncrypted().fullEncrypt,game2.getEncrypted().fullEncrypt);
     }
-    */
+
 
     @Test
     public void TestUserName() throws IOException {
@@ -86,7 +86,7 @@ public class Sprint2Tests {
         Players.savePlayers();
         Player testPlayer2 = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
         testPlayer2 = Players.loadPlayer("hardCoded");
-        assertTrue(testPlayer.getCryptogramsCompleted() == testPlayer2.getCryptogramsCompleted());
+        assertEquals(testPlayer.getCryptogramsCompleted(),testPlayer2.getCryptogramsCompleted());
         }
     }
 
