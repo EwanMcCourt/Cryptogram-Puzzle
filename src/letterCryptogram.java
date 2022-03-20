@@ -18,7 +18,6 @@ public class letterCryptogram extends Cryptogram {
         }
     }
 
-
     public letterCryptogram(String file)  {
         this.isLetter = true;
         this.phrase = callPhrase(file);
@@ -26,7 +25,6 @@ public class letterCryptogram extends Cryptogram {
         this.guesses = new ArrayList<>();
         this.parsedGuesses = null;
         this.cryptogramAlphabet = new HashMap<>();
-
 
         ArrayList<String> letters = new ArrayList<>();
         for (int i = 97; i <= 122; i++){

@@ -87,8 +87,6 @@ public class Player {
         Players.savePlayers();
     }
 
-
-
     public void printDetails() {
         System.out.println("Username " + getUsername());
         System.out.println("Number of total guesses: " + getTotalGuesses());

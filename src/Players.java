@@ -24,7 +24,7 @@ public class Players {
 
 
             System.out.println("Please enter your unique username");
-            String username = scan.nextLine();
+            String username = scan.nextLine();   //User inputs their username
 
             //Checks if username already exists
             while (input.hasNext()) {
@@ -40,7 +40,6 @@ public class Players {
                 writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
             } else {
                 int amountOfPlayers = 1;
-
 
                 for (int i = 1; i < players.size(); i++) {
                     amountOfPlayers++;
@@ -60,7 +59,7 @@ public class Players {
         FileWriter writing;
         try {
             Scanner input = new Scanner(file);
-            writing = new FileWriter(file);
+            writing = new FileWriter(file);   //Saves the users details
             BufferedReader reader = new BufferedReader(new FileReader(file));
             for (int i = 0; i < players.size(); i++) {
                 writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
@@ -70,7 +69,6 @@ public class Players {
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
         //Currently, loads players unordered
@@ -94,7 +92,6 @@ public class Players {
                 int cryptogramsCompleted = input.nextInt();
 
                 int numCorrectGuesses = input.nextInt();
-
 
 
                 players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
@@ -176,7 +173,6 @@ public class Players {
     public static void displayPlayer(int id) {
         loadPlayers();
         String playerInfo = null;
-
 
         //Checks for valid id
         if (id > players.size() || id < 0) {

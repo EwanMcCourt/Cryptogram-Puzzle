@@ -15,7 +15,7 @@ public class Game {
         this.encrypted = Cryptogram.newCryptogram(type, file);
         this.currentPlayer = player;
         try {
-            playerGameMapping.put(this, player);
+            playerGameMapping.put(this, player);         //Maps user details to the new game
         } catch (NullPointerException e) {
             playerGameMapping = new HashMap<>();
             playerGameMapping.put(this, player);
@@ -35,7 +35,7 @@ public class Game {
         String target;
         String guess;
         String type;
-        if (encrypted.isLetter) type = "letter";
+        if (encrypted.isLetter) type = "letter"; //Allows user to guess a letter and checks if it is an acceptable input
         else type = "number";
         System.out.println("What letter do you want to guess?");
         target = object.next();
@@ -46,18 +46,18 @@ public class Game {
         }
         while (!encrypted.fullEncrypt.contains(target)) {
             System.out.println("That "+type+" isn't in this cryptogram try again!");
-            System.out.println("What "+type+" do you want to guess?");
+            System.out.println("What "+type+" do you want to guess?");  //Message for when a guess is wrong
             target = object.next();
         }
         System.out.println("What is your guess?");
         guess = object.next();
         while (guess.length() > 1) {
-            System.out.println("Your guess is too long!!");
+            System.out.println("Your guess is too long!!");    //Message for if the guess it too long
             System.out.println("What is your guess?");
             guess = object.next();
         }
         while (encrypted.guesses.contains(" " + guess)) {
-            System.out.println("This letter has already been guessed");
+            System.out.println("This letter has already been guessed");  //Message for when a guess is repeated
             System.out.println("What is your guess?");
             guess = object.next();
         }
@@ -65,7 +65,7 @@ public class Game {
         if (!encrypted.guesses.get(encrypted.fullEncrypt.indexOf(target)).equals(" ?")) {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
             conform = object.next();
-            while (!conform.equals("yes")&&!conform.equals("no")){
+            while (!conform.equals("yes")&&!conform.equals("no")){      //Allows user to change their previous guess
                 System.out.println("Invalid input, try again...");
                 conform = object.next();
             }
@@ -91,7 +91,7 @@ public class Game {
     public ArrayList<String> undoLetter() {
         Scanner reader = new Scanner(System.in);
         System.out.println("What guess are you unmapping?");
-        String remove = reader.next();
+        String remove = reader.next();                  //Removes a previous guess (unmaps the letter)
         if (encrypted.guesses.contains(" " + remove)){
             while (encrypted.guesses.contains(" " + remove)){
                 int i = encrypted.guesses.indexOf(" " + remove);
@@ -168,14 +168,14 @@ public class Game {
                 if (parsed[0].equals(currentPlayer.getUsername())) {
                     System.out.println("You already have a saved game, would you like to overwrite? (yes/no)");
                     overwrite = input.next();
-                    if (overwrite.equals("yes")) {
+                    if (overwrite.equals("yes")) {       //Allows user to save their current game over the previous one
                         fileContent.remove(i);
                         fileContent.add(gameInfo);
                     }
                 }
             }
             if (overwrite == null){
-                fileContent.add(gameInfo);
+                fileContent.add(gameInfo);       //Allows user to save game when there is not already a saved game
             }
             Files.write(Paths.get(String.valueOf(saveFile)), fileContent, StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -204,7 +204,7 @@ public class Game {
                             }
                             else guesses.add(" "+Character.toString(parsed[3].charAt(j)));
                         }
-                        Cryptogram c = new letterCryptogram(parsed[2], guesses, alphabet);
+                        Cryptogram c = new letterCryptogram(parsed[2], guesses, alphabet); //Allows user to load a previously saved game
                         this.encrypted = c;
                     }
                 }

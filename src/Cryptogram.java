@@ -20,7 +20,7 @@ public class Cryptogram {
 
     static Cryptogram newCryptogram(String type, String file) {
         if (type.equals("yes")){
-            return new numberCryptogram(file);
+            return new numberCryptogram(file);                         //Creates a new cryptogram
         }
         else {
             return new letterCryptogram(file);
@@ -30,7 +30,7 @@ public class Cryptogram {
     public void printDetails() {
         System.out.println("phrase is " + phrase);
         System.out.print(cryptogramAlphabet.keySet());
-        System.out.println();
+        System.out.println();                                        //Displays cryptogram details
         System.out.print("[");
         for (Character i : cryptogramAlphabet.keySet()) {
             System.out.print(cryptogramAlphabet.get(i)+ ", ");
