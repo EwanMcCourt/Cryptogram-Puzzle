@@ -1,8 +1,6 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 
 public class Game {
@@ -183,16 +181,20 @@ public class Game {
         }
     }
 
-    public void loadGame(){
+    public boolean loadGame(){
         try {
             ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
             for (int i = 0; i < fileContent.size(); i++){
                 String[] parsed = fileContent.get(i).split("~");
-                if (parsed[0].equals(currentPlayer.getUsername())) {
+                if (parsed.length != 5){ //if line does not have 5 values it is removed from file
+                    fileContent.remove(i);
+                    Files.write(Paths.get(String.valueOf(saveFile)), fileContent, StandardCharsets.UTF_8);
+                    i--;
+                }
+                else if (parsed[0].equals(currentPlayer.getUsername())) { //converts lines from file back into cryptogram objects
                     HashMap<Character, String> alphabet = new HashMap<>();
                     parsed[4] = parsed[4].substring(1, parsed[4].length()-1);
                     String[] map = parsed[4].split(", ");
-                    System.out.print(map[map.length-1]);
                     for (String s : map){
                         String[] key = s.split("=");
                         alphabet.put(key[0].charAt(0), key[1]);
@@ -212,10 +214,22 @@ public class Game {
                         Cryptogram c = new numberCryptogram(parsed[2], guesses, alphabet); //Allows user to load a previously saved game
                         this.encrypted = c;
                     }
+                    return true;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Saved game not found!");
+            return false;
+        } catch (Exception e) {
+            try {
+                if (e.getClass() == NoSuchFileException.class) { //creates new file if none are present
+                    System.out.println("Error, no save file, attempting to create...");
+                    saveFile.createNewFile();
+                } else { //other errors will be coming from corrupt files
+                    System.out.println("Error, corrupt file.");
+                }
+            }
+            catch (IOException ex){}
+            return false;
         }
     }
 }

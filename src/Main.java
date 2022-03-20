@@ -8,32 +8,39 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner inputReader = new Scanner(System.in);
 
-        System.out.print("Welcome, would you like to make a new player profile?");
-        String input = inputReader.nextLine();    //User can create a new profile
-
-        if(input.equals("yes")){
-            Players.addPlayer();
+        System.out.print("Welcome, would you like to make a new player profile? ");
+        String input;
+        Player player;
+        do {
+            input = inputReader.nextLine();
+            if (input.equals("yes")) { //new player
+                Players.addPlayer();
+            }
+            System.out.println("What is the username of the account you wish to play as? ");
+            input = inputReader.nextLine();
+            player = Players.loadPlayer(input);
+            if (player == null) System.out.print("Player does not exist, would you like to make a new player profile?");
         }
-            System.out.println("What is the username of the account you wish to play as?");
-            input = inputReader.nextLine();           //Creates username from user input
-            Player player = Players.loadPlayer(input);
-//            player.incrementCryptogramsCompleted();
-//            player.incrementCryptogramsPlayed();
+        while (player == null); //makes sure the player is either a new one or one that exists
+
 
         //user command interface
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
-
-         input = inputReader.nextLine();
-
+        input = inputReader.nextLine();
         Game game;
         while (!input.equals("exit")) {
             switch (input) {    //"exit" will exit the interface and program
                 case "load": case "new":
                     if (input.equals("load")) {
                         game = new Game(player);
-                        game.loadGame();            //Loads a previously saved game
+                        if(!game.loadGame()){
+                            System.out.print("Enter new to start a new game or help for other commands ");
+                            input = inputReader.nextLine();
+                            break;
+                        }
                     }
                     else {
+                        player.incrementCryptogramsPlayed();
                         System.out.println("Would you like to play a number cryptogram?");
                         System.out.println("(Defaults to letter cryptogram)");
                         input = inputReader.nextLine();
@@ -64,16 +71,15 @@ public class Main {
                                     break;
                                 }
                             case "help":    //Displays information on what the user can prompt with their inputs
-                                System.out.println("new - generates a new cryptogram");
                                 System.out.println("guess - begins a guess for the cryptogram");
                                 System.out.println("undo - undos the last guess in the cryptogram");
                                 System.out.println("help - shows list of commands and their function");
-                                System.out.println("exit - exits the program");
+                                System.out.println("exit - exits to main menu");
                                 break;
                             case "exit":
                                 break;
                             default:
-                                System.out.println("Not guess or undo, try again!"); //Error message for invalid input
+                                System.out.println("command not found, use 'help' for a list of commands"); //Error message for invalid input
                                 break;
                         }
                     }
@@ -91,15 +97,13 @@ public class Main {
                     else{
                     System.out.println("Congrats you did it!!!");     //Message upon completion of a cryptogram game
                     player.incrementCryptogramsCompleted();}
-                    player.incrementCryptogramsPlayed();
                     player.printDetails();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
                     input = inputReader.nextLine();  //Allows user to try another cryptogram or exit the program
                     break;
                 case "help":       //Displays information on what the user can prompt with their inputs
                     System.out.println("new - generates a new cryptogram");
-                    System.out.println("guess - begins a guess for the cryptogram");
-                    System.out.println("undo - undos the last guess in the cryptogram");
+                    System.out.println("load - loads a previously saved cryptogram");
                     System.out.println("help - shows list of commands and their function");
                     System.out.println("exit - exits the program");
                     System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
