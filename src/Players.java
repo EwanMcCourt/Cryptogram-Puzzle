@@ -12,7 +12,7 @@ public class Players {
 
     //Adds a new player to the file
     public static void addPlayer() {
-
+        Players.loadPlayers();
         Scanner scan = new Scanner(System.in);
 
         FileWriter writing = null;
@@ -24,7 +24,11 @@ public class Players {
 
 
             System.out.println("Please enter your unique username");
-            String username = scan.nextLine();
+            String username = scan.nextLine();   //User inputs their username
+            while (username.length() == 0){
+                System.out.println("Invalid input, please try again");
+                username = scan.nextLine();
+            }
 
             //Checks if username already exists
             while (input.hasNext()) {
@@ -35,33 +39,46 @@ public class Players {
                 }
             }
 
-
             //Checks if players file is empty before writing to a new line
             if (line == null) {
-                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
             } else {
                 int amountOfPlayers = 1;
-                loadPlayers();
 
                 for (int i = 1; i < players.size(); i++) {
                     amountOfPlayers++;
-
                 }
-                System.out.println(amountOfPlayers);
-                writing.append("\n" + amountOfPlayers + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0);
+
+                writing.append("\n" + amountOfPlayers++ + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0+ " "+0 );
             }
             writing.close();
-
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loadPlayers();
+        savePlayers();
+    }
+
+    public static void savePlayers() {
+        FileWriter writing;
+        try {
+            Scanner input = new Scanner(file);
+            writing = new FileWriter(file);   //Saves the users details
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            for (int i = 0; i < players.size(); i++) {
+                writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
+            }
+            writing.close();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //Currently, loads players unordered
+        //Currently, loads players unordered
     public static List<Player> loadPlayers() {
         try {
-
-
+            players.clear();
             Scanner input = new Scanner(file);
 
             while (input.hasNext()) {
@@ -95,7 +112,6 @@ public class Players {
     public static void displayPlayers() {
         try {
 
-
             Scanner input = new Scanner(file);
 
             while (input.hasNext()) {
@@ -127,42 +143,49 @@ public class Players {
     }
 
     //loads player based on id(line number)
-    public static String loadPlayer(int id) {
+    public static Player loadPlayer(String givenUsername){
         loadPlayers();
-        String playerInfo = null;
-        Scanner input;
+        Player playerInfo = null;
+        Scanner reader= null;
 
         //Checks for valid id
-        if (id > players.size() || id < 0) {
-            System.out.println("Sorry, that id is invalid.");
-            return playerInfo;
-        }
+//        if (id > players.size() || id < 0) {
+//            System.out.println("Sorry, that id is invalid.");
+//            return playerInfo;
+//        }
         try {
-            input = new Scanner(file);
-            playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
-            input.close();
-        } catch (IOException e) {
-            System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
+            reader = new Scanner(file);
+            for(int i =0;i<players.size();i++){
+
+                if(players.get(i).getUsername().equals(givenUsername)){
+
+                    playerInfo =players.get(i);
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        System.out.println(playerInfo);
+
+        //     playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
+        reader.close();
+        
         return playerInfo;
     }
-
 
     //displays player based on id(line number)
     public static void displayPlayer(int id) {
         loadPlayers();
         String playerInfo = null;
-        Scanner input;
 
         //Checks for valid id
         if (id > players.size() || id < 0) {
             System.out.println("Sorry, that id is invalid.");
         }
         try {
-            input = new Scanner(file);
+
             playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
-            input.close();
+
         } catch (IOException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
         }
