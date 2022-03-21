@@ -64,7 +64,7 @@ public class Cryptogram {
             for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
             return phraseReader.readLine();
         } catch (IOException | IllegalArgumentException e) {
-            System.out.print("Error, no phrase file!");            //Displays error message
+            System.out.println("Error, no phrase file!");            //Displays error message
             return null;
         }
     }

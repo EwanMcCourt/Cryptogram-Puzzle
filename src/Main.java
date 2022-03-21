@@ -96,9 +96,10 @@ public class Main {
                     }
                     else{
                     System.out.println("Congrats you did it!!!");     //Message upon completion of a cryptogram game
-                    player.incrementCryptogramsCompleted();}
+                    player.incrementCryptogramsCompleted();
+                    game.removeSave();}
+                    Players.savePlayers();
                     player.printDetails();
-                    game.removeSave();
                     System.out.println("Type new to make a new cryptogram or type exit to leave.");
                     input = inputReader.nextLine();  //Allows user to try another cryptogram or exit the program
                     break;
