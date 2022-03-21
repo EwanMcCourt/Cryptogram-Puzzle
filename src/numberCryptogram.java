@@ -38,7 +38,7 @@ public class numberCryptogram extends Cryptogram {
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
-            num = rand.nextInt(0, numbers.size());
+            num = rand.nextInt(numbers.size());
             cryptogramAlphabet.put(alphabet, numbers.get(num));
             numbers.remove(num);
             alphabet++;

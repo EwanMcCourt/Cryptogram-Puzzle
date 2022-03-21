@@ -52,12 +52,10 @@ public class Player {
     }
     public void updateAccuracy() {
         this.accuracy = (double) numCorrectGuesses / (double) totalGuesses * 100;
-        Players.savePlayers();
     }
 
     public void updatenumCorrectGuesses(int numCorrectGuesses) {
         this.numCorrectGuesses = numCorrectGuesses;
-        Players.savePlayers();
     }
     public int getnumCorrectGuesses() {
         return this.numCorrectGuesses;                        //Updating the number of correct guesses
@@ -68,7 +66,6 @@ public class Player {
     }
     public void updateTotalGuesses(int totalGuesses) {
         this.totalGuesses = totalGuesses;
-        Players.savePlayers();
     }
 
     public int getCryptogramsPlayed() {
@@ -76,7 +73,6 @@ public class Player {
     }
     public void incrementCryptogramsPlayed() {
         this.cryptogramsPlayed++;
-        Players.savePlayers();
     }
 
     public int getCryptogramsCompleted() {
@@ -84,7 +80,6 @@ public class Player {
     }
     public void incrementCryptogramsCompleted() {
         this.cryptogramsCompleted++;
-        Players.savePlayers();
     }
 
     public void printDetails() {

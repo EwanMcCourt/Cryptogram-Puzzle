@@ -168,7 +168,7 @@ public class Game {
                     overwrite = input.next();
                     if (overwrite.equals("yes")) {       //Allows user to save their current game over the previous one
                         fileContent.remove(i);
-                        fileContent.add(gameInfo);
+                        fileContent.add(i, gameInfo);
                     }
                 }
             }
