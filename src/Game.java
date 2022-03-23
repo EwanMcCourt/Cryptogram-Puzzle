@@ -254,5 +254,29 @@ public class Game {
         }
     }
 
+    public void hint() {
+        String letterToMap = null;
+        for (int i = 0; i < getEncrypted().phrase.length(); i++) {
+            if (Objects.equals(getEncrypted().guesses.get(i), " ")) {
+                continue;
+            } else if (!Objects.equals(getEncrypted().guesses.get(i), " ?")) {
+                if (getEncrypted().guesses.get(i).trim().equals(String.valueOf(getEncrypted().phrase.charAt(i)))) {
+                    continue;
+                }
+                letterToMap = String.valueOf(getEncrypted().phrase.charAt(i));
+                break;
+
+            }
+            letterToMap = String.valueOf(getEncrypted().phrase.charAt(i));
+            break;
+        }
+        for (int i = 0; i < getEncrypted().phrase.length(); i++) {
+            if (Objects.equals(String.valueOf(getEncrypted().phrase.charAt(i)), letterToMap)) {
+                getEncrypted().guesses.set(i, " " + String.valueOf(getEncrypted().phrase.charAt(i)));
+            }
+            System.out.println(String.valueOf(getEncrypted().fullEncrypt.get(i) + " has been solved as " + letterToMap));
+        }
+    }
+
 
 }
