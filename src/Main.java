@@ -26,7 +26,7 @@ public class Main {
 
         //user command interface
 
-        System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
+        System.out.print("Welcome, would you like to load a cryptogram, start a new game or display the leaderboard? ");
         input = inputReader.nextLine();
         Game game;
         boolean solvedByAi = false;
