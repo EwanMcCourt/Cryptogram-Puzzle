@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -82,6 +83,7 @@ public class Main {
                                 System.out.println("help - shows list of commands and their function");
                                 System.out.println("hint  - gives you a letter for free");
                                 System.out.println("solve - solves the cryptogram for you");
+                                System.out.println("frequencies - gives you the frequencies of letters in your cryptogram plus the percentage in the english language");
                                 System.out.println("exit - exits to main menu");
                                 break;
                             case "solve":
@@ -92,6 +94,10 @@ public class Main {
                             case "hint":
                                 game.hint();
                                 game.getEncrypted().parsedGuesses = game.parseInput();
+                                game.currentSol();
+                            case "frequencies":
+                                game.getEncrypted().calcFrequencies();
+                                game.getEncrypted().getFrequencies();
                                 game.currentSol();
                             case "exit":
                                 break;

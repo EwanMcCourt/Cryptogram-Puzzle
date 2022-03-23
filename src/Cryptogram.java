@@ -16,13 +16,13 @@ public class Cryptogram {
     protected ArrayList<Integer> posGuess;
     protected String parsedGuesses;
 
-    public Cryptogram() {}
+    public Cryptogram() {
+    }
 
     static Cryptogram newCryptogram(String type, String file) {
-        if (type.equals("yes")){
+        if (type.equals("yes")) {
             return new numberCryptogram(file);                         //Creates a new cryptogram
-        }
-        else {
+        } else {
             return new letterCryptogram(file);
         }
     }
@@ -33,12 +33,12 @@ public class Cryptogram {
         System.out.println();                                        //Displays cryptogram details
         System.out.print("[");
         for (Character i : cryptogramAlphabet.keySet()) {
-            System.out.print(cryptogramAlphabet.get(i)+ ", ");
+            System.out.print(cryptogramAlphabet.get(i) + ", ");
         }
         System.out.println("]");
     }
 
-    HashMap<String, Integer> getFrequencies() {
+    public void getFrequencies() {
         HashMap<String, Integer> frequencies = new HashMap<>();
         ArrayList<String> charArray = fullEncrypt;
         for (int i = 0; i < charArray.size(); i++) {
@@ -53,7 +53,58 @@ public class Cryptogram {
                 frequencies.put(fullEncrypt.get(i), total + 1);
             }
         }
-        return frequencies;
+        System.out.println("Letter:");
+        for (String i : frequencies.keySet()) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        System.out.println("Appearences:");
+        for (String i : frequencies.keySet()) {
+            System.out.print(frequencies.get(i) + " ");
+        }
+        System.out.println();
+    }
+
+    public void calcFrequencies() {
+        System.out.println("The common proportion of letter frequencies in the English Language");
+        HashMap<String, Double> frequencies = new HashMap<>();
+        ArrayList<String> charArray = fullEncrypt;
+        frequencies.put("a", 8.5);
+        frequencies.put("b", 2.0);
+        frequencies.put("c", 4.5);
+        frequencies.put("d", 3.4);
+        frequencies.put("e", 11.2);
+        frequencies.put("f", 1.8);
+        frequencies.put("g", 2.5);
+        frequencies.put("h", 3.0);
+        frequencies.put("i", 7.5);
+        frequencies.put("j", 0.2);
+        frequencies.put("k", 1.1);
+        frequencies.put("l", 5.5);
+        frequencies.put("m", 3.0);
+        frequencies.put("n", 6.6);
+        frequencies.put("o", 7.1);
+        frequencies.put("p", 3.2);
+        frequencies.put("q", 0.2);
+        frequencies.put("r", 7.6);
+        frequencies.put("s", 5.7);
+        frequencies.put("t", 7.0);
+        frequencies.put("u", 3.6);
+        frequencies.put("v", 1.0);
+        frequencies.put("w", 1.3);
+        frequencies.put("x", 0.3);
+        frequencies.put("y", 1.8);
+        frequencies.put("z", 0.3);
+        System.out.println("Letter:");
+        for (String i : frequencies.keySet()) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        System.out.println("Percentage:");
+        for (String i : frequencies.keySet()) {
+            System.out.print(frequencies.get(i) + "% ");
+        }
+        System.out.println();
     }
 
     public String callPhrase(String file) {
