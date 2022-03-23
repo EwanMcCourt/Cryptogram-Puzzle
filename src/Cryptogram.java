@@ -10,9 +10,9 @@ import java.util.HashMap;
 public class Cryptogram {
     protected boolean isLetter;
     protected String phrase;
-    protected HashMap<Character, String> cryptogramAlphabet = new HashMap<>();
-    protected String[] fullEncrypt;
-    protected String[] guesses;
+    protected HashMap<Character, String> cryptogramAlphabet;
+    protected ArrayList<String> fullEncrypt;
+    protected ArrayList<String> guesses;
     protected ArrayList<Integer> posGuess;
     protected String parsedGuesses;
 
@@ -20,7 +20,7 @@ public class Cryptogram {
 
     static Cryptogram newCryptogram(String type, String file) {
         if (type.equals("yes")){
-            return new numberCryptogram(file);
+            return new numberCryptogram(file);                         //Creates a new cryptogram
         }
         else {
             return new letterCryptogram(file);
@@ -30,7 +30,7 @@ public class Cryptogram {
     public void printDetails() {
         System.out.println("phrase is " + phrase);
         System.out.print(cryptogramAlphabet.keySet());
-        System.out.println();
+        System.out.println();                                        //Displays cryptogram details
         System.out.print("[");
         for (Character i : cryptogramAlphabet.keySet()) {
             System.out.print(cryptogramAlphabet.get(i)+ ", ");
@@ -40,17 +40,17 @@ public class Cryptogram {
 
     HashMap<String, Integer> getFrequencies() {
         HashMap<String, Integer> frequencies = new HashMap<>();
-        String[] charArray = fullEncrypt;
-        for (int i = 0; i < charArray.length; i++) {
-            if (!(fullEncrypt[i].charAt(0) == ' ')) {
-                frequencies.put(fullEncrypt[i], 0);
+        ArrayList<String> charArray = fullEncrypt;
+        for (int i = 0; i < charArray.size(); i++) {
+            if (!(fullEncrypt.get(i).charAt(0) == ' ')) {
+                frequencies.put(fullEncrypt.get(i), 0);
             }
         }
-        for (int i = 0; i < charArray.length; i++) {
+        for (int i = 0; i < charArray.size(); i++) {
             int total;
-            if (!(fullEncrypt[i].charAt(0) == ' ')) {
-                total = frequencies.get(fullEncrypt[i]);
-                frequencies.put(fullEncrypt[i], total + 1);
+            if (!(fullEncrypt.get(i).charAt(0) == ' ')) {
+                total = frequencies.get(fullEncrypt.get(i));
+                frequencies.put(fullEncrypt.get(i), total + 1);
             }
         }
         return frequencies;
@@ -64,7 +64,7 @@ public class Cryptogram {
             for (int i = 0; i < random; i++) phraseReader.readLine(); // navigates to right line in file
             return phraseReader.readLine();
         } catch (IOException | IllegalArgumentException e) {
-            System.out.print("Error, no phrase file!");            //Displays error message
+            System.out.println("Error, no phrase file!");            //Displays error message
             return null;
         }
     }
