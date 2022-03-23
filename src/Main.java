@@ -25,9 +25,11 @@ public class Main {
 
 
         //user command interface
+
         System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
         input = inputReader.nextLine();
         Game game;
+        boolean solvedByAi = false;
         while (!input.equals("exit")) {
             switch (input) {    //"exit" will exit the interface and program
                 case "load": case "new":
@@ -49,7 +51,7 @@ public class Main {
                     game.getEncrypted().printDetails();
                     game.getEncrypted().parsedGuesses = game.parseInput();
                     while(!Objects.equals(game.getEncrypted().parsedGuesses, game.getEncrypted().phrase) && !input.equals("exit")){
-                        System.out.println("Do you want to add a guess or undo a guess?");
+                        System.out.println("Do you want to add a guess or undo a guess? Or even let the us solve it if things are too hard!");
                         input = inputReader.nextLine().trim();
                         switch (input) {
                             case "guess":       //User selects "guess" then makes their guess
@@ -79,6 +81,10 @@ public class Main {
                                 System.out.println("help - shows list of commands and their function");
                                 System.out.println("exit - exits to main menu");
                                 break;
+                            case "solve":
+                                game.solve();
+                                game.getEncrypted().parsedGuesses = game.parseInput();
+                                solvedByAi = true;
                             case "exit":
                                 break;
                             default:
@@ -93,6 +99,10 @@ public class Main {
                             game.saveGame();      //Allows user to save their cryptogram game
                         }
                         else System.out.println("Fail by exit!");
+                    }
+                    if(solvedByAi){
+                        System.out.println(game.getEncrypted().phrase + " was the solution!! Unlucky!");
+                        game.removeSave();
                     }
                     else{
                     System.out.println("Congrats you did it!!!");     //Message upon completion of a cryptogram game
