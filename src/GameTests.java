@@ -303,8 +303,8 @@ public class GameTests {
                 game.currentSol();
             }
 
-        }
-        assertTrue(testPlayer.getTotalGuesses() > 1);
+            }
+            assertTrue(testPlayer.getTotalGuesses() > 1);
     }
     /*@Test
     public void TestLoadPlayer() throws IOException {
