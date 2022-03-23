@@ -1,13 +1,11 @@
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Players {
     static List<Player> players = new ArrayList<>();
+
     static File file = new File("PlayerInfo.txt");
 
     //Adds a new player to the file
@@ -41,15 +39,12 @@ public class Players {
 
             //Checks if players file is empty before writing to a new line
             if (line == null) {
-                writing.append(0 + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
+                writing.append( username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
             } else {
-                int amountOfPlayers = 1;
 
-                for (int i = 1; i < players.size(); i++) {
-                    amountOfPlayers++;
-                }
 
-                writing.append("\n" + amountOfPlayers++ + " " + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0+ " "+0 );
+
+                writing.append("\n" + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0+ " "+0 );
             }
             writing.close();
         } catch (IOException e) {
@@ -66,7 +61,7 @@ public class Players {
             writing = new FileWriter(file);   //Saves the users details
             BufferedReader reader = new BufferedReader(new FileReader(file));
             for (int i = 0; i < players.size(); i++) {
-                writing.append( i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
+                writing.append(players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getnumCorrectGuesses() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsCompleted() + " " + players.get(i).getCryptogramsPlayed() + "\n");
             }
             writing.close();
         }
@@ -75,7 +70,7 @@ public class Players {
         }
     }
 
-        //Currently, loads players unordered
+    //Currently, loads players unordered
     public static List<Player> loadPlayers() {
         try {
             players.clear();
@@ -83,7 +78,7 @@ public class Players {
 
             while (input.hasNext()) {
 
-                int id = input.nextInt();
+
 
                 String username = input.next();
 
@@ -97,7 +92,7 @@ public class Players {
 
                 int cryptogramsPlayed = input.nextInt();
 
-                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
+                players.add(new Player(username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
             }
             input.close();
 
@@ -108,11 +103,13 @@ public class Players {
     }
 
     //Currently, displays players unordered
-    public static void displayPlayers() {
+    public static void displayTopTenPlayers() {
+
+        List<Player> topPlayers = new ArrayList<>();
         try {
             Scanner input = new Scanner(file);
             while (input.hasNext()) {
-                int id = input.nextInt();
+
 
                 String username = input.next();
 
@@ -126,15 +123,25 @@ public class Players {
 
                 int cryptogramsPlayed = input.nextInt();
 
-                players.add(new Player(id, username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
+                topPlayers.add(new Player( username, accuracy, totalGuesses, cryptogramsPlayed, cryptogramsCompleted, numCorrectGuesses));
             }
             input.close();
 
         } catch (InputMismatchException | FileNotFoundException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
         }
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println(i + " " + players.get(i).getUsername() + " " + players.get(i).getAccuracy() + " " + players.get(i).getTotalGuesses() + " " + players.get(i).getCryptogramsPlayed() + " " + players.get(i).getCryptogramsCompleted());
+        topPlayers.sort(Comparator.comparing(Player::getCryptogramsCompleted, Comparator.reverseOrder()));
+        if (topPlayers.size()<10){
+            System.out.println("The top ten players are: ");
+            for (int i = 0; i < topPlayers.size(); i++) {
+                System.out.println(topPlayers.get(i));
+            }
+        }else{
+
+       System.out.println("The top ten players are: ");
+        for (int i = 0; i < 10; i++) {
+            System.out.println(topPlayers.get(i));
+        }
         }
     }
 
@@ -144,11 +151,6 @@ public class Players {
         Player playerInfo = null;
         Scanner reader= null;
 
-        //Checks for valid id
-//        if (id > players.size() || id < 0) {
-//            System.out.println("Sorry, that id is invalid.");
-//            return playerInfo;
-//        }
         try {
             reader = new Scanner(file);
             for(int i =0;i<players.size();i++){
@@ -163,28 +165,11 @@ public class Players {
             e.printStackTrace();
         }
 
-        //     playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
+
         reader.close();
-        
+
         return playerInfo;
     }
 
-    //displays player based on id(line number)
-    public static void displayPlayer(int id) {
-        loadPlayers();
-        String playerInfo = null;
 
-        //Checks for valid id
-        if (id > players.size() || id < 0) {
-            System.out.println("Sorry, that id is invalid.");
-        }
-        try {
-
-            playerInfo = Files.readAllLines(Paths.get("PlayerInfo.txt")).get(id);
-
-        } catch (IOException e) {
-            System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
-        }
-        System.out.println(playerInfo);
-    }
 }

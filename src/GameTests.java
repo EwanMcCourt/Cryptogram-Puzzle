@@ -9,7 +9,7 @@ public class GameTests {
 
     @Test
     public void testNotNull() {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         assertNotNull(game.getEncrypted());
     }
@@ -29,7 +29,7 @@ public class GameTests {
 
     @Test
     public void checkCryptogramGenerationNumbers() {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, "yes", "./src/phrases.txt");
         for (int i = 0; i < game.getEncrypted().fullEncrypt.size(); i++) {
             if (!(game.getEncrypted().phrase.charAt(i) == ' ')) {
@@ -55,7 +55,7 @@ public class GameTests {
 
     @Test
     public void checkEnterLetter(){
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
 
@@ -74,7 +74,7 @@ public class GameTests {
 
     @Test
     public void checkEnterLetterTwiceInSamePosition() {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
         game.currentSol();
         String simulatedUserInput = game.getEncrypted().fullEncrypt.get(0) + System.getProperty("line.separator") + "e";
@@ -97,7 +97,7 @@ public class GameTests {
 
     @Test
     public void checkEnterLetterAtDifferentGuessForSameTarget() {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
 
@@ -123,7 +123,7 @@ public class GameTests {
 
     @Test
     public void checkEnterLetterAtDifferentGuessForSameTarget1() {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
         String firstEncrypt = String.valueOf(game.getEncrypted().fullEncrypt.get(0));
         InputStream savedStandardInputStream = System.in;
@@ -145,7 +145,7 @@ public class GameTests {
 
     @Test
     public void checkCompletingCryptogram () {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
         String done = "";
@@ -167,7 +167,7 @@ public class GameTests {
 
     @Test
     public void checkFailingCryptogram() {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         game.getEncrypted().printDetails();
         game.getEncrypted().parsedGuesses = game.parseInput();
@@ -195,7 +195,7 @@ public class GameTests {
 
     @Test
     public void checkLetterNotInCryptogram(){
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/test.txt");
 
         InputStream savedStandardInputStream = System.in;
@@ -211,7 +211,7 @@ public class GameTests {
 
     @Test
     public void checkUndoLetter(){
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/test.txt");
 
         InputStream savedStandardInputStream = System.in;
@@ -239,7 +239,7 @@ public class GameTests {
 
     @Test
     public void checkUndoLetterNotBeenMapped(){
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, " ", "./src/phrases.txt");
         InputStream savedStandardInputStream = System.in;
         String simulatedUserInput = String.valueOf(game.getEncrypted().fullEncrypt.get(0)) + System.getProperty("line.separator")
@@ -256,7 +256,7 @@ public class GameTests {
     }
     @Test
     public void TestLoad() throws IOException {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
         String simulatedUserInput = encrypted.fullEncrypt.get(0) + System.getProperty("line.separator")
@@ -278,7 +278,7 @@ public class GameTests {
 
     @Test
     public void TestUserName() throws IOException {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         String pUserName = "player";
         player.setUsername(pUserName);
@@ -286,7 +286,7 @@ public class GameTests {
     }
     @Test
     public void TestStats() throws IOException {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
         String done = "";

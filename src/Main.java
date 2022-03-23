@@ -26,7 +26,7 @@ public class Main {
 
         //user command interface
 
-        System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
+        System.out.print("Welcome, would you like to load a cryptogram, start a new game or display the leaderboard? ");
         input = inputReader.nextLine();
         Game game;
         boolean solvedByAi = false;
@@ -118,12 +118,17 @@ public class Main {
                     System.out.println("load - loads a previously saved cryptogram");
                     System.out.println("help - shows list of commands and their function");
                     System.out.println("exit - exits the program");
-                    System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
+                    System.out.print("Welcome, would you like to load a cryptogram, start a new game, or load the leaderboard? ");
+                    input = inputReader.nextLine();
+                    break;
+                case "leaderboard":
+                    Players.displayTopTenPlayers();
+                    System.out.print("Welcome, would you like to load a cryptogram, start a new game, or load the leaderboard?");
                     input = inputReader.nextLine();
                     break;
                 default:
                     System.out.println("command not found, use 'help' for a list of commands");
-                    System.out.print("Welcome, would you like to load a cryptogram or start a new game? ");
+                    System.out.print("Welcome, would you like to load a cryptogram, start a new game, or load the leaderboard? ");
                     input = inputReader.nextLine();    //Allows user to try another cryptogram or exit the program
                     break;                             //(Or ask for help)
             }
