@@ -56,7 +56,7 @@ public class Cryptogram {
         System.out.println("Letter:");
         for (String i : frequencies.keySet()) {
             System.out.print(i + " ");
-        }
+        }                                          //Displays the frequency of the letter in English words
         System.out.println();
         System.out.println("Appearences:");
         for (String i : frequencies.keySet()) {
@@ -75,7 +75,7 @@ public class Cryptogram {
         frequencies.put("d", 3.4);
         frequencies.put("e", 11.2);
         frequencies.put("f", 1.8);
-        frequencies.put("g", 2.5);
+        frequencies.put("g", 2.5);    //Frequency of each letter
         frequencies.put("h", 3.0);
         frequencies.put("i", 7.5);
         frequencies.put("j", 0.2);
@@ -100,8 +100,8 @@ public class Cryptogram {
             System.out.print(i + " ");
         }
         System.out.println();
-        System.out.println("Percentage:");
-        for (String i : frequencies.keySet()) {
+        System.out.println("Percentage:");                     //Displays the percentage of each letter appearing in
+        for (String i : frequencies.keySet()) {                //words in the English language.
             System.out.print(frequencies.get(i) + "% ");
         }
         System.out.println();

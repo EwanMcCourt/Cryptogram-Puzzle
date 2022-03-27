@@ -11,7 +11,7 @@ public class GameTests {
     public void testNotNull() {
         Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
-        assertNotNull(game.getEncrypted());
+        assertNotNull(game.getEncrypted());    //Ensures that the cryptogram game is not null
     }
 
     @Test
@@ -20,7 +20,7 @@ public class GameTests {
         for (int i = 0; i < encrypted.phrase.length(); i++) {
             String current = Character.toString(encrypted.phrase.charAt(i));
             String current2 = encrypted.fullEncrypt.get(i);
-            if (!(encrypted.phrase.charAt(i) == ' ')) {  //checking for a space and skips this iteration of the loop
+            if (!(encrypted.phrase.charAt(i) == ' ')) {  //Checking for a space and skips this iteration of the loop
                 System.out.println(current + " == " + current2);
                 assertNotEquals(current, current2);
             }
@@ -34,7 +34,7 @@ public class GameTests {
         for (int i = 0; i < game.getEncrypted().fullEncrypt.size(); i++) {
             if (!(game.getEncrypted().phrase.charAt(i) == ' ')) {
                 int currentNum = Integer.parseInt(game.getEncrypted().fullEncrypt.get(i));
-                assertTrue(currentNum <= 26 && currentNum >= 1);
+                assertTrue(currentNum <= 26 && currentNum >= 1);  //Makes sure that the cryptogram generates numbers
             }
         }
     }
@@ -63,7 +63,7 @@ public class GameTests {
                 + "e" + System.getProperty("line.separator");
 
         System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes(StandardCharsets.UTF_8)));
-        game.enterLetter();
+        game.enterLetter();    //Checks that the program allows the user to enter letters for their guesses
         System.setIn(System.in);
         String parsedEncrypted = game.parseInput();
         game.currentSol();
@@ -254,6 +254,7 @@ public class GameTests {
         Cryptogram currEncrypted2 = game.getEncrypted();
         assertEquals(currEncrypted,currEncrypted2);
     }
+
     @Test
     public void TestLoad() throws IOException {
         Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
@@ -275,7 +276,6 @@ public class GameTests {
         assertEquals(game.getEncrypted().fullEncrypt,game2.getEncrypted().fullEncrypt);
     }
 
-
     @Test
     public void TestUserName() throws IOException {
         Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
@@ -284,6 +284,7 @@ public class GameTests {
         player.setUsername(pUserName);
         assertEquals(pUserName,player.getUsername());
     }
+
     @Test
     public void TestStats() throws IOException {
         Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
@@ -301,9 +302,7 @@ public class GameTests {
                 encrypted.guesses = game.enterLetter();
                 System.setIn(savedStandardInputStream);
                 game.currentSol();
-            }
-
-            }
+            }}
             assertTrue(testPlayer.getTotalGuesses() > 1);
     }
     /*@Test
