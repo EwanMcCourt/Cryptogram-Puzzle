@@ -25,8 +25,6 @@ public class Player {
         this.numCorrectGuesses = numCorrectGuesses;
     }
 
-
-
     public String getUsername() {
         return this.username;
     }
@@ -81,5 +79,5 @@ public class Player {
     @Override
     public String toString() {
         return  username + " " +  accuracy + " " + totalGuesses+" "+ cryptogramsPlayed+" "+ cryptogramsCompleted+" " +numCorrectGuesses;
-    }
+    }   //User all time details
 }
