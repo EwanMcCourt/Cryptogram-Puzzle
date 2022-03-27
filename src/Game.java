@@ -267,11 +267,13 @@ public class Game {
             letterToMap = String.valueOf(getEncrypted().phrase.charAt(i));
             break;
         }
+        int pos = 0;
         for (int i = 0; i < getEncrypted().phrase.length(); i++) {
             if (Objects.equals(String.valueOf(getEncrypted().phrase.charAt(i)), letterToMap)) {
                 getEncrypted().guesses.set(i, " " + String.valueOf(getEncrypted().phrase.charAt(i)));  //Fills in the hint for the user
             }
-            System.out.println(String.valueOf(getEncrypted().fullEncrypt.get(i) + " has been solved as " + letterToMap));  //Tells the user what the hint was
+            pos = i;
         }
+        System.out.println(String.valueOf(getEncrypted().fullEncrypt.get(pos) + " has been solved as " + letterToMap));
     }
 }
