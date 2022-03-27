@@ -22,7 +22,7 @@ public class numberCryptogram extends Cryptogram {
         this.isLetter = false;
         this.phrase = callPhrase(file);
         this.posGuess = new ArrayList<>();
-        this.guesses = new ArrayList<>();
+        this.guesses = new ArrayList<>();     //Creates a new number cryptogram
         this.parsedGuesses = null;
         this.cryptogramAlphabet = new HashMap<>();
 
@@ -31,14 +31,14 @@ public class numberCryptogram extends Cryptogram {
             numbers.add(Integer.toString(i));
         }
 
-        Random rand = new Random();
+        Random rand = new Random();  //Randomly maps the letters for the user to solve
         int num; //value in array list to be mapped to letter
 
         ArrayList<String> result = new ArrayList<>();
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
-            num = rand.nextInt(0, numbers.size());
+            num = rand.nextInt(numbers.size());
             cryptogramAlphabet.put(alphabet, numbers.get(num));
             numbers.remove(num);
             alphabet++;
@@ -59,7 +59,7 @@ public class numberCryptogram extends Cryptogram {
         }}
 
     public void printDetails() {
-        System.out.println("phrase is " + phrase);
+        System.out.println("phrase is " + phrase);     //Displays the cryptogram phrase
         System.out.print("[");
         for (Character i : cryptogramAlphabet.keySet()) {
             if (cryptogramAlphabet.get(i).length() == 2){

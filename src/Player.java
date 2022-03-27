@@ -1,7 +1,5 @@
 public class Player {
-    static int idVal;
     private int numCorrectGuesses;
-    private int id;
     private String username;
     private double accuracy;             //Declarations of all required variables to be stored on the player
     private int totalGuesses;
@@ -9,13 +7,7 @@ public class Player {
     private int cryptogramsCompleted;
 
     public Player(String username){
-        try{
-            idVal++;
-        }
-        catch(NullPointerException e){
-            idVal = 1;
-        }
-        this.id = idVal;
+
         this.username = username;
         this.totalGuesses = 0;                  //Initial assignment of player variables
         this.cryptogramsPlayed = 0;
@@ -23,8 +15,8 @@ public class Player {
     }
 
     //for hard coding player
-    public Player(int id, String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted, int numCorrectGuesses) {
-        this.id = id;
+    public Player( String username, double accuracy, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted, int numCorrectGuesses) {
+
         this.username = username;
         this.accuracy = accuracy;
         this.totalGuesses = totalGuesses;
@@ -32,13 +24,6 @@ public class Player {
         this.cryptogramsCompleted = cryptogramsCompleted;
         this.numCorrectGuesses = numCorrectGuesses;
     }
-
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }                   //Updating the id
 
     public String getUsername() {
         return this.username;
@@ -52,12 +37,10 @@ public class Player {
     }
     public void updateAccuracy() {
         this.accuracy = (double) numCorrectGuesses / (double) totalGuesses * 100;
-        Players.savePlayers();
     }
 
     public void updatenumCorrectGuesses(int numCorrectGuesses) {
         this.numCorrectGuesses = numCorrectGuesses;
-        Players.savePlayers();
     }
     public int getnumCorrectGuesses() {
         return this.numCorrectGuesses;                        //Updating the number of correct guesses
@@ -68,7 +51,6 @@ public class Player {
     }
     public void updateTotalGuesses(int totalGuesses) {
         this.totalGuesses = totalGuesses;
-        Players.savePlayers();
     }
 
     public int getCryptogramsPlayed() {
@@ -76,7 +58,6 @@ public class Player {
     }
     public void incrementCryptogramsPlayed() {
         this.cryptogramsPlayed++;
-        Players.savePlayers();
     }
 
     public int getCryptogramsCompleted() {
@@ -84,7 +65,6 @@ public class Player {
     }
     public void incrementCryptogramsCompleted() {
         this.cryptogramsCompleted++;
-        Players.savePlayers();
     }
 
     public void printDetails() {
@@ -95,4 +75,9 @@ public class Player {
         System.out.println("Cryptograms played: "+ getCryptogramsPlayed());
         System.out.println("Cryptograms completed: "+ getCryptogramsCompleted());
     }
+
+    @Override
+    public String toString() {
+        return  username + " " +  accuracy + " " + totalGuesses+" "+ cryptogramsPlayed+" "+ cryptogramsCompleted+" " +numCorrectGuesses;
+    }   //User all time details
 }
