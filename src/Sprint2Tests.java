@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class Sprint2Tests {
     @Test
     public void TestSaveToFile() throws IOException {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player( "hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         System.setIn(System.in);
         String simulatedUserInput = "yes" + System.getProperty("line.separator");
@@ -29,7 +29,7 @@ public class Sprint2Tests {
 
     @Test
     public void TestLoad() throws IOException {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         Cryptogram encrypted = game.getEncrypted();
         String simulatedUserInput = encrypted.fullEncrypt.get(0) + System.getProperty("line.separator")
@@ -51,7 +51,7 @@ public class Sprint2Tests {
 
     @Test
     public void TestUserName() throws IOException {
-        Player player = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player player = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(player, " ", "./src/phrases.txt");
         String pUserName = "player";
         player.setUsername(pUserName);
@@ -59,7 +59,7 @@ public class Sprint2Tests {
     }
     @Test
     public void TestStats() throws IOException {
-        Player testPlayer = new Player(1, "hardCoded", 0.0, 0, 0, 0, 0);
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
         Game game = new Game(testPlayer, "letter", "./src/test.txt");
         Cryptogram encrypted = game.getEncrypted();
         String done = "";
