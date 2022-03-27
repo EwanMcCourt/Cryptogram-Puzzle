@@ -38,7 +38,7 @@ public class letterCryptogram extends Cryptogram {
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
-            num = rand.nextInt(0, letters.size());
+            num = rand.nextInt(letters.size());
             if (Character.toString(alphabet).equals(letters.get(num))){
                 num = (num+1)%letters.size();
             }

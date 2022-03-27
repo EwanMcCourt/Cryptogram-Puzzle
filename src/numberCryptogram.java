@@ -4,6 +4,20 @@ import java.util.Random;
 
 public class numberCryptogram extends Cryptogram {
 
+    public numberCryptogram(String phrase, ArrayList guesses, HashMap<Character, String> cryptogramAlphabet){
+        this.isLetter = false;
+        this.phrase = phrase;
+        this.guesses = guesses;
+        this.cryptogramAlphabet = cryptogramAlphabet;
+        this.fullEncrypt = new ArrayList<>();
+        for (int i = 0; i < phrase.length(); i++) {
+            if (!(phrase.charAt(i) == ' ')) {
+                this.fullEncrypt.add(cryptogramAlphabet.get(phrase.charAt(i)));
+            }
+            else this.fullEncrypt.add(" ");
+        }
+    }
+
     public numberCryptogram(String file) {
         this.isLetter = false;
         this.phrase = callPhrase(file);
@@ -24,7 +38,7 @@ public class numberCryptogram extends Cryptogram {
 
         char alphabet = (char) 97;
         for (int j = 0; j < 26; j++) {
-            num = rand.nextInt(0, numbers.size());
+            num = rand.nextInt(numbers.size());
             cryptogramAlphabet.put(alphabet, numbers.get(num));
             numbers.remove(num);
             alphabet++;

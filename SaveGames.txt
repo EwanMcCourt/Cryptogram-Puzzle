@@ -1,1 +1,3 @@
-a~true~hi this is lots of is~?? ???? ?? ???? ?? ??~{a=u, b=c, c=y, d=b, e=n, f=l, g=f, h=i, i=w, j=k, k=p, l=j, m=g, n=d, o=t, p=r, q=a, r=h, s=m, t=s, u=x, v=z, w=o, x=v, y=q, z=e}
+hardCoded~true~the quick brown fox jumped over the lazy dog~e?? ????? ????? ??? ?????? ???? e?? ???? ???~{a=n, b=v, c=m, d=c, e=h, f=p, g=b, h=z, i=y, j=l, k=x, l=f, m=t, n=w, o=r, p=a, q=s, r=d, s=e, t=g, u=i, v=q, w=u, x=j, y=k, z=o}
+test~true~hi this is lots of is~h? ?h?? ?? ???? ?? ??~{a=k, b=s, c=n, d=a, e=h, f=m, g=q, h=f, i=y, j=l, k=v, l=b, m=w, n=r, o=j, p=x, q=t, r=d, s=i, t=g, u=p, v=u, w=z, x=c, y=e, z=o}
+test4~trfdgfdue~hfdgdello~??fdgfd???~{a=h, b=n, c=r, d=a, e=f,fgfdg f=w, g=t, h=o, i=v, j=b, k=q, l=e, m=x, n=d, o=c, p=y, q=j, r=k, s=i, t=m, u=g, v=p, w=l, x=u, y=z, z=s}
