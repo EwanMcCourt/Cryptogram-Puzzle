@@ -38,9 +38,9 @@ public class Game {
         else type = "number";
         System.out.println("What letter do you want to guess?");
         target = object.next();
-        while ((type.equals("letter") && target.length() > 1) || target.length() > 2) {
-            System.out.println("Input too long.");
-            System.out.println("What " + type + " do you want to guess?");
+        while ((type.equals("letter") && target.length() > 1) || target.length() > 2) {  //Checks if user input is too long
+            System.out.println("Input too long.");                           //Displays error message when too long
+            System.out.println("What " + type + " do you want to guess?");       //Allows user to try again if invalid
             target = object.next();
         }
         while (!encrypted.fullEncrypt.contains(target)) {
@@ -63,14 +63,14 @@ public class Game {
         String conform = null;
         if (!encrypted.guesses.get(encrypted.fullEncrypt.indexOf(target)).equals(" ?")) {
             System.out.println("This letter is already mapped are you sure you want to overwrite? (yes or no)");
-            conform = object.next();
-            while (!conform.equals("yes") && !conform.equals("no")) {      //Allows user to change their previous guess
-                System.out.println("Invalid input, try again...");
+            conform = object.next();                                     //Allows user to change their previous guess
+            while (!conform.equals("yes") && !conform.equals("no")) {
+                System.out.println("Invalid input, try again...");      //Tells user their response is not allowed (must be yes or no)
                 conform = object.next();
             }
         }
         if (Objects.equals(conform, "yes") || Objects.equals(conform, null)) {
-            applyGuess(target, guess);
+            applyGuess(target, guess);//If the user types 'yes' then their previous guess for that case will be overwritten
         }
         return encrypted.guesses;
     }
@@ -81,9 +81,9 @@ public class Game {
                 encrypted.guesses.set(i, " " + guess);
             }
         }
-        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1);
+        currentPlayer.updateTotalGuesses(currentPlayer.getTotalGuesses() + 1); //Adds one to the users total number of guesses
         if (Objects.equals(encrypted.cryptogramAlphabet.get(guess.charAt(0)), target)) {
-            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1);
+            currentPlayer.updatenumCorrectGuesses(currentPlayer.getnumCorrectGuesses() + 1); //Adds one to the users total number of correct guesses
         }
     }
 
@@ -97,11 +97,10 @@ public class Game {
                 encrypted.guesses.set(i, " ?");
             }
         } else {
-            System.out.println("That letter is not mapped so there is nothing to undo");
+            System.out.println("That letter is not mapped so there is nothing to undo"); //If user attempts to overwrite an empty slot, this message will display and no overwriting will occur
         }
         return encrypted.guesses;
     }
-
 
     public static Integer getKeyByValue(HashMap<Integer, String> labeledMap, String value) {
         for (Map.Entry<Integer, String> entry : labeledMap.entrySet()) {
@@ -111,7 +110,6 @@ public class Game {
         }
         return null;
     }
-
 
     public void currentSol() {
         for (int i = 0; i < encrypted.fullEncrypt.size(); i++) {
@@ -138,7 +136,7 @@ public class Game {
             System.out.print(encrypted.guesses.get(i) + " ");
         }
         System.out.println();
-        System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times");
+        System.out.println("You have guessed " + currentPlayer.getTotalGuesses() + " times"); //Displays that users total number of guesses
     }
 
     public String parseInput() {
@@ -160,7 +158,7 @@ public class Game {
             ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
             String overwrite = null;
             String gameInfo = currentPlayer.getUsername() + "~" + encrypted.isLetter + "~" + encrypted.phrase + "~" + parseInput() + "~" + encrypted.cryptogramAlphabet;
-            for (int i = 0; i < fileContent.size(); i++) {
+            for (int i = 0; i < fileContent.size(); i++) {  //^Passes details to be saved
                 String[] parsed = fileContent.get(i).split("~");
                 if (parsed[0].equals(currentPlayer.getUsername())) {
                     System.out.println("You already have a saved game, would you like to overwrite? (yes/no)");
@@ -185,11 +183,11 @@ public class Game {
             ArrayList<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(String.valueOf(saveFile)), StandardCharsets.UTF_8));
             for (int i = 0; i < fileContent.size(); i++) {
                 String[] parsed = fileContent.get(i).split("~");
-                if (parsed.length != 5) { //if line does not have 5 values it is removed from file
+                if (parsed.length != 5) { //If line does not have 5 values it is removed from file
                     fileContent.remove(i);
                     Files.write(Paths.get(String.valueOf(saveFile)), fileContent, StandardCharsets.UTF_8);
                     i--;
-                } else if (parsed[0].equals(currentPlayer.getUsername())) { //converts lines from file back into cryptogram objects
+                } else if (parsed[0].equals(currentPlayer.getUsername())) { //Converts lines from file back into cryptogram objects
                     HashMap<Character, String> alphabet = new HashMap<>();
                     parsed[4] = parsed[4].substring(1, parsed[4].length() - 1);
                     String[] map = parsed[4].split(", ");
@@ -213,7 +211,7 @@ public class Game {
                     return true;
                 }
             }
-            System.out.println("Saved game not found!");
+            System.out.println("Saved game not found!");  //Error message for when user attempts to load a game when there is no prior save
             return false;
         } catch (Exception e) {
             try {
@@ -235,7 +233,7 @@ public class Game {
             for (int i = 0; i < fileContent.size(); i++) {
                 String[] parsed = fileContent.get(i).split("~");
                 if (parsed[0].equals(currentPlayer.getUsername())) {
-                    fileContent.remove(i);
+                    fileContent.remove(i);   //Deletes the existing game save
                     i--;
                 }
             }
@@ -265,7 +263,6 @@ public class Game {
                 }
                 letterToMap = String.valueOf(getEncrypted().phrase.charAt(i));
                 break;
-
             }
             letterToMap = String.valueOf(getEncrypted().phrase.charAt(i));
             break;
@@ -273,12 +270,10 @@ public class Game {
         int pos = 0;
         for (int i = 0; i < getEncrypted().phrase.length(); i++) {
             if (Objects.equals(String.valueOf(getEncrypted().phrase.charAt(i)), letterToMap)) {
-                getEncrypted().guesses.set(i, " " + String.valueOf(getEncrypted().phrase.charAt(i)));
+                getEncrypted().guesses.set(i, " " + String.valueOf(getEncrypted().phrase.charAt(i)));  //Fills in the hint for the user
             }
             pos = i;
         }
         System.out.println(String.valueOf(getEncrypted().fullEncrypt.get(pos) + " has been solved as " + letterToMap));
     }
-
-
 }

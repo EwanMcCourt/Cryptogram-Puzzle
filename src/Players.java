@@ -41,9 +41,6 @@ public class Players {
             if (line == null) {
                 writing.append( username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0 + " "+0 );
             } else {
-
-
-
                 writing.append("\n" + username + " " + 0.0 + " " + 0 + " " + 0 + " " + 0+ " "+0 );
             }
             writing.close();
@@ -51,7 +48,7 @@ public class Players {
             e.printStackTrace();
         }
         loadPlayers();
-        savePlayers();
+        savePlayers();    //Saves player details
     }
 
     public static void savePlayers() {
@@ -78,15 +75,13 @@ public class Players {
 
             while (input.hasNext()) {
 
-
-
                 String username = input.next();
 
                 double accuracy = input.nextDouble();
 
                 int numCorrectGuesses = input.nextInt();
 
-                int totalGuesses = input.nextInt();
+                int totalGuesses = input.nextInt();   //Loads the user details
 
                 int cryptogramsCompleted = input.nextInt();
 
@@ -98,7 +93,7 @@ public class Players {
 
         } catch (InputMismatchException | FileNotFoundException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
-        }
+        }            //Error message for when the user (username inputted by the user) cannot be found
         return players;
     }
 
@@ -117,7 +112,7 @@ public class Players {
 
                 int numCorrectGuesses = input.nextInt();
 
-                int totalGuesses = input.nextInt();
+                int totalGuesses = input.nextInt();       //Displays players details (for the top 10 players)
 
                 int cryptogramsCompleted = input.nextInt();
 
@@ -129,18 +124,18 @@ public class Players {
 
         } catch (InputMismatchException | FileNotFoundException e) {
             System.err.format("Sorry, either the file does not exist or a vital component from them is missing\n");
-        }
+        }      //Error message for when the user (username inputted by the user) cannot be found
         topPlayers.sort(Comparator.comparing(Player::getCryptogramsCompleted, Comparator.reverseOrder()));
         if (topPlayers.size()<10){
             System.out.println("The top ten players are: ");
             for (int i = 0; i < topPlayers.size(); i++) {
-                System.out.println(topPlayers.get(i));
+                System.out.println(topPlayers.get(i));     //Displays the top 10 players
             }
         }else{
 
        System.out.println("The top ten players are: ");
         for (int i = 0; i < 10; i++) {
-            System.out.println(topPlayers.get(i));
+            System.out.println(topPlayers.get(i));        //Displays the top 10 players
         }
         }
     }
@@ -165,11 +160,8 @@ public class Players {
             e.printStackTrace();
         }
 
-
         reader.close();
 
         return playerInfo;
     }
-
-
 }
