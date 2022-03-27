@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Scanner inputReader = new Scanner(System.in);
 
         System.out.print("Welcome, would you like to make a new player profile? (yes/no) ");

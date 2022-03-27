@@ -3,6 +3,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class GameTests {
@@ -319,4 +321,21 @@ public class GameTests {
         Player testPlayer2 = Players.loadPlayer("hardCoded");
         assertEquals(testPlayer.getCryptogramsCompleted(),testPlayer2.getCryptogramsCompleted());
         }*/
+    @Test
+    public void TestHint() throws IOException {
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
+        Game game = new Game(testPlayer, "letter", "./src/test.txt");
+        ArrayList<String> preGuess = new ArrayList<String>(game.getEncrypted().guesses);
+        game.hint();
+        assertNotEquals(preGuess, game.getEncrypted().guesses);
+
+    }
+    @Test
+    public void TestSolution() throws IOException {
+        Player testPlayer = new Player("hardCoded", 0.0, 0, 0, 0, 0);
+        Game game = new Game(testPlayer, "letter", "./src/test.txt");
+        game.solve();
+        game.getEncrypted().parsedGuesses = game.parseInput();
+        assertEquals(game.getEncrypted().parsedGuesses,game.getEncrypted().phrase);
+    }
 }
